@@ -1,0 +1,19 @@
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+header {
+    height: 100vh;
+    background-color: #0a0a0f;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+}
+
+main {
+    flex: 1;/*Ocupa el resto de la pantalla*/
+}

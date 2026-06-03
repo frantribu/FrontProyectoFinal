@@ -1,0 +1,28 @@
+.card-container {
+    border: 1px solid rgba(255, 255, 255, .07);
+    padding: 15px;
+    background-color: #13131e;
+    border-radius: 10px;
+}
+
+.card-container div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+span {
+    font-size: 20px;
+    margin-right: 5px;
+    color: gray;
+}
+
+p {
+    color: gray;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 500;
+}

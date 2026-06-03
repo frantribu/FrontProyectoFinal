@@ -1,0 +1,19 @@
+* {
+    pointer-events: none;
+}
+
+span {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-weight: 550;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+p {
+    color: rgb(167, 167, 167);
+}

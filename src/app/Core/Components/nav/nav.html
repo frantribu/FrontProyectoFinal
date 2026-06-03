@@ -1,0 +1,92 @@
+<nav>
+    <div class="nav-header">
+        <span class="material-symbols-outlined toys">toys</span>
+        <div>
+            <h1>AutoPremium</h1>
+            <p>Sistema interno</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="nav-content">
+        <div class="nav-section">
+            <p>PRINCIPAL</p>
+
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+                        <span class="nav-label">Inicio</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            directions_car
+                        </span>
+                        <span class="nav-label">Vehiculos</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            analytics
+                        </span>
+                        <span class="nav-label">Ventas</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <p>TALLER</p>
+
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            build
+                        </span>
+                        <span class="nav-label">Reparaciones</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            calendar_month
+                        </span>
+                        <span class="nav-label">Turnos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <p>GESTION</p>
+
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            group
+                        </span>
+                        <span class="nav-label">Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div>
+        <p>{{authService.usuarioR()?.nombre}}</p>
+        <p>{{authService.usuarioR()?.rol}}</p>
+    </div>
+
+</nav>
