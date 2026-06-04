@@ -1,0 +1,5 @@
+<section>
+    @for (item of users(); track item.id) {
+        <app-card-usuario [user]="item"></app-card-usuario>
+    }
+</section>
