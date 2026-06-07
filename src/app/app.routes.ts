@@ -6,5 +6,7 @@ export const routes: Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
     {path: "login", canActivate:[authenticatedGuard], loadComponent: () => import("./Pages/login/login").then(c=>c.Login)},
 
-    {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)}
+    {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)},
+
+    {path:"vehiculos", loadComponent:()=>import("./Pages/vehiculos/list-vehiculos/vehiculos").then(c=>c.Vehiculos)}
 ];

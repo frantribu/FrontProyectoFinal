@@ -1,0 +1,75 @@
+<div class="container-vehiculos">
+    <div class="header-vehiculos">
+        <div class="container-buscador">
+            <span class="material-symbols-outlined">
+                search
+            </span>
+            <input type="text" placeholder="Buscador">
+        </div>
+
+        <div class="add-vehiculo">
+            <button>
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                Agregar vehículo</button>
+        </div>
+    </div>
+
+    <div class="container-list-vehiculos">
+        <table>
+            <thead>
+                <tr>
+                    <th>VEHICULO</th>
+                    <th>TIPO</th>
+                    <th>PATENTE</th>
+                    <th>PRECIO</th>
+                    <th>KILOMETROS</th>
+                    <th>ESTADO</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (v of vehiculos(); track v.id) {
+                <tr>
+                    <td>
+                        <div>
+                            <div class="info-vehiculo">
+                                {{v.marca}} {{v.modelo}} {{v.version}}
+                            </div>
+                            <div class="anio-vehiculo">
+                                {{v.anio}}
+                            </div>
+                        </div>
+                    </td>
+
+                    <td><span class="tipo-vehiculo">{{v.tipo.toLowerCase()}}</span></td>
+                    <td>{{v.patente}}</td>
+                    <td>${{v.precio | number }}</td>
+                    <td>{{v.kilometraje | number}} km</td>
+                    <td><span class="estado-vehiculo"
+                            [class]="'estado-' + v.estado.toLowerCase()">{{v.estado.toLowerCase()}}</span>
+                    </td>
+                    <td>
+                        <div class="container-acciones">
+                            @if(rol=="admin"){
+                            <button class="button-eliminar"><span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </button>
+                            }
+                            <button class="button-modificar">
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

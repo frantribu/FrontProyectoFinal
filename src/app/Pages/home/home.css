@@ -61,6 +61,7 @@ section > div{
     border-radius: 10px;
     background-color: #13131e;
     padding: 15px;
+    cursor: pointer;
 }
 
 .card-acceso:hover {

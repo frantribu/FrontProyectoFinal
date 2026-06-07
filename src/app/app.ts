@@ -14,7 +14,4 @@ export class App{
 
   authService=inject(AuthService)
 
-  ngOnInit():void{
-    this.authService.loadUser();
-  }
 }

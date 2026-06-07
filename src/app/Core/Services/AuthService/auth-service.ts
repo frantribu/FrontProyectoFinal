@@ -12,48 +12,20 @@ import { UsuarioResponse } from '../../Models/UsuarioResponse';
 export class AuthService {
   private url = "http://localhost:8080/auth/login";
   private tokenKey="authToken";
+  private userKey="userToken";
 
   private http = inject(HttpClient);
   private router = inject(Router);
-
-  usuarioR = signal<UsuarioResponse | null>(null);
 
   login(loginRequest: LoginRequest):Observable<LoginResponse>{
     return this.http.post<LoginResponse>(this.url, loginRequest).pipe(
       tap(response=>{ // el tap hace efecto secundarios sin modificar la respuesta
         if(response){
           localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem(this.userKey, JSON.stringify(response.usuario));
         }
       })
     )
-  }
-
-  getUserLogued():Observable<UsuarioResponse>{
-
-    const token=this.getToken();
-
-    return this.http.get<UsuarioResponse>("http://localhost:8080/auth/logued",
-      {
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
-  }
-
-  loadUser(){
-    const token=this.getToken();
-
-    if(!token)return;
-
-    this.getUserLogued().subscribe({
-      next: usuario=>{
-        this.usuarioR.set(usuario);
-      },
-      error: ()=>{
-        this.logout();
-      }
-    })
   }
 
   private getToken():string | null{
@@ -75,6 +47,21 @@ export class AuthService {
   logout(){
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login'])
+  }
+
+  getUser():UsuarioResponse | null{
+    const data= localStorage.getItem(this.userKey);
+    return data ? JSON.parse(data):null
+  }
+
+  getNombreCompleto(){
+    const user= this.getUser();
+    return user ? `${user.nombre.toLowerCase()} ${user.apellido.toLowerCase()}`:''
+  }
+
+  getRol(){
+    const user=this.getUser();
+    return user ? `${user.rol.toLowerCase()}`:''
   }
 
 }

@@ -1,0 +1,167 @@
+.container-vehiculos {
+    padding: 20px;
+}
+
+.header-vehiculos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container-buscador {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container-buscador span {
+    position: absolute;
+    color: rgba(255, 255, 255, .22);
+    pointer-events: none;
+    transform: translateX(12px);
+}
+
+.container-buscador input {
+    background-color: rgb(83, 83, 83);
+    padding: 5px 38px 5px 37px;
+    border-radius: 5px;
+    border: 0.5px solid rgba(255, 255, 255, .09);
+    outline: none;
+    color: rgba(255, 255, 255, .85);
+}
+
+.container-buscador input:hover {
+    border-color: rgba(255, 255, 255, .14);
+}
+
+.container-buscador input:focus {
+    border-color: rgba(99, 102, 241, .5);
+}
+
+.container-buscador input::placeholder {
+    color: rgba(255, 255, 255, .22);
+}
+
+.add-vehiculo button {
+    display: flex;
+    align-items: center;
+    background-color: #6366f1;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.container-list-vehiculos {
+    border: 0.5px solid rgba(255, 255, 255, .07);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+table {
+    background-color: #13131e;
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+thead {
+    color: rgba(255, 255, 255, .28);
+    font-size: 11px;
+    border-bottom: 0.5px solid rgba(255, 255, 255, .07);
+}
+
+thead tr {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 13px 16px;
+}
+
+tbody{
+    text-transform: capitalize;
+}
+
+tbody tr {
+    border-bottom: 0.5px solid rgba(255, 255, 255, .05);
+    transition: background-color 0.2s;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, .025);
+}
+
+.card-vehiculo {
+    background-color: #13131e;
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 10px;
+    transition: border 0.2s;
+}
+
+.card-vehiculo:hover {
+    border: 1px solid rgba(255, 255, 255, .15);
+}
+
+.anio-vehiculo{
+    color: rgb(105, 105, 105);
+}
+
+.tipo-vehiculo{
+    background-color: rgb(49, 49, 49);
+    padding: 3px 7px;
+    border-radius: 10px;
+    color: gray;
+}
+
+.estado-vehiculo{
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.container-acciones{
+    display: flex;
+    gap: 10px;
+}
+
+.button-eliminar{
+    color: red;
+}
+
+.button-modificar{
+    color: rgb(0, 132, 255);
+}
+
+.estado-disponible{
+    background-color: rgba(34,197,94,.12);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,.20);
+    font-size: 13px;
+}
+
+.estado-reservado{
+    background-color: rgba(245,158,11,.12);
+    color: #fcd34d;
+    border: 1px solid rgba(245,158,11,.20);
+}
+
+.estado-reparacion{
+    background-color: rgba(239,68,68,.12);
+    color: #fca5a5;
+    border: 1px solid rgba(239,68,68,.20);
+}
+
+.estado-vendido{
+    background-color: rgba(148,163,184,.10);
+    color: rgba(148,163,184,.70);
+    border: 1px solid rgba(148,163,184,.18);
+}
+
+

@@ -1,0 +1,26 @@
+<div class="container-card">
+    <div class="container-header-card">
+        <p>{{vehiculo()?.estado}}</p>
+        <img src="https://resizer.iproimg.com/unsafe/filters:format(webp):quality(70)/https://assets.iprofesional.com/assets/jpg/2020/08/501846.jpg?5.7.0"
+            alt="">
+    </div>
+
+    <div class="container-info-vehiculo">
+        <div class="marca-modelo-vehiculo">
+            <p class="marca">{{vehiculo()?.marca}}</p>
+            <p class="modelo">{{vehiculo()?.modelo}} {{vehiculo()?.version}}</p>
+            <p class="anio">{{vehiculo()?.anio}}</p>
+        </div>
+
+        <div class="precio-kilometraje-vehiculo">
+            <p>{{vehiculo()?.precio}}</p>
+            <p>{{vehiculo()?.kilometraje}}</p>
+        </div>
+
+        <div class="patente-fecha-vehiculo">
+            <p>{{vehiculo()?.patente}}</p>
+            <p>{{vehiculo()?.fechaIngreso}}</p>
+        </div>
+    </div>
+
+</div>
