@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginRequest } from '../../Models/LoginRequest';
+import { LoginRequest, LoginResponse } from '../../Models/Login';
 import { Observable, tap } from 'rxjs';
-import { LoginResponse } from '../../Models/LoginResponse';
-import { UsuarioResponse } from '../../Models/UsuarioResponse';
+import { UsuarioResponse } from '../../Models/Usuario';
 
 @Injectable({
   providedIn: 'root',

@@ -1,0 +1,30 @@
+.container-selector {
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.container-selector div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(36, 36, 36);
+    border: 1px solid rgb(78, 78, 78);
+    border-radius: 10px;
+    padding: 30px 70px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.container-selector div:hover{
+    transform: scale(1.02);
+}
+
+span {
+    font-size: 100px;
+}

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { VehiculoResponse } from '../../Core/Models/VehiculoResponse';
+import { VehiculoResponse } from '../../Core/Models/Vehiculo';
 
 @Component({
   selector: 'app-card-vehiculo',

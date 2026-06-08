@@ -1,0 +1,38 @@
+<div>
+    <form [formGroup]="form" (submit)="agregarAuto()">
+        <select formControlName="marca" (change)="onMarcaChange()">
+            <option value="">Selecciona una marca</option>
+            @for (m of marcas(); track m) {
+            <option [value]="m">{{m}}</option>
+            }
+        </select>
+
+        <select formControlName="modelo" (change)="onModeloChange()">
+            <option value="">Selecciona un modelo</option>
+            @for (mod of modelos(); track mod) {
+                <option [value]="mod">{{mod}}</option>
+            }
+        </select>
+
+        <select formControlName="anio" (change)="onAnioChange()">
+            <option [value]="0">Selecciona un año</option>
+            @for (an of anios(); track an) {
+                <option [value]="an">{{an}}</option>
+            }
+        </select>
+
+        <select formControlName="idTrim">
+            <option [value]="0">Selecciona un submodelo</option>
+            @for (sub of submodelos(); track sub.id) {
+                <option [value]="sub.id">{{sub.description}}</option>
+            }
+        </select>
+
+        <input type="number" placeholder="Precio" formControlName="precio">
+        <input type="number" placeholder="kilometraje" formControlName="kilometraje">
+        <input type="text" placeholder="Patente" formControlName="patente">
+        <input type="text" placeholder="Color" formControlName="color">
+
+        <button type="submit">Agregar vehiculo</button>
+    </form>
+</div>

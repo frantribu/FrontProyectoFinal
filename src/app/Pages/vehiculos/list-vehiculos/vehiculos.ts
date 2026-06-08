@@ -1,12 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
-import { VehiculoResponse } from '../../../Core/Models/VehiculoResponse';
+import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-vehiculos',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './vehiculos.html',
   styleUrl: './vehiculos.css',
 })

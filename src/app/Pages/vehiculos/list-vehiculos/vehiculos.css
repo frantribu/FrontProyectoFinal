@@ -43,7 +43,7 @@
     color: rgba(255, 255, 255, .22);
 }
 
-.add-vehiculo button {
+.add-vehiculo a {
     display: flex;
     align-items: center;
     background-color: #6366f1;
@@ -129,10 +129,19 @@ tbody tr:hover {
 .container-acciones{
     display: flex;
     gap: 10px;
+   
+}
+
+.acciones{
+    text-align: right;
+}
+
+.container-acciones button{
+    cursor: pointer;
 }
 
 .button-eliminar{
-    color: red;
+    color: rgba(250, 40, 40, 0.685);
 }
 
 .button-modificar{

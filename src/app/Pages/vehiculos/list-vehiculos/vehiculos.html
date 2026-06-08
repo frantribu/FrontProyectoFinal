@@ -8,11 +8,11 @@
         </div>
 
         <div class="add-vehiculo">
-            <button>
+            <a routerLink="/vehiculos/nuevo">
                 <span class="material-symbols-outlined">
                     add
                 </span>
-                Agregar vehículo</button>
+                Agregar vehículo</a>
         </div>
     </div>
 
@@ -51,7 +51,7 @@
                     <td><span class="estado-vehiculo"
                             [class]="'estado-' + v.estado.toLowerCase()">{{v.estado.toLowerCase()}}</span>
                     </td>
-                    <td>
+                    <td class="acciones">
                         <div class="container-acciones">
                             @if(rol=="admin"){
                             <button class="button-eliminar"><span class="material-symbols-outlined">
