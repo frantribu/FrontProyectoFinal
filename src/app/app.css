@@ -6,7 +6,7 @@
 
 header {
     height: 100vh;
-    background-color: #0a0a0f;
+    background-color: var(--color-bg-shell);
 }
 
 .sidebar {

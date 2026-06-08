@@ -4,7 +4,7 @@
 }
 
 .container-header-card{
-    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    border-bottom: 1px solid var(--color-border-muted);
 }
 
 .container-info-vehiculo {
@@ -14,14 +14,14 @@
 .marca-modelo-vehiculo {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    border-bottom: 1px solid var(--color-border-muted);
     padding: 0 0 10px 0
 }
 
 .precio-kilometraje-vehiculo {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    border-bottom: 1px solid var(--color-border-muted);
     padding: 10px 0 10px 0
 }
 
@@ -35,5 +35,5 @@
 }
 
 p {
-    color: white;
+    color: var(--color-text-primary);
 }

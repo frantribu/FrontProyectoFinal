@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearVehiculoRequest, Submodelo } from '../../Core/Models/Vehiculo';
 import { Router } from '@angular/router';
+import { CrearAutoRequest } from '../../Core/Models/Auto';
 
 @Component({
   selector: 'app-auto-form',
@@ -11,10 +12,11 @@ import { Router } from '@angular/router';
   templateUrl: './auto-form.html',
   styleUrl: './auto-form.css',
 })
-export class AutoForm {
+export class AutoForm implements OnDestroy {
   private vehiculoService = inject(VehiculoService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private previewUrls = new Map<File, string>();
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -24,14 +26,48 @@ export class AutoForm {
     precio: [0, Validators.required],
     kilometraje: [0, Validators.required],
     patente: ['', Validators.required],
-    color: ['', Validators.required]
+    color: ['', Validators.required],
   })
+
+  imagenes = signal<File[]>([]);
 
   marcas = toSignal(this.vehiculoService.getMarcas("AUTO"), { initialValue: [] });
 
   modelos = signal<String[]>([]);
   anios = signal<number[]>([]);
   submodelos = signal<Submodelo[]>([]);
+
+  onFotoChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const files = input.files;
+    if (!files?.length) return;
+
+    this.imagenes.update(actual => [...actual, ...Array.from(files)]);
+    input.value = '';
+  }
+
+  getPreviewUrl(file: File): string {
+    let url = this.previewUrls.get(file);
+    if (!url) {
+      url = URL.createObjectURL(file);
+      this.previewUrls.set(file, url);
+    }
+    return url;
+  }
+
+  quitarImagen(index: number) {
+    const file = this.imagenes()[index];
+    const url = this.previewUrls.get(file);
+    if (url) {
+      URL.revokeObjectURL(url);
+      this.previewUrls.delete(file);
+    }
+    this.imagenes.update(imgs => imgs.filter((_, i) => i !== index));
+  }
+
+  ngOnDestroy() {
+    this.previewUrls.forEach(url => URL.revokeObjectURL(url));
+  }
 
   onMarcaChange() {
     this.form.get("modelo")?.reset();
@@ -86,15 +122,15 @@ export class AutoForm {
   agregarAuto() {
     const formulario = this.form.getRawValue();
 
-    const request: CrearVehiculoRequest = {
+    const request: CrearAutoRequest = {
       idTrim: formulario.idTrim,
       precio: formulario.precio,
       color: formulario.color,
       kilometraje: formulario.kilometraje,
-      patente: formulario.patente
+      patente: formulario.patente,
     }
 
-    this.vehiculoService.agregarAuto(request).subscribe({
+    this.vehiculoService.agregarAuto(request, this.imagenes()).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("No se puedo crear el auto", e)
     })

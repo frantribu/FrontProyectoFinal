@@ -1,4 +1,4 @@
-<div>
+<div class="container-auto-form">
     <form [formGroup]="form" (submit)="agregarAuto()">
         <select formControlName="marca" (change)="onMarcaChange()">
             <option value="">Selecciona una marca</option>
@@ -10,29 +10,70 @@
         <select formControlName="modelo" (change)="onModeloChange()">
             <option value="">Selecciona un modelo</option>
             @for (mod of modelos(); track mod) {
-                <option [value]="mod">{{mod}}</option>
+            <option [value]="mod">{{mod}}</option>
             }
         </select>
 
         <select formControlName="anio" (change)="onAnioChange()">
             <option [value]="0">Selecciona un año</option>
             @for (an of anios(); track an) {
-                <option [value]="an">{{an}}</option>
+            <option [value]="an">{{an}}</option>
             }
         </select>
 
         <select formControlName="idTrim">
             <option [value]="0">Selecciona un submodelo</option>
             @for (sub of submodelos(); track sub.id) {
-                <option [value]="sub.id">{{sub.description}}</option>
+            <option [value]="sub.id">{{sub.description}}</option>
             }
         </select>
+        <div class="container-input">
+            <label for="precio-input">Precio</label>
+            <input type="number" id="precio-input" placeholder="Precio" formControlName="precio">
+        </div>
 
-        <input type="number" placeholder="Precio" formControlName="precio">
-        <input type="number" placeholder="kilometraje" formControlName="kilometraje">
-        <input type="text" placeholder="Patente" formControlName="patente">
-        <input type="text" placeholder="Color" formControlName="color">
-
+        <div class="container-input">
+            <label for="kilometraje-input">Kilometraje</label>
+            <input type="number" id="kilometraje-input" placeholder="" formControlName="kilometraje">
+        </div>
+        <div class="container-input">
+            <label for="patente-input">Patente</label>
+            <input type="text" id="patente-input" placeholder="ABC123" formControlName="patente">
+        </div>
+        <div class="container-input">
+            <label for="color-input">Color</label>
+            <input type="text" id="color-input" placeholder="" formControlName="color">
+        </div>
+        <div class="container-input">
+            <label for="foto-input">Fotos</label>
+            <label for="foto-input" class="file-dropzone" [class.selected]="imagenes().length">
+                <input type="file" id="foto-input" accept="image/png,image/jpeg,image/webp" multiple (change)="onFotoChange($event)">
+                <span class="material-symbols-outlined">upload_file</span>
+                <span>
+                    <strong>
+                        @if (imagenes().length === 0) {
+                            Arrastrá o seleccioná imágenes
+                        } @else {
+                            {{ imagenes().length }} {{ imagenes().length === 1 ? 'imagen seleccionada' : 'imágenes seleccionadas' }}
+                        }
+                    </strong>
+                    <small>PNG, JPG o WEBP</small>
+                </span>
+            </label>
+            @if (imagenes().length) {
+                <div class="foto-grid">
+                    @for (img of imagenes(); track $index) {
+                        <figure class="foto-preview">
+                            <img [src]="getPreviewUrl(img)" [alt]="img.name">
+                            <figcaption>{{ img.name }}</figcaption>
+                            <button type="button" class="foto-remove" (click)="quitarImagen($index)" aria-label="Quitar imagen">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </figure>
+                    }
+                </div>
+            }
+        </div>
         <button type="submit">Agregar vehiculo</button>
     </form>
 </div>

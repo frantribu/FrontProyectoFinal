@@ -17,60 +17,60 @@
 
 .container-buscador span {
     position: absolute;
-    color: rgba(255, 255, 255, .22);
+    color: var(--color-text-placeholder);
     pointer-events: none;
     transform: translateX(12px);
 }
 
 .container-buscador input {
-    background-color: rgb(83, 83, 83);
+    background-color: var(--color-bg-input-muted);
     padding: 5px 38px 5px 37px;
     border-radius: 5px;
-    border: 0.5px solid rgba(255, 255, 255, .09);
+    border: 0.5px solid var(--color-border-default);
     outline: none;
-    color: rgba(255, 255, 255, .85);
+    color: var(--color-text-primary);
 }
 
 .container-buscador input:hover {
-    border-color: rgba(255, 255, 255, .14);
+    border-color: var(--color-border-hover);
 }
 
 .container-buscador input:focus {
-    border-color: rgba(99, 102, 241, .5);
+    border-color: var(--color-border-focus);
 }
 
 .container-buscador input::placeholder {
-    color: rgba(255, 255, 255, .22);
+    color: var(--color-text-placeholder);
 }
 
 .add-vehiculo a {
     display: flex;
     align-items: center;
-    background-color: #6366f1;
-    color: #ffffff;
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
     border-radius: 5px;
     padding: 8px 16px;
     cursor: pointer;
 }
 
 .container-list-vehiculos {
-    border: 0.5px solid rgba(255, 255, 255, .07);
+    border: 0.5px solid var(--color-border-default);
     border-radius: 14px;
     overflow: hidden;
     margin: 20px 0;
 }
 
 table {
-    background-color: #13131e;
+    background-color: var(--color-bg-elevated);
     width: 100%;
     border-collapse: collapse;
-    color: white;
+    color: var(--color-text-primary);
 }
 
 thead {
-    color: rgba(255, 255, 255, .28);
+    color: var(--color-text-table-header);
     font-size: 11px;
-    border-bottom: 0.5px solid rgba(255, 255, 255, .07);
+    border-bottom: 0.5px solid var(--color-border-default);
 }
 
 thead tr {
@@ -87,7 +87,7 @@ tbody{
 }
 
 tbody tr {
-    border-bottom: 0.5px solid rgba(255, 255, 255, .05);
+    border-bottom: 0.5px solid var(--color-border-subtle);
     transition: background-color 0.2s;
 }
 
@@ -96,29 +96,29 @@ tbody tr:last-child {
 }
 
 tbody tr:hover {
-    background-color: rgba(255, 255, 255, .025);
+    background-color: var(--color-overlay-row-hover);
 }
 
 .card-vehiculo {
-    background-color: #13131e;
-    border: 1px solid rgba(255, 255, 255, .07);
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
     border-radius: 10px;
     transition: border 0.2s;
 }
 
 .card-vehiculo:hover {
-    border: 1px solid rgba(255, 255, 255, .15);
+    border: 1px solid var(--color-border-strong);
 }
 
 .anio-vehiculo{
-    color: rgb(105, 105, 105);
+    color: var(--color-text-muted);
 }
 
 .tipo-vehiculo{
-    background-color: rgb(49, 49, 49);
+    background-color: var(--color-bg-chip);
     padding: 3px 7px;
     border-radius: 10px;
-    color: gray;
+    color: var(--color-text-tertiary);
 }
 
 .estado-vehiculo{
@@ -141,36 +141,35 @@ tbody tr:hover {
 }
 
 .button-eliminar{
-    color: rgba(250, 40, 40, 0.685);
+    color: var(--color-danger-action);
 }
 
 .button-modificar{
-    color: rgb(0, 132, 255);
+    color: var(--color-info-action);
 }
 
 .estado-disponible{
-    background-color: rgba(34,197,94,.12);
-    color: #86efac;
-    border: 1px solid rgba(34,197,94,.20);
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-border);
     font-size: 13px;
 }
 
 .estado-reservado{
-    background-color: rgba(245,158,11,.12);
-    color: #fcd34d;
-    border: 1px solid rgba(245,158,11,.20);
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning-text);
+    border: 1px solid var(--color-warning-border);
 }
 
 .estado-reparacion{
-    background-color: rgba(239,68,68,.12);
-    color: #fca5a5;
-    border: 1px solid rgba(239,68,68,.20);
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
 }
 
 .estado-vendido{
-    background-color: rgba(148,163,184,.10);
-    color: rgba(148,163,184,.70);
-    border: 1px solid rgba(148,163,184,.18);
+    background-color: var(--color-neutral-bg);
+    color: var(--color-neutral-text);
+    border: 1px solid var(--color-neutral-border);
 }
-
 

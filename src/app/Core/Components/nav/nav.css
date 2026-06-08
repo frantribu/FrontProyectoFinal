@@ -1,11 +1,11 @@
 nav {
     display: flex;
     flex-direction: column;
-    color: white;
+    color: var(--color-text-on-primary);
     width: 250px;
     height: 100vh;
     padding: 20px;
-    border-right: 1px solid rgba(255, 255, 255, .07);
+    border-right: 1px solid var(--color-border-default);
 }
 
 .nav-header {
@@ -16,7 +16,7 @@ nav {
 }
 
 hr {
-    color: rgba(255, 255, 255, .07);
+    color: var(--color-border-default);
     margin: 15px -20px;
 }
 
@@ -32,14 +32,14 @@ hr {
 }
 
 .nav-header>div p {
-    color: rgb(180, 180, 180);
+    color: var(--color-text-secondary);
     font-size: 13px;
     font-weight: 600;
 }
 
 .toys {
     font-size: 19px;
-    background-color: rgba(99, 102, 241);
+    background-color: var(--color-primary);
     padding: 10px;
     border-radius: 10px;
 }
@@ -52,7 +52,7 @@ hr {
 }
 
 .nav-section>p {
-    color: rgb(85, 85, 85);
+    color: var(--color-text-faint);
     font-size: 14px;
     font-weight: 600;
 }
@@ -68,7 +68,7 @@ hr {
 }
 
 .nav-section li {
-    color: rgb(146, 146, 146);
+    color: var(--color-text-tertiary);
     transition: background-color 0.2s, color 0.2s;
 }
 
@@ -81,8 +81,8 @@ hr {
 }
 
 .nav-section li:hover {
-    background-color: rgba(20, 20, 24);
-    color: rgb(219, 219, 219);
+    background-color: var(--color-bg-interactive);
+    color: var(--color-text-nav-hover);
     border-radius: 8px;
 }
 
@@ -98,15 +98,15 @@ hr {
 }
 
 .container-perfil:hover {
-    background-color: rgba(255, 255, 255, .04);
+    background-color: var(--color-overlay-hover);
 }
 
 .logo-user {
-    background-color: rgba(81, 83, 247, 0.12);
+    background-color: var(--color-primary-muted-bg);
     padding: 10px;
     border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, .13);
-    color: #6366f1;
+    border: 1px solid var(--color-border-hover);
+    color: var(--color-primary);
     pointer-events: none;
 }
 
@@ -115,7 +115,7 @@ hr {
 }
 
 .rol-user {
-    color: rgba(255, 255, 255, .45);
+    color: var(--color-text-subtle);
     pointer-events: none;
     font-size: small;
 }

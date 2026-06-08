@@ -12,6 +12,24 @@ export interface VehiculoResponse{
     anio:number;
 }
 
+export interface VehiculoDetalleResponse{
+    id:number;
+    patente:string;
+    marca:string;
+    modelo:string;
+    version:string;
+    precio:number;
+    color:string;
+    anio:number;
+    kilometraje:number;
+    motor:string;
+    combustion:string;
+    tipo:string;
+    fechaIngreso:Date;
+    imagenes:File[] | null;
+}
+
+
 export interface Submodelo{
     id:number,
     description:string
@@ -22,5 +40,5 @@ export interface CrearVehiculoRequest{
     precio:number,
     kilometraje:number,
     patente:string,
-    color:string
+    color:string,
 }
