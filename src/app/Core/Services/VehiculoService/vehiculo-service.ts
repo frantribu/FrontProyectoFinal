@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CrearVehiculoRequest, Submodelo, VehiculoResponse } from '../../Models/Vehiculo';
+import { CrearVehiculoRequest, Submodelo, VehiculoDetalleResponse, VehiculoResponse } from '../../Models/Vehiculo';
 import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest } from '../../Models/Auto';
 
@@ -15,6 +15,14 @@ export class VehiculoService {
   getVehiculos(): Observable<VehiculoResponse[]> {
     return this.http.get<VehiculoResponse[]>(this.url, {
       headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  getDetalleVehiculo(id:number):Observable<VehiculoDetalleResponse>{
+    return this.http.get<VehiculoDetalleResponse>(this.url+`/${id}`, {
+      headers:{
         Authorization: `Bearer ${this.token}`
       }
     });
@@ -63,4 +71,11 @@ export class VehiculoService {
     });
   }
 
+  eliminarVehiculo(id:number){
+    return this.http.delete(this.url + `/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
 }

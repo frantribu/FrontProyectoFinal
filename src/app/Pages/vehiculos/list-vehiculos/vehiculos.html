@@ -32,7 +32,7 @@
 
             <tbody>
                 @for (v of vehiculos(); track v.id) {
-                <tr>
+                <tr (click)="verDetalle(v.id)">
                     <td>
                         <div>
                             <div class="info-vehiculo">
@@ -54,7 +54,8 @@
                     <td class="acciones">
                         <div class="container-acciones">
                             @if(rol=="admin"){
-                            <button class="button-eliminar"><span class="material-symbols-outlined">
+                            <button class="button-eliminar" (click)="eliminarVehiculo(v.id); $event.stopPropagation()"><span
+                                    class="material-symbols-outlined">
                                     delete
                                 </span>
                             </button>

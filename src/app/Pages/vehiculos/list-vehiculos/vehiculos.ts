@@ -3,7 +3,7 @@ import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo
 import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-vehiculos',
@@ -12,22 +12,46 @@ import { RouterLink } from "@angular/router";
   styleUrl: './vehiculos.css',
 })
 export class Vehiculos {
-  private vehiculoService=inject(VehiculoService);
-  private authService=inject(AuthService);
+  private vehiculoService = inject(VehiculoService);
+  private authService = inject(AuthService);
+  private router = inject(Router)
 
-  rol=this.authService.getRol();
+  rol = this.authService.getRol();
 
-  vehiculos=signal<VehiculoResponse[]>([])
+  vehiculos = signal<VehiculoResponse[]>([])
 
-  constructor(){
+  constructor() {
     this.getVehiculos();
   }
 
-  getVehiculos(){
+  getVehiculos() {
     this.vehiculoService.getVehiculos().subscribe({
-      next:(v)=>this.vehiculos.set(v),
-      error:(err)=>console.log(err)
+      next: (v) => this.vehiculos.set(v),
+      error: (err) => console.log(err)
     })
   }
 
+  eliminarVehiculo(id: number) {
+    const resultado = confirm("Estas seguro que queres eliminar este vehiculo?");
+
+    if (resultado) {
+      this.vehiculoService.eliminarVehiculo(id).subscribe({
+        next: () => {
+          this.vehiculos.update(listaVehiculos =>
+            listaVehiculos.filter(v => v.id !== id)
+          )
+        },
+        error: (e) => {
+          console.log("Error al eliminar el vehiculo: ", e);
+
+          alert("Error al eliminar el vehiculo")
+        }
+      })
+    }
+
+  }
+
+  verDetalle(id: number) {
+    this.router.navigate(['/vehiculos/', id])
+  }
 }

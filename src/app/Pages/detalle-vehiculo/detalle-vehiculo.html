@@ -1,0 +1,22 @@
+@if(loading()){
+<p>Cargando...</p>
+}@else if (error()) {
+<p>{{error()}}</p>
+<button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
+}@else if (vehiculo()){
+<div>
+    <p>{{vehiculo()?.marca}}</p>
+    <p>{{vehiculo()?.modelo}}</p>
+    <p>{{vehiculo()?.version}}</p>
+    <p>{{vehiculo()?.anio}}</p>
+    <p>{{vehiculo()?.patente}}</p>
+    <p>{{vehiculo()?.precio}}</p>
+    <p>{{vehiculo()?.color}}</p>
+    <p>{{vehiculo()?.kilometraje}}</p>
+    <p>{{vehiculo()?.motor}}</p>
+    <p>{{vehiculo()?.combustion}}</p>
+    <p>{{vehiculo()?.tipo}}</p>
+    <p>{{vehiculo()?.descripcion}}</p>
+    <p>{{vehiculo()?.fechaIngreso}}</p>
+</div>
+}
