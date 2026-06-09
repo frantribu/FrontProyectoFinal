@@ -17,7 +17,7 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     motor: string;
     combustion: string;
     descripcion: string;
-    imagenes: File[] | null;
+    imagenes: string[] | null;
 }
 
 export interface AutoDetalleResponse extends VehiculoDetalleResponse {

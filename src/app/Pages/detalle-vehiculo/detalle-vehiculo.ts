@@ -12,11 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DetalleVehiculo {
   private vehiculoService=inject(VehiculoService);
   private route=inject(ActivatedRoute);
+
+  baseUrl="http://localhost:8080/ImagenesVehiculo/";
   
   router=inject(Router);
   vehiculo=signal<VehiculoDetalleResponse | null>(null);
   loading=signal<boolean>(false);
   error=signal<string|null>(null);
+  indiceImagen=signal<number>(0);
 
   constructor(){
     const id=Number(this.route.snapshot.paramMap.get("id"));
@@ -40,5 +43,25 @@ export class DetalleVehiculo {
         this.loading.set(false)
       }
     })
+  }
+
+  anterior(){
+    if(this.indiceImagen() > 0){
+      this.indiceImagen.set(this.indiceImagen() - 1);
+    }else{
+      this.indiceImagen.set(this.vehiculo()!.imagenes!.length - 1);
+    }
+  }
+
+  siguiente(){
+    if(this.indiceImagen() < this.vehiculo()!.imagenes!.length - 1){
+      this.indiceImagen.set(this.indiceImagen() + 1);
+    }else{
+      this.indiceImagen.set(0);
+    }
+  }
+
+  irAImagen(index:number){
+    this.indiceImagen.set(index);
   }
 }
