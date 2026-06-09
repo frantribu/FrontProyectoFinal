@@ -4,7 +4,6 @@ export interface AutoDetalleResponse extends VehiculoDetalleResponse {
     puertas: number;
     potencia: number;
     tipoAuto: string;
-    descripcion: string;
     tipoDeTraccion: string;
     transmision: string;
 }

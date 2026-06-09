@@ -1,1 +1,88 @@
-<p>moto-form works!</p>
+<div class="container-auto-form container-moto-form">
+    <form [formGroup]="form" (submit)="agregarMoto()">
+        
+        <div class="container-input">
+            <label for="marca-input">Marca</label>
+            <input type="text" id="marca-input" placeholder="Ej: Honda, Yamaha, Zanella" formControlName="marca">
+        </div>
+
+        <div class="container-input">
+            <label for="modelo-input">Modelo</label>
+            <input type="text" id="modelo-input" placeholder="Ej: XR 250 Tornado" formControlName="modelo">
+        </div>
+
+        <div class="container-input">
+            <label for="anio-input">Año</label>
+            <input type="number" id="anio-input" placeholder="Ej: 2024" formControlName="anio">
+        </div>
+
+        <div class="container-input">
+            <label for="version-input">Versión</label>
+            <input type="text" id="version-input" placeholder="Ej: Full, Base, ABS" formControlName="version">
+        </div>
+
+        <div class="container-input">
+            <label for="tipo-moto-input">Tipo de Moto</label>
+            <input type="text" id="tipo-moto-input" placeholder="Ej: Calle, Scooter, Enduro" formControlName="TipoDeMoto">
+        </div>
+
+        <div class="container-input">
+            <label for="cilindrada-input">Cilindrada (cc)</label>
+            <input type="number" id="cilindrada-input" placeholder="Ej: 150, 250, 600" formControlName="Cilindrada">
+        </div>
+
+        <div class="container-input">
+            <label for="precio-input">Precio</label>
+            <input type="number" id="precio-input" placeholder="Precio" formControlName="precio">
+        </div>
+
+        <div class="container-input">
+            <label for="kilometraje-input">Kilometraje</label>
+            <input type="number" id="kilometraje-input" placeholder="Ej: 0" formControlName="kilometraje">
+        </div>
+
+        <div class="container-input">
+            <label for="patente-input">Patente</label>
+            <input type="text" id="patente-input" placeholder="A123BCD o 123ABC" formControlName="patente">
+        </div>
+
+        <div class="container-input">
+            <label for="color-input">Color</label>
+            <input type="text" id="color-input" placeholder="Ej: Rojo" formControlName="color">
+        </div>
+
+        <div class="container-input">
+            <label for="foto-input">Fotos</label>
+            <label for="foto-input" class="file-dropzone" [class.selected]="imagenes().length">
+                <input type="file" id="foto-input" accept="image/png,image/jpeg,image/webp" multiple (change)="onFotoChange($event)">
+                <span class="material-symbols-outlined">upload_file</span>
+                <span>
+                    <strong>
+                        @if (imagenes().length === 0) {
+                            Arrastrá o seleccioná imágenes
+                        } @else {
+                            {{ imagenes().length }} {{ imagenes().length === 1 ? 'imagen seleccionada' : 'imágenes seleccionadas' }}
+                        }
+                    </strong>
+                    <small>PNG, JPG o WEBP</small>
+                </span>
+            </label>
+
+            @if (imagenes().length) {
+                <div class="foto-grid">
+                    @for (img of imagenes(); track $index) {
+                        <figure class="foto-preview">
+                            <img [src]="getPreviewUrl(img)" [alt]="img.name">
+                            <figcaption>{{ img.name }}</figcaption>
+                            <button type="button" class="foto-remove" (click)="quitarImagen($index)" aria-label="Quitar imagen">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </figure>
+                    }
+                </div>
+            }
+        </div>
+
+        <button type="submit" [disabled]="form.invalid">Agregar Moto</button>
+    </form>
+</div>
