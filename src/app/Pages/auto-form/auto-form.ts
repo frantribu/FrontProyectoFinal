@@ -2,26 +2,26 @@ import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
-import { CrearVehiculoRequest, Submodelo } from '../../Core/Models/Vehiculo';
 import { Router } from '@angular/router';
+import { Submodelo } from '../../Core/Models/Vehiculo';
 import { CrearAutoRequest } from '../../Core/Models/Auto';
+import { ImageUpload } from '../../Shared/image-upload/image-upload';
 
 @Component({
   selector: 'app-auto-form',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, ImageUpload],
   templateUrl: './auto-form.html',
   styleUrl: './auto-form.css',
 })
-export class AutoForm implements OnDestroy {
+export class AutoForm extends ImageUpload{
   private vehiculoService = inject(VehiculoService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private previewUrls = new Map<File, string>();
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
     modelo: ['', Validators.required],
-    anio: [0, Validators.required],
+    anio: [0, [Validators.required, Validators.min(1900)]],
     idTrim: [0, Validators.required],
     precio: [0, Validators.required],
     kilometraje: [0, Validators.required],
@@ -29,45 +29,11 @@ export class AutoForm implements OnDestroy {
     color: ['', Validators.required],
   })
 
-  imagenes = signal<File[]>([]);
-
   marcas = toSignal(this.vehiculoService.getMarcas("AUTO"), { initialValue: [] });
 
   modelos = signal<String[]>([]);
   anios = signal<number[]>([]);
   submodelos = signal<Submodelo[]>([]);
-
-  onFotoChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const files = input.files;
-    if (!files?.length) return;
-
-    this.imagenes.update(actual => [...actual, ...Array.from(files)]);
-    input.value = '';
-  }
-
-  getPreviewUrl(file: File): string {
-    let url = this.previewUrls.get(file);
-    if (!url) {
-      url = URL.createObjectURL(file);
-      this.previewUrls.set(file, url);
-    }
-    return url;
-  }
-
-  quitarImagen(index: number) {
-    const file = this.imagenes()[index];
-    const url = this.previewUrls.get(file);
-    if (url) {
-      URL.revokeObjectURL(url);
-      this.previewUrls.delete(file);
-    }
-    this.imagenes.update(imgs => imgs.filter((_, i) => i !== index));
-  }
-
-  ngOnDestroy() {
-    this.previewUrls.forEach(url => URL.revokeObjectURL(url));
-  }
 
   onMarcaChange() {
     this.form.get("modelo")?.reset();

@@ -1,88 +1,88 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CrearMotoRequest } from '../../Core/Models/Moto';
+import { Router } from '@angular/router';
+import { ImageUpload } from '../../Shared/image-upload/image-upload';
 
 
 @Component({
   selector: 'app-moto-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ImageUpload],
   templateUrl: './moto-form.html',
   styleUrls: ['./moto-form.css']
 })
-export class MotoFormComponent {
+export class MotoFormComponent extends ImageUpload {
   private fb = inject(FormBuilder);
+  private vehiculoService = inject(VehiculoService);
+  private router = inject(Router);
 
-  form: FormGroup;
-  imagenes = signal<File[]>([]); 
+  marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
+  modelos = signal<String[]>([]);
+  tiposMoto = toSignal(this.vehiculoService.obtenerTiposMoto(), {initialValue:[]})
 
-  constructor() {
-    this.form = this.fb.group({
-      marca: ['', Validators.required],
-      modelo: ['', Validators.required],
-      anio: [null, [Validators.required, Validators.min(1900)]],
-      version: ['', Validators.required], // <- Ahora es un campo de texto ("version") en vez de un ID numérico
-      TipoDeMoto: ['', Validators.required],
-      Cilindrada: [null, [Validators.required, Validators.min(1)]],
-      precio: [null, [Validators.required, Validators.min(1)]],
-      kilometraje: [null, [Validators.required, Validators.min(0)]],
-      patente: ['', [Validators.required, Validators.maxLength(10)]],
-      color: ['', Validators.required]
-    });
-  }
+  form = this.fb.nonNullable.group({
+    marca: ['', Validators.required],
+    modelo: ['', Validators.required],
+    anio: [0, [Validators.required, Validators.min(1900)]],
+    version: ['', Validators.required],
+    tipoMoto: ['', Validators.required],
+    motor: ['', Validators.required],
+    combustion: ['', Validators.required],
+    cilindrada: [0, [Validators.required, Validators.min(1)]],
+    precio: [0, [Validators.required, Validators.min(1)]],
+    kilometraje: [0, [Validators.required, Validators.min(0)]],
+    patente: ['', [Validators.required, Validators.maxLength(10)]],
+    color: ['', Validators.required],
+    descripcion: ['', Validators.required]
+  });
 
-  // ================= GESTIÓN DE IMÁGENES =================
+  onMarcaChange() {
+    this.form.get("modelo")?.reset();
+    const marca = this.form.get("marca")?.value;
 
-  onFotoChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const archivosNuevos = Array.from(input.files);
-      this.imagenes.update(imagenesActuales => [...imagenesActuales, ...archivosNuevos]);
+    if (!marca) {
+      this.modelos.set([]);
+      return;
     }
-  }
 
-  getPreviewUrl(file: File): string {
-    return URL.createObjectURL(file);
+    this.vehiculoService.getModelos("MOTO", marca).subscribe({
+      next: (m) => this.modelos.set(m),
+      error: () => console.log("Error al mostrar los modelos")
+    })
   }
-
-  quitarImagen(index: number) {
-    this.imagenes.update(imagenesActuales => 
-      imagenesActuales.filter((_, i) => i !== index)
-    );
-  }
+  
 
   // ================= ENVÍO DEL FORMULARIO =================
 
   agregarMoto() {
-    if (this.form.invalid) return;
+    const formulario = this.form.getRawValue();
 
-    const formValue = this.form.value;
-    
-    // Armamos el objeto para la API respetando la firma de CrearMotoRequest
-    const nuevaMoto: CrearMotoRequest = {
-      // Como idTrim sigue siendo obligatorio y numérico en tu interfaz, le inyectamos 
-      // un valor por defecto (como 0 o 1) para que no tire error de tipado en TypeScript.
-      idTrim: 1, 
-      precio: Number(formValue.precio),
-      kilometraje: Number(formValue.kilometraje),
-      patente: formValue.patente,
-      color: formValue.color,
-      TipoDeMoto: formValue.TipoDeMoto,
-      Cilindrada: Number(formValue.Cilindrada)
-    };
+    const request: CrearMotoRequest = {
+      marca: formulario.marca,
+      modelo: formulario.modelo,
+      version: formulario.version,
+      anio: formulario.anio,
+      motor: formulario.motor,
+      combustion: formulario.combustion,
+      descripcion: formulario.descripcion,
+      cilindrada: formulario.cilindrada,
+      tipoMoto: formulario.tipoMoto,
+      precio: formulario.precio,
+      kilometraje: formulario.kilometraje,
+      patente: formulario.patente,
+      color: formulario.color
+    }
 
-    /* 💡 NOTA IMPORTANTE:
-      Si el backend necesita procesar el texto de la "version" que el usuario escribió a mano, 
-      vas a tener que sumarlo aquí abajo. Si tu interfaz no acepta "version", vas a tener que hablar 
-      con el encargado del Backend para ver si le pueden agregar `version?: string` a la petición, 
-      o si ellos pueden interceptar el texto para asignarle el ID correspondiente del lado del servidor.
-    */
-    
-    // Ejemplo de cómo quedaría si pudieras enviarle también la string "version":
-    // const payload extendido = { ...nuevaMoto, version: formValue.version };
+    this.vehiculoService.agregarMoto(request, this.imagenes()).subscribe({
+      next: () => {
+        this.router.navigate(['/vehiculos'])
+        console.log(request);
 
-    console.log('Objeto formateado para la API:', nuevaMoto);
-    console.log('Texto escrito en Versión:', formValue.version);
-    console.log('Fotos listas:', this.imagenes());
+      },
+      error: (e) => console.log("No se pudo crear la moto ", e)
+    })
   }
 }

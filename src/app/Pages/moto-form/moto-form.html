@@ -1,87 +1,87 @@
-<div class="container-auto-form container-moto-form">
-    <form [formGroup]="form" (submit)="agregarMoto()">
-        
-        <div class="container-input">
-            <label for="marca-input">Marca</label>
-            <input type="text" id="marca-input" placeholder="Ej: Honda, Yamaha, Zanella" formControlName="marca">
+<div class="container-auto-form container-moto-form" (submit)="agregarMoto()">
+    <form [formGroup]="form">
+
+        <div>
+            <label for="marca">Marca</label>
+            <select formControlName="marca" (change)="onMarcaChange()">
+                <option value="">Selecciona una marca</option>
+                @for (m of marcas(); track m) {
+                <option [value]="m">{{m}}</option>
+                }
+            </select>
         </div>
 
-        <div class="container-input">
-            <label for="modelo-input">Modelo</label>
-            <input type="text" id="modelo-input" placeholder="Ej: XR 250 Tornado" formControlName="modelo">
+        <div>
+            <label for="modelo">Modelo</label>
+            <select formControlName="modelo">
+                <option value="">Selecciona un modelo</option>
+                @for (mod of modelos(); track mod) {
+                <option [value]="mod">{{mod}}</option>
+                }
+            </select>
         </div>
 
         <div class="container-input">
             <label for="anio-input">Año</label>
-            <input type="number" id="anio-input" placeholder="Ej: 2024" formControlName="anio">
+            <input type="number" id="anio-input" placeholder="" formControlName="anio">
         </div>
 
         <div class="container-input">
             <label for="version-input">Versión</label>
-            <input type="text" id="version-input" placeholder="Ej: Full, Base, ABS" formControlName="version">
+            <input type="text" id="version-input" placeholder="" formControlName="version">
         </div>
 
         <div class="container-input">
             <label for="tipo-moto-input">Tipo de Moto</label>
-            <input type="text" id="tipo-moto-input" placeholder="Ej: Calle, Scooter, Enduro" formControlName="TipoDeMoto">
+            <select formControlName="tipoMoto">
+                <option value="">Selecciona un tipo de moto</option>
+                @for (t of tiposMoto(); track t.name) {
+                    <option [value]="t.name">{{t.label}}</option>
+                }
+            </select>
         </div>
 
         <div class="container-input">
             <label for="cilindrada-input">Cilindrada (cc)</label>
-            <input type="number" id="cilindrada-input" placeholder="Ej: 150, 250, 600" formControlName="Cilindrada">
+            <input type="number" id="cilindrada-input" placeholder="" formControlName="cilindrada">
+        </div>
+
+        <div class="container-input">
+            <label for="motor-input">Tipo de motor</label>
+            <input type="TEXT" id="combustible-input" placeholder="" formControlName="motor">
+        </div>
+
+        <div class="container-input">
+            <label for="combustible-input">Tipo de combustible</label>
+            <input type="TEXT" id="combustible-input" placeholder="" formControlName="combustion">
         </div>
 
         <div class="container-input">
             <label for="precio-input">Precio</label>
-            <input type="number" id="precio-input" placeholder="Precio" formControlName="precio">
+            <input type="number" id="precio-input" placeholder="" formControlName="precio">
         </div>
 
         <div class="container-input">
             <label for="kilometraje-input">Kilometraje</label>
-            <input type="number" id="kilometraje-input" placeholder="Ej: 0" formControlName="kilometraje">
+            <input type="number" id="kilometraje-input" placeholder="" formControlName="kilometraje">
         </div>
 
         <div class="container-input">
             <label for="patente-input">Patente</label>
-            <input type="text" id="patente-input" placeholder="A123BCD o 123ABC" formControlName="patente">
+            <input type="text" id="patente-input" placeholder="" formControlName="patente">
         </div>
 
         <div class="container-input">
             <label for="color-input">Color</label>
-            <input type="text" id="color-input" placeholder="Ej: Rojo" formControlName="color">
+            <input type="text" id="color-input" placeholder="" formControlName="color">
         </div>
 
         <div class="container-input">
-            <label for="foto-input">Fotos</label>
-            <label for="foto-input" class="file-dropzone" [class.selected]="imagenes().length">
-                <input type="file" id="foto-input" accept="image/png,image/jpeg,image/webp" multiple (change)="onFotoChange($event)">
-                <span class="material-symbols-outlined">upload_file</span>
-                <span>
-                    <strong>
-                        @if (imagenes().length === 0) {
-                            Arrastrá o seleccioná imágenes
-                        } @else {
-                            {{ imagenes().length }} {{ imagenes().length === 1 ? 'imagen seleccionada' : 'imágenes seleccionadas' }}
-                        }
-                    </strong>
-                    <small>PNG, JPG o WEBP</small>
-                </span>
-            </label>
-
-            @if (imagenes().length) {
-                <div class="foto-grid">
-                    @for (img of imagenes(); track $index) {
-                        <figure class="foto-preview">
-                            <img [src]="getPreviewUrl(img)" [alt]="img.name">
-                            <figcaption>{{ img.name }}</figcaption>
-                            <button type="button" class="foto-remove" (click)="quitarImagen($index)" aria-label="Quitar imagen">
-                                <span class="material-symbols-outlined">close</span>
-                            </button>
-                        </figure>
-                    }
-                </div>
-            }
+            <label for="descripcion-input">Descripcion</label>
+            <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
         </div>
+
+        <app-image-upload></app-image-upload>
 
         <button type="submit" [disabled]="form.invalid">Agregar Moto</button>
     </form>

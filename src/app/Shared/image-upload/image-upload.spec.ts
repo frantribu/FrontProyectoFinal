@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MotoFormComponent } from './moto-form';
+import { ImageUpload } from './image-upload';
 
-describe('MotoForm', () => {
-  let component: MotoFormComponent;
-  let fixture: ComponentFixture<MotoFormComponent>;
+describe('ImageUpload', () => {
+  let component: ImageUpload;
+  let fixture: ComponentFixture<ImageUpload>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MotoFormComponent],
+      imports: [ImageUpload],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MotoFormComponent);
+    fixture = TestBed.createComponent(ImageUpload);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

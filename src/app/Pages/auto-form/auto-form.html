@@ -58,38 +58,7 @@
             <label for="color-input">Color</label>
             <input type="text" id="color-input" placeholder="" formControlName="color">
         </div>
-        <div class="container-input">
-            <label for="foto-input">Fotos</label>
-            <label for="foto-input" class="file-dropzone" [class.selected]="imagenes().length">
-                <input type="file" id="foto-input" accept="image/png,image/jpeg,image/webp" multiple
-                    (change)="onFotoChange($event)">
-                <span class="material-symbols-outlined">upload_file</span>
-                <span>
-                    <strong>
-                        @if (imagenes().length === 0) {
-                        Arrastrá o seleccioná imágenes
-                        } @else {
-                        {{ imagenes().length }} {{ imagenes().length === 1 ? 'imagen seleccionada' : 'imágenes
-                        seleccionadas' }}
-                        }
-                    </strong>
-                    <small>PNG, JPG o WEBP</small>
-                </span>
-            </label>
-            @if (imagenes().length) {
-            <div class="foto-grid">
-                @for (img of imagenes(); track $index) {
-                <figure class="foto-preview">
-                    <img [src]="getPreviewUrl(img)" [alt]="img.name">
-                    <figcaption>{{ img.name }}</figcaption>
-                    <button type="button" class="foto-remove" (click)="quitarImagen($index)" aria-label="Quitar imagen">
-                        <span class="material-symbols-outlined">close</span>
-                    </button>
-                </figure>
-                }
-            </div>
-            }
-        </div>
+        <app-image-upload></app-image-upload>
         <button type="submit" [disabled]="form.invalid">Agregar vehiculo</button>
     </form>
 </div>

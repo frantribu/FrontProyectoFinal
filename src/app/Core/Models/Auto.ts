@@ -8,10 +8,6 @@ export interface AutoDetalleResponse extends VehiculoDetalleResponse {
     transmision: string;
 }
 
-export interface CrearAutoRequest extends CrearVehiculoRequest {
-    idTrim: number;
-    precio: number;
-    color: string;
-    kilometraje: number;
-    patente: string;
+export interface CrearAutoRequest extends CrearVehiculoRequest{
+    idTrim: number,
 }

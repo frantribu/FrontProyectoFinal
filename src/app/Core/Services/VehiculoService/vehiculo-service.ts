@@ -1,8 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient,  } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CrearVehiculoRequest, Submodelo, VehiculoDetalleResponse, VehiculoResponse } from '../../Models/Vehiculo';
 import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest } from '../../Models/Auto';
+import { Submodelo, VehiculoDetalleResponse, VehiculoResponse } from '../../Models/Vehiculo';
+import { CrearMotoRequest, MotoDetalleResponse, TipoMoto } from '../../Models/Moto';
 
 @Injectable({
   providedIn: 'root',
@@ -71,8 +72,27 @@ export class VehiculoService {
     });
   }
 
+  agregarMoto(moto:CrearMotoRequest, imagenes:File[]):Observable<MotoDetalleResponse>{
+    const form=new FormData();
+    form.append('datos', new Blob([JSON.stringify(moto)], {type: 'application/json'}));
+    imagenes.forEach(img=> form.append('files', img));
+    return this.http.post<MotoDetalleResponse>(this.url + "/motos", form, {
+      headers:{
+        Authorization:`Bearer ${this.token}`
+      }
+    })
+  }
+
   eliminarVehiculo(id:number){
     return this.http.delete(this.url + `/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
+
+  obtenerTiposMoto(){
+    return this.http.get<TipoMoto[]>(this.url + `/tipos-moto`, {
       headers:{
         Authorization: `Bearer ${this.token}`
       }
