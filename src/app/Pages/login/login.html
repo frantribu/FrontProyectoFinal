@@ -51,7 +51,7 @@
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                             </svg>
                             <input [type]="ocultar ? 'password' : 'text'" placeholder="Tu contraseña" formControlName="password">
-                            <button type="button" class="buttonContraseña" (click)="togglePassword()">
+                            <button type="button" class="buttonContraseña" (click)="togglePassword()" [disabled]="formLogin.invalid">
                                 <img [src]="ocultar ? '/img/ojo-abierto.png':'/img/ojo (1).png'"  alt="ocultar/mostrar contraseña" class="icono-mostrarOcultar">
                             </button>
                         </div>

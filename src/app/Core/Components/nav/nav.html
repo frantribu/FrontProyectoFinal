@@ -15,7 +15,7 @@
 
             <ul>
                 <li>
-                    <a href="">
+                    <a routerLink="/home">
                         <span class="material-symbols-outlined">
                             home
                         </span>
@@ -24,7 +24,7 @@
                 </li>
 
                 <li>
-                    <a href="">
+                    <a routerLink="/vehiculos">
                         <span class="material-symbols-outlined">
                             directions_car
                         </span>
@@ -47,6 +47,19 @@
             <p>TALLER</p>
 
             <ul>
+                @if (auth.getRol().toLowerCase()==="admin") {
+                <li>
+                    <a routerLink="/talleres">
+                        <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined">
+                                handyman
+                            </span>
+                        </span>
+                        <span class="nav-label">Talleres</span>
+                    </a>
+                </li>
+                }
+
                 <li>
                     <a href="">
                         <span class="material-symbols-outlined">
@@ -66,9 +79,9 @@
                 </li>
             </ul>
         </div>
-
         <div class="nav-section">
             <p>GESTION</p>
+
 
             <ul>
                 <li>
@@ -78,15 +91,29 @@
                         </span>
                         <span onclick="navigateToUsers()" class="nav-label">Usuarios</span>
                     </a>
+
                 </li>
             </ul>
         </div>
+
     </div>
 
+    <hr>
 
-    <div>
-        <p>{{authService.usuarioR()?.nombre}}</p>
-        <p>{{authService.usuarioR()?.rol}}</p>
+    <div class="container-perfil" (click)="toggleMenuUser()">
+
+        @if (menuUserOpen) {
+        <div class="menu-abierto-user">
+            <button (click)="auth.logout()">Cerrar sesion</button>
+        </div>
+        }
+
+        <p class="logo-user">{{getIniciales()}}</p>
+
+        <div>
+            <h3 class="name-user">{{capitalizarNombre(auth.getNombreCompleto())}}</h3>
+            <p class="rol-user">{{auth.getRol()}}</p>
+        </div>
     </div>
 
 </nav>

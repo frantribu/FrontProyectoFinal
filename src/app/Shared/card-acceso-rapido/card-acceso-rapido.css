@@ -15,5 +15,5 @@ h3 {
 }
 
 p {
-    color: rgb(167, 167, 167);
+    color: var(--color-text-tertiary);
 }

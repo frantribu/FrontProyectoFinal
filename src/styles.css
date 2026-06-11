@@ -1,13 +1,231 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+/* =============================================================================
+   PALETA DE COLORES DEL SISTEMA
+   Tema oscuro con acento índigo-violeta. Todas las variables están en :root
+   para que cualquier componente pueda usarlas con var(--nombre-variable).
+   ============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+     FONDOS — Capas de profundidad (de más oscuro a más claro)
+     --------------------------------------------------------------------------- */
+
+  /* Fondo base del documento (body). Es la capa más profunda de toda la app. */
+  --color-bg-base: #060609;
+
+  /* Fondo del contenedor principal: sidebar, header y áreas estructurales. */
+  --color-bg-shell: #0a0a12;
+
+  /* Fondo de tarjetas, tablas, modales y paneles elevados sobre el shell. */
+  --color-bg-elevated: #11111a;
+
+  /* Fondo de campos de entrada, buscadores y superficies interactivas. */
+  --color-bg-surface: #0d0d16;
+
+  /* Fondo de inputs en estado focus o activo; ligeramente más claro que surface. */
+  --color-bg-surface-active: #141422;
+
+  /* Fondo al pasar el cursor sobre ítems de navegación o filas seleccionables. */
+  --color-bg-interactive: #181824;
+
+  /* Fondo de inputs secundarios (buscadores, filtros) con mayor contraste. */
+  --color-bg-input-muted: #222230;
+
+  /* Fondo de tarjetas de selección (p. ej. selector de tipo de vehículo). */
+  --color-bg-selector: #1a1a26;
+
+  /* Fondo de chips, badges y etiquetas neutras (tipo de vehículo, categorías). */
+  --color-bg-chip: #252532;
+
+  /* ---------------------------------------------------------------------------
+     TEXTO — Jerarquía tipográfica por contraste
+     --------------------------------------------------------------------------- */
+
+  /* Texto principal: títulos, contenido destacado y datos importantes. */
+  --color-text-primary: #eeeef4;
+
+  /* Texto secundario: subtítulos de navegación, iconos de sección, descripciones. */
+  --color-text-secondary: #b4b4c4;
+
+  /* Texto terciario: ítems de menú inactivos y texto de apoyo en tarjetas. */
+  --color-text-tertiary: #9292a4;
+
+  /* Texto atenuado: etiquetas de sección, metadatos y años en listados. */
+  --color-text-muted: #6e6e80;
+
+  /* Texto muy tenue: encabezados de grupo en navegación (p. ej. "Gestión"). */
+  --color-text-faint: #555566;
+
+  /* Texto sobre botones primarios y fondos de marca; siempre legible. */
+  --color-text-on-primary: #ffffff;
+
+  /* Texto auxiliar semitransparente: roles de usuario, labels de formulario. */
+  --color-text-subtle: rgba(238, 238, 244, 0.45);
+
+  /* Placeholders de inputs y texto deshabilitado en formularios. */
+  --color-text-placeholder: rgba(238, 238, 244, 0.25);
+
+  /* Encabezados de columnas en tablas y texto de menor jerarquía en listados. */
+  --color-text-table-header: rgba(238, 238, 244, 0.30);
+
+  /* Texto al hacer hover en ítems de navegación; mayor énfasis que tertiary. */
+  --color-text-nav-hover: #dcdce8;
+
+  /* ---------------------------------------------------------------------------
+     BORDES — Separación visual entre superficies
+     --------------------------------------------------------------------------- */
+
+  /* Borde estándar de tarjetas, tablas, inputs y contenedores. */
+  --color-border-default: rgba(255, 255, 255, 0.08);
+
+  /* Borde muy sutil para divisores internos (filas de tabla, separadores). */
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+
+  /* Borde tenue para líneas divisorias dentro de tarjetas de detalle. */
+  --color-border-muted: rgba(255, 255, 255, 0.06);
+
+  /* Borde al pasar el cursor sobre tarjetas, inputs o elementos interactivos. */
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+
+  /* Borde con mayor énfasis en hover de tarjetas destacadas. */
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Borde de focus en inputs y campos editables; indica estado activo. */
+  --color-border-focus: rgba(99, 102, 241, 0.55);
+
+  /* Borde de tarjetas de selección y elementos con contorno visible. */
+  --color-border-selector: #3d3d50;
+
+  /* ---------------------------------------------------------------------------
+     MARCA / PRIMARIO — Color de identidad y acciones principales
+     --------------------------------------------------------------------------- */
+
+  /* Color primario de marca: botones principales, logo, CTAs y enlaces activos. */
+  --color-primary: #6366f1;
+
+  /* Variante más clara del primario para hover en botones y estados interactivos. */
+  --color-primary-hover: #7c7ff5;
+
+  /* Texto/icono sobre fondos primarios suaves (accesos rápidos, avatar). */
+  --color-primary-text: #818cf8;
+
+  /* Fondo suave con tinte primario: avatar de usuario, íconos destacados. */
+  --color-primary-muted-bg: rgba(99, 102, 241, 0.14);
+
+  /* Fondo muy sutil primario: iconos de accesos rápidos relacionados con ventas. */
+  --color-primary-subtle-bg: rgba(99, 102, 241, 0.10);
+
+  /* ---------------------------------------------------------------------------
+     ENLACES — Navegación secundaria y acciones de texto
+     --------------------------------------------------------------------------- */
+
+  /* Color de enlaces de texto (p. ej. "Ver reportes") y acciones secundarias. */
+  --color-link: #7aabda;
+
+  /* ---------------------------------------------------------------------------
+     SUPERPOSICIONES — Efectos hover sin cambiar el fondo base
+     --------------------------------------------------------------------------- */
+
+  /* Capa semitransparente al hover en perfil de usuario y zonas clicables. */
+  --color-overlay-hover: rgba(255, 255, 255, 0.04);
+
+  /* Resaltado sutil al hover en filas de tablas y listas densas. */
+  --color-overlay-row-hover: rgba(255, 255, 255, 0.03);
+
+  /* ---------------------------------------------------------------------------
+     ICONOS — Trazos y rellenos de iconografía
+     --------------------------------------------------------------------------- */
+
+  /* Trazo de iconos dentro de inputs (correo, contraseña) en estado normal. */
+  --color-icon-muted: rgba(255, 255, 255, 0.22);
+
+  /* ---------------------------------------------------------------------------
+     SEMÁNTICOS — ÉXITO (disponible, confirmación, clientes)
+     --------------------------------------------------------------------------- */
+
+  /* Texto de estado "Disponible" y acciones positivas confirmadas. */
+  --color-success-text: #6ee7a0;
+
+  /* Fondo de badge/chip de estado disponible o éxito. */
+  --color-success-bg: rgba(52, 211, 153, 0.12);
+
+  /* Borde de badge de estado disponible. */
+  --color-success-border: rgba(52, 211, 153, 0.22);
+
+  /* Icono de acceso rápido relacionado con clientes o acciones positivas. */
+  --color-accent-green: #6ee7a0;
+
+  /* Fondo del icono en tarjetas de acceso rápido con temática verde. */
+  --color-accent-green-bg: rgba(52, 211, 153, 0.10);
+
+  /* ---------------------------------------------------------------------------
+     SEMÁNTICOS — ADVERTENCIA (reservado, pendiente)
+     --------------------------------------------------------------------------- */
+
+  /* Texto de estado "Reservado" y alertas de atención moderada. */
+  --color-warning-text: #fcd34d;
+
+  /* Fondo de badge/chip de estado reservado o advertencia. */
+  --color-warning-bg: rgba(251, 191, 36, 0.12);
+
+  /* Borde de badge de estado reservado. */
+  --color-warning-border: rgba(251, 191, 36, 0.22);
+
+  /* ---------------------------------------------------------------------------
+     SEMÁNTICOS — PELIGRO (reparación, eliminar, errores)
+     --------------------------------------------------------------------------- */
+
+  /* Texto de estado "En reparación" y mensajes de error o destructivos. */
+  --color-danger-text: #fca5a5;
+
+  /* Fondo de badge/chip de estado en reparación o error. */
+  --color-danger-bg: rgba(248, 113, 113, 0.12);
+
+  /* Borde de badge de estado en reparación. */
+  --color-danger-border: rgba(248, 113, 113, 0.22);
+
+  /* Color del botón/acción "Eliminar" en tablas y listados. */
+  --color-danger-action: #f87171;
+
+  /* Icono de acceso rápido relacionado con talleres o acciones críticas. */
+  --color-accent-red: #fca5a5;
+
+  /* Fondo del icono en tarjetas de acceso rápido con temática roja. */
+  --color-accent-red-bg: rgba(248, 113, 113, 0.10);
+
+  /* ---------------------------------------------------------------------------
+     SEMÁNTICOS — NEUTRO (vendido, inactivo, archivado)
+     --------------------------------------------------------------------------- */
+
+  /* Texto de estado "Vendido" y elementos inactivos o archivados. */
+  --color-neutral-text: rgba(148, 163, 184, 0.75);
+
+  /* Fondo de badge/chip de estado vendido o neutro. */
+  --color-neutral-bg: rgba(148, 163, 184, 0.10);
+
+  /* Borde de badge de estado vendido. */
+  --color-neutral-border: rgba(148, 163, 184, 0.20);
+
+  /* ---------------------------------------------------------------------------
+     ACCIONES — Botones y enlaces de operaciones específicas
+     --------------------------------------------------------------------------- */
+
+  /* Color del botón/acción "Modificar" o "Editar" en tablas. */
+  --color-info-action: #3b9eff;
 }
 
-html, body{
-    font-family: 'DM Sans', sans-serif;
-    background-color: #09090e;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
 }

@@ -1,5 +1,5 @@
 section {
-    color: white;
+    color: var(--color-text-primary);
     width: 100%;
     padding: 20px;
 }
@@ -23,7 +23,7 @@ section > div{
 
 .material-symbols-outlined{
  font-size: 20px;
-    color: rgb(180, 180, 180);
+    color: var(--color-text-secondary);
     margin-right: 8px;
 }
 
@@ -35,12 +35,12 @@ section > div{
 }
 
 .title-section{
-    color: rgb(180, 180, 180);
+    color: var(--color-text-secondary);
     font-weight: 500;
 }
 
 .resumen-header a {
-    color: rgba(111, 146, 189);
+    color: var(--color-link);
 }
 
 .resumen-cards {
@@ -57,13 +57,14 @@ section > div{
 }
 
 .card-acceso {
-    border: 1px solid rgba(255, 255, 255, .07);
+    border: 1px solid var(--color-border-default);
     border-radius: 10px;
-    background-color: #13131e;
+    background-color: var(--color-bg-elevated);
     padding: 15px;
+    cursor: pointer;
 }
 
 .card-acceso:hover {
-    border: 1px solid rgba(255, 255, 255, .13);
+    border: 1px solid var(--color-border-hover);
         border-radius: 10px;
 }
