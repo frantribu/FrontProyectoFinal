@@ -4,6 +4,7 @@ import { authenticatedGuard } from './Core/Guards/Authenticated/authenticated-gu
 
 export const routes: Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
+    
     {path: "login", canActivate:[authenticatedGuard], loadComponent: () => import("./Pages/login/login").then(c=>c.Login)},
 
     {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)},

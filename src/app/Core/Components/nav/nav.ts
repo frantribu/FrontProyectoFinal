@@ -1,5 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { AuthService } from '../../Services/AuthService/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -9,4 +10,9 @@ import { AuthService } from '../../Services/AuthService/auth-service';
 })
 export class Nav {
   authService=inject(AuthService)
+  router = inject(Router)
+
+  navigateToUsers(){
+    return this.router.navigate(['/users'])
+  }
 }

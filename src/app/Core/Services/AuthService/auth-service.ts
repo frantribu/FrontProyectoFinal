@@ -29,7 +29,8 @@ export class AuthService {
   }
 
   getUserLogued():Observable<UsuarioResponse>{
-
+    console.log(this.getToken());
+    
     const token=this.getToken();
 
     return this.http.get<UsuarioResponse>("http://localhost:8080/auth/logued",

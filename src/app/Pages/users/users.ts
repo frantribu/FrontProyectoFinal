@@ -12,6 +12,6 @@ import { CardUsuario } from "../../Shared/card-usuario/card-usuario";
   styleUrl: './users.css',
 })
 export class Users {
-  private service = inject(UsuarioService);
-   users = toSignal(this.service.getAll(), {initialValue:[]});
+  service = inject(UsuarioService);
+  users = toSignal(this.service.getAll(), {initialValue:[]});
 }

@@ -9,6 +9,6 @@ import { UsuarioResponse } from './../../Core/Models/UsuarioResponse';
   styleUrl: './card-usuario.css',
 })
 export class CardUsuario {
-  user = input<UsuarioResponse>()
+  Cuser = input<UsuarioResponse>()
   
 }
