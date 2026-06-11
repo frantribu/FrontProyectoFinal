@@ -1,11 +1,11 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
+import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Submodelo } from '../../Core/Models/Vehiculo';
-import { CrearAutoRequest } from '../../Core/Models/Auto';
-import { ImageUpload } from '../../Shared/image-upload/image-upload';
+import { Submodelo } from '../../../Core/Models/Vehiculo';
+import { CrearAutoRequest } from '../../../Core/Models/Auto';
+import { ImageUpload } from '../../../Shared/image-upload/image-upload';
 
 @Component({
   selector: 'app-auto-form',

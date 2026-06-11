@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
-import { VehiculoDetalleResponse } from '../../Core/Models/Vehiculo';
+import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
+import { VehiculoDetalleResponse } from '../../../Core/Models/Vehiculo';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

@@ -1,0 +1,29 @@
+<div>
+    <form [formGroup]="form">
+
+        <div>
+            <select formControlName="especialidad">
+                <option value="">Selecciona una especialidad</option>
+
+                @for (e of especialidades(); track e.nombre) {
+                    <option [value]="e.nombre">{{e.label}}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" formControlName="nombre">
+        </div>
+
+        <div>
+            <label for="encargado">Encargado del taller</label>
+            <input type="text" formControlName="idEncargadoTaller">
+        </div>
+
+        <div>
+            <label for="direccion">Direccion</label>
+            <input type="text" formControlName="direccion">
+        </div>
+    </form>
+</div>
