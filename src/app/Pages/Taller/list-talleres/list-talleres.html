@@ -1,0 +1,8 @@
+<div>
+
+    <a routerLink="/talleres/nuevo">Agregar taller</a>
+    
+    @for (taller of talleres(); track taller.id) {
+        <p>{{taller.nombre}}</p>
+    }
+</div>

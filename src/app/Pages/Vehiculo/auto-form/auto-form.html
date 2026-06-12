@@ -34,10 +34,11 @@
         <div class="container-select">
             <label for="submodelo-select">Version</label>
             <select formControlName="idTrim">
-                <option [value]="0">Selecciona un submodelo</option>
+                <option value=0>Selecciona la version</option>
                 @for (sub of submodelos(); track sub.id) {
                 <option [value]="sub.id">{{sub.description}}</option>
                 }
+
             </select>
         </div>
 

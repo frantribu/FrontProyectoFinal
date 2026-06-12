@@ -1,11 +1,16 @@
+<<<<<<< HEAD:src/app/Pages/auto-form/auto-form.ts
 import { Component, inject, signal } from '@angular/core';
 import { VehiculoService } from '../../Core/Services/VehiculoService/vehiculo-service';
+=======
+import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
+>>>>>>> 060ac8b78bf3a8242afd607fa50179e8aecb6606:src/app/Pages/Vehiculo/auto-form/auto-form.ts
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Submodelo } from '../../Core/Models/Vehiculo';
-import { CrearAutoRequest } from '../../Core/Models/Auto';
-import { ImageUpload } from '../../Shared/image-upload/image-upload';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Submodelo } from '../../../Core/Models/Vehiculo';
+import { CrearAutoRequest } from '../../../Core/Models/Auto';
+import { ImageUpload } from '../../../Shared/image-upload/image-upload';
 
 @Component({
   selector: 'app-auto-form',
@@ -13,10 +18,14 @@ import { ImageUpload } from '../../Shared/image-upload/image-upload';
   templateUrl: './auto-form.html',
   styleUrl: './auto-form.css',
 })
-export class AutoForm extends ImageUpload{
+export class AutoForm extends ImageUpload {
   private vehiculoService = inject(VehiculoService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  id = Number(this.route.snapshot.paramMap.get("id"));
+  isEditMode=!!this.id;
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -42,8 +51,11 @@ export class AutoForm extends ImageUpload{
 
     const marca = this.form.get("marca")?.value;
 
+    this.modelos.set([]);
+    this.anios.set([]);
+    this.submodelos.set([]);
+
     if (!marca) {
-      this.modelos.set([])
       return;
     }
 
@@ -58,8 +70,10 @@ export class AutoForm extends ImageUpload{
     this.form.get("idTrim")?.reset();
     const modelo = this.form.get("modelo")?.value;
 
+    this.anios.set([]);
+    this.submodelos.set([]);
+
     if (!modelo) {
-      this.anios.set([]);
       return;
     }
 
@@ -74,8 +88,9 @@ export class AutoForm extends ImageUpload{
     const modelo = this.form.get("modelo")?.value;
     const anio = Number(this.form.get("anio")?.value);
 
+    this.submodelos.set([]);
+
     if (!anio || !modelo) {
-      this.submodelos.set([]);
       return;
     }
 
@@ -100,6 +115,10 @@ export class AutoForm extends ImageUpload{
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("No se puedo crear el auto", e)
     })
+  }
+
+  cargarAuto(){
+    this.vehiculoService.getDetalleVehiculo(this.id!)
   }
 
 }
