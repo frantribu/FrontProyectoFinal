@@ -32,6 +32,7 @@ export class DetalleVehiculo {
       next:(v)=>{
         this.vehiculo.set(v)
         this.loading.set(false)
+        console.log(v);
       },
       error:(e)=>{
         if(e.status===403){

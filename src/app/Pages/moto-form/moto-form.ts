@@ -34,7 +34,7 @@ export class MotoFormComponent extends ImageUpload {
     cilindrada: [0, [Validators.required, Validators.min(1)]],
     precio: [0, [Validators.required, Validators.min(1)]],
     kilometraje: [0, [Validators.required, Validators.min(0)]],
-    patente: ['', [Validators.required, Validators.maxLength(10)]],
+    patente: ['', [Validators.required, Validators.maxLength(10)],],
     color: ['', Validators.required],
     descripcion: ['', Validators.required]
   });
@@ -55,7 +55,7 @@ export class MotoFormComponent extends ImageUpload {
   }
   
 
-  // ================= ENVÍO DEL FORMULARIO =================
+  // ================= ENVIO DEL FORMULARIO =================
 
   agregarMoto() {
     const formulario = this.form.getRawValue();
