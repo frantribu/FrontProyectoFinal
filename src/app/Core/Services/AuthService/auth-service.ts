@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginRequest, LoginResponse } from '../../Models/Login';
 import { Observable, tap } from 'rxjs';
-import { UsuarioResponse } from '../../Models/Usuario';
+import { Usuario } from '../../Models/Usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
 
-  getUser():UsuarioResponse | null{
+  getUser():Usuario | null{
     const data= localStorage.getItem(this.userKey);
     return data ? JSON.parse(data):null
   }

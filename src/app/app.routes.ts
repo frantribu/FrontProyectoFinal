@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './Core/Guards/Auth/auth-guard';
 import { authenticatedGuard } from './Core/Guards/Authenticated/authenticated-guard';
+import { adminGuard } from './Core/Guards/Admin/admin-guard';
 
 export const routes: Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
@@ -9,7 +10,8 @@ export const routes: Routes = [
 
     {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)},
 
-    {path:"users", loadComponent:()=> import("./Pages/users/users").then(c => c.Users)},
+    {path:"users", canActivate:[adminGuard], loadComponent:()=> import("./Pages/Usuarios/list-users/users").then(c => c.Users)},
+    {path:"users/nuevo", loadComponent:()=>import("./Pages/Usuarios/user-form/user-form").then(c=>c.UserForm)},
 
     {path:"vehiculos", loadComponent:()=>import("./Pages/Vehiculo/list-vehiculos/vehiculos").then(c=>c.Vehiculos)},
     {path:"vehiculos/nuevo", loadComponent:()=>import("./Pages/Vehiculo/vehiculo-selector/vehiculo-selector").then(c=>c.VehiculoSelector)},

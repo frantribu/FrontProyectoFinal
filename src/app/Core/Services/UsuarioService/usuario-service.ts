@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UsuarioResponse } from '../../Models/UsuarioResponse';
+import { Rol, Usuario } from '../../Models/Usuario';
+import { Observable } from 'rxjs';
+import { UsuarioRequest } from '../../Models/UsuarioRequest';
 
 
 @Injectable({
@@ -9,25 +11,54 @@ import { UsuarioResponse } from '../../Models/UsuarioResponse';
 export class UsuarioService{
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
+  private token = localStorage.getItem("authToken")
 
-  getAll(){
-    return this.http.get<UsuarioResponse[]>(this.url)
+  getAll(): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.url, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
   getUserById(id:number){
-    return this.http.get<UsuarioResponse>(`${this.url}/${id}`)
+    return this.http.get<Usuario>(`${this.url}/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
-  postUser(user: Partial<UsuarioResponse>){
-    return this.http.post(this.url, user)
+  createUser(user: UsuarioRequest): Observable<Usuario>{
+    return this.http.post<Usuario>(this.url, user, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
-  patchUser(id: number, user: Partial<UsuarioResponse>){
-    return this.http.patch(`${this.url}/${id}`, user)
+  patchUser(id: number, user: Partial<Usuario>){
+    return this.http.patch(`${this.url}/${id}`, user, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
   deleteUser(id: number){
-    this.http.delete(`${this.url}/${id}`)
+    this.http.delete(`${this.url}/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
+
+  getRoles(){
+    return this.http.get<Rol[]>(this.url + "/roles", {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
   

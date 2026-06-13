@@ -12,10 +12,6 @@ import { RouterLink } from "@angular/router";
 export class Nav {
   authService=inject(AuthService)
   router = inject(Router)
-
-  navigateToUsers(){
-    return this.router.navigate(['/users'])
-  }
   auth = inject(AuthService);
   menuUserOpen=false;
 

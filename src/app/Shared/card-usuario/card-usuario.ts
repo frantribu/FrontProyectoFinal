@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { UsuarioResponse } from './../../Core/Models/UsuarioResponse';
+import { Usuario } from './../../Core/Models/Usuario';
 
 
 @Component({
@@ -9,6 +9,6 @@ import { UsuarioResponse } from './../../Core/Models/UsuarioResponse';
   styleUrl: './card-usuario.css',
 })
 export class CardUsuario {
-  Cuser = input<UsuarioResponse>()
+  Cuser = input<Usuario>()
   
 }

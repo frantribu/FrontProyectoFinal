@@ -1,4 +1,4 @@
-import { UsuarioResponse } from "./Usuario";
+import { Usuario } from "./Usuario";
 
 export interface LoginRequest{
     email:string,
@@ -7,5 +7,5 @@ export interface LoginRequest{
 
 export interface LoginResponse{
     token:string;
-    usuario:UsuarioResponse;
+    usuario:Usuario;
 }

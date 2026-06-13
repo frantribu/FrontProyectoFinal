@@ -1,5 +1,5 @@
 import { historialReparacionResponse } from "./HistorialReparacion";
-import { UsuarioResponse } from "./Usuario";
+import { Usuario } from "./Usuario";
 
 export interface TallerResponse{
     id:number;
@@ -13,7 +13,7 @@ export interface TallerDetalleResponse{
     especialidad:string;
     nombre:string;
     activo:boolean;
-    encargadoTaller:UsuarioResponse;
+    encargadoTaller:Usuario;
     direccion:string;
     historialReparacion:historialReparacionResponse[];
 }
