@@ -1,22 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
-import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
-import { VehiculoDetalleResponse } from '../../../Core/Models/Vehiculo';
+import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VehiculoDetalleResponse } from '../../../../Core/Models/Vehiculo';
+import { AutoDetalleResponse } from '../../../../Core/Models/Auto';
 
 @Component({
-  selector: 'app-detalle-vehiculo',
+  selector: 'app-detalle-auto',
   imports: [],
-  templateUrl: './detalle-vehiculo.html',
-  styleUrl: './detalle-vehiculo.css',
+  templateUrl: './detalle-auto.html',
+  styleUrl: './detalle-auto.css',
 })
-export class DetalleVehiculo {
+export class DetalleAuto {
   private vehiculoService=inject(VehiculoService);
   private route=inject(ActivatedRoute);
 
   baseUrl="http://localhost:8080/ImagenesVehiculo/";
   
   router=inject(Router);
-  vehiculo=signal<VehiculoDetalleResponse | null>(null);
+  auto=signal<AutoDetalleResponse | null>(null);
   loading=signal<boolean>(false);
   error=signal<string|null>(null);
   indiceImagen=signal<number>(0);
@@ -28,9 +29,9 @@ export class DetalleVehiculo {
 
   cargarVehiculo(id:number){
     this.loading.set(true);
-    this.vehiculoService.getDetalleVehiculo(id).subscribe({
+    this.vehiculoService.getDetalleAuto(id).subscribe({
       next:(v)=>{
-        this.vehiculo.set(v)
+        this.auto.set(v)
         this.loading.set(false)
       },
       error:(e)=>{
@@ -49,12 +50,12 @@ export class DetalleVehiculo {
     if(this.indiceImagen() > 0){
       this.indiceImagen.set(this.indiceImagen() - 1);
     }else{
-      this.indiceImagen.set(this.vehiculo()!.imagenes!.length - 1);
+      this.indiceImagen.set(this.auto()!.imagenes!.length - 1);
     }
   }
 
   siguiente(){
-    if(this.indiceImagen() < this.vehiculo()!.imagenes!.length - 1){
+    if(this.indiceImagen() < this.auto()!.imagenes!.length - 1){
       this.indiceImagen.set(this.indiceImagen() + 1);
     }else{
       this.indiceImagen.set(0);

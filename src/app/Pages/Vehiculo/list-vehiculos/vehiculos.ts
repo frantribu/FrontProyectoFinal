@@ -51,7 +51,20 @@ export class Vehiculos {
 
   }
 
-  verDetalle(id: number) {
-    this.router.navigate(['/vehiculos/', id])
+  verDetalle(vehiculo: VehiculoResponse) {
+    if (vehiculo.tipo.toLowerCase() == "auto") {
+      this.router.navigate(['/vehiculos/auto/', vehiculo.id])
+    } else {
+      this.router.navigate(['/vehiculos/moto/', vehiculo.id])
+    }
   }
+
+  modificarVehiculo(vehiculo: VehiculoResponse) {
+    if (vehiculo.tipo.toLowerCase() == "auto") {
+      this.router.navigate([`/vehiculos/auto/${vehiculo.id}/editar`])
+    } else {
+      this.router.navigate([`/vehiculos/moto/${vehiculo.id}/editar`])
+    }
+  }
+
 }

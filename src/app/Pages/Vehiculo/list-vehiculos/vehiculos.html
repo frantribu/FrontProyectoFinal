@@ -32,7 +32,7 @@
 
             <tbody>
                 @for (v of vehiculos(); track v.id) {
-                <tr (click)="verDetalle(v.id)">
+                <tr (click)="verDetalle(v)">
                     <td>
                         <div>
                             <div class="info-vehiculo">
@@ -60,7 +60,7 @@
                                 </span>
                             </button>
                             }
-                            <button class="button-modificar">
+                            <button class="button-modificar" (click)="modificarVehiculo(v); $event.stopPropagation()">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>

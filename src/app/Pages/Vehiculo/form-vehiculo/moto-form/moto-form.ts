@@ -1,10 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
+import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CrearMotoRequest } from '../../../Core/Models/Moto';
+import { CrearMotoRequest } from '../../../../Core/Models/Moto';
 import { Router } from '@angular/router';
-import { ImageUpload } from '../../../Shared/image-upload/image-upload';
+import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
 
 @Component({

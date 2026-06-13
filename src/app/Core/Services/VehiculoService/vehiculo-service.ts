@@ -9,6 +9,9 @@ import { CrearMotoRequest, MotoDetalleResponse, TipoMoto } from '../../Models/Mo
   providedIn: 'root',
 })
 export class VehiculoService {
+  getDetalleVehiculo(id: number) {
+    throw new Error('Method not implemented.');
+  }
   private url = "http://localhost:8080/vehiculos"
   private http = inject(HttpClient)
   private token = localStorage.getItem("authToken")
@@ -21,8 +24,16 @@ export class VehiculoService {
     });
   }
 
-  getDetalleVehiculo(id:number):Observable<VehiculoDetalleResponse>{
-    return this.http.get<VehiculoDetalleResponse>(this.url+`/${id}`, {
+  getDetalleAuto(id:number):Observable<AutoDetalleResponse>{
+    return this.http.get<AutoDetalleResponse>(this.url+`/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  getDetalleMoto(id:number):Observable<MotoDetalleResponse>{
+    return this.http.get<MotoDetalleResponse>(this.url+`/${id}`, {
       headers:{
         Authorization: `Bearer ${this.token}`
       }
@@ -60,8 +71,9 @@ export class VehiculoService {
       }
     });
   }
-
-  agregarAuto(auto: CrearAutoRequest, imagenes: File[]): Observable<AutoDetalleResponse> {
+ /*------------------------------------------AUTO----------------------------------------------------*/ 
+  
+ agregarAuto(auto: CrearAutoRequest, imagenes: File[]): Observable<AutoDetalleResponse> {
     const form = new FormData();
     form.append('datos', new Blob([JSON.stringify(auto)], { type: 'application/json' }));
     imagenes.forEach(img => form.append('files', img));
@@ -71,6 +83,16 @@ export class VehiculoService {
       }
     });
   }
+
+  modificarAuto(id:number, auto:CrearAutoRequest):Observable<AutoDetalleResponse>{
+    return this.http.put<AutoDetalleResponse>(this.url + `/modificar/${id}`, auto, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
+
+   /*------------------------------------------MOTO----------------------------------------------------*/ 
 
   agregarMoto(moto:CrearMotoRequest, imagenes:File[]):Observable<MotoDetalleResponse>{
     const form=new FormData();
@@ -83,6 +105,14 @@ export class VehiculoService {
     })
   }
 
+  obtenerTiposMoto(){
+    return this.http.get<TipoMoto[]>(this.url + `/tipos-moto`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
+
   eliminarVehiculo(id:number){
     return this.http.delete(this.url + `/${id}`, {
       headers:{
@@ -91,11 +121,5 @@ export class VehiculoService {
     })
   }
 
-  obtenerTiposMoto(){
-    return this.http.get<TipoMoto[]>(this.url + `/tipos-moto`, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
-  }
+  
 }

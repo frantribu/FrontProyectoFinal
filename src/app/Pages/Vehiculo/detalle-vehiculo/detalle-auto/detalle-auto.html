@@ -3,29 +3,29 @@
 }@else if (error()) {
 <p>{{error()}}</p>
 <button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
-}@else if (vehiculo()){
+}@else if (auto()){
 <div class="container-detalle-vehiculo">
     <div class="titulo-vehiculo">
-        <h2>{{vehiculo()?.marca}} {{vehiculo()?.modelo}} {{vehiculo()?.version}} {{vehiculo()?.motor}}
-            {{vehiculo()?.anio}}
+        <h2>{{auto()?.marca}} {{auto()?.modelo}} {{auto()?.version}} {{auto()?.motor}}
+            {{auto()?.anio}}
         </h2>
     </div>
 
     <div class="container-info-vehiculo">
         <p class="info-meta">
-            <span class="info-estado">{{ vehiculo()?.estado }}</span>
-            · Ingreso {{ vehiculo()?.fechaIngreso }}
+            <span class="info-estado">{{ auto()?.estado }}</span>
+            · Ingreso {{ auto()?.fechaIngreso }}
         </p>
 
         <div class="patente-vehiculo-container">
             <div class="patente-vehiculo">
                 <span class="patente-header">Argentina</span>
-                <span class="patente-numero">{{ vehiculo()?.patente }}</span>
+                <span class="patente-numero">{{ auto()?.patente }}</span>
             </div>
         </div>
 
         <div class="info-precio">
-            <span class="info-precio-valor">${{ vehiculo()?.precio }}</span>
+            <span class="info-precio-valor">${{ auto()?.precio }}</span>
         </div>
 
         <hr class="info-divider">
@@ -33,15 +33,15 @@
         <div class="info-atributos">
             <p class="info-fila">
                 <span class="info-label">Color:</span>
-                <span class="info-valor">{{ vehiculo()?.color }}</span>
+                <span class="info-valor">{{ auto()?.color }}</span>
             </p>
             <p class="info-fila">
                 <span class="info-label">Kilometraje:</span>
-                <span class="info-valor">{{ vehiculo()?.kilometraje }} km</span>
+                <span class="info-valor">{{ auto()?.kilometraje }} km</span>
             </p>
             <p class="info-fila">
                 <span class="info-label">Combustión:</span>
-                <span class="info-valor">{{ vehiculo()?.combustion }}</span>
+                <span class="info-valor">{{ auto()?.combustion }}</span>
             </p>
         </div>
 
@@ -49,12 +49,12 @@
 
         <div class="info-descripcion">
             <h3 class="info-seccion-titulo">Descripción</h3>
-            <p class="info-descripcion-texto">{{ vehiculo()?.descripcion }}</p>
+            <p class="info-descripcion-texto">{{ auto()?.descripcion }}</p>
         </div>
     </div>
 
     <div class="container-imagenes">
-        @if (vehiculo()?.imagenes!.length > 1) {
+        @if (auto()?.imagenes!.length > 1) {
         <div class="carousel-container">
             <button type="button" class="carousel-btn carousel-btn-prev" (click)="anterior()"
                 aria-label="Imagen anterior">
@@ -62,7 +62,7 @@
             </button>
 
             <div class="carousel-viewport">
-                <img class="imagen-vehiculo" [src]="baseUrl + vehiculo()!.imagenes![indiceImagen()]">
+                <img class="imagen-vehiculo" [src]="baseUrl + auto()!.imagenes![indiceImagen()]">
             </div>
             <button type="button" class="carousel-btn carousel-btn-next" (click)="siguiente()"
                 aria-label="Imagen siguiente">
@@ -70,13 +70,13 @@
             </button>
         </div>
         <div class="carousel-imagenes">
-            @for(imagen of vehiculo()?.imagenes; track $index) {
+            @for(imagen of auto()?.imagenes; track $index) {
             <img class="imagen-vehiculo" [class.active]="$index === indiceImagen()" (click)="irAImagen($index)" [src]="baseUrl + imagen">
             }
         </div>
         } @else {
         <div class="carousel-viewport">
-            <img class="imagen-vehiculo" [src]="baseUrl + vehiculo()!.imagenes![0]">
+            <img class="imagen-vehiculo" [src]="baseUrl + auto()!.imagenes![0]">
         </div>
 
         }

@@ -1,11 +1,11 @@
 import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
+import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Submodelo } from '../../../Core/Models/Vehiculo';
-import { CrearAutoRequest } from '../../../Core/Models/Auto';
-import { ImageUpload } from '../../../Shared/image-upload/image-upload';
+import { Submodelo } from '../../../../Core/Models/Vehiculo';
+import { CrearAutoRequest } from '../../../../Core/Models/Auto';
+import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
 @Component({
   selector: 'app-auto-form',
@@ -20,7 +20,7 @@ export class AutoForm extends ImageUpload {
   private route = inject(ActivatedRoute);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditMode=!!this.id;
+  isEditable = !!this.id;
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -39,6 +39,13 @@ export class AutoForm extends ImageUpload {
   anios = signal<number[]>([]);
   submodelos = signal<Submodelo[]>([]);
 
+  constructor(){
+    super();
+    if(this.isEditable){
+      this.cargarAutoParaEditar();
+    }
+  }
+  
   onMarcaChange() {
     this.form.get("modelo")?.reset();
     this.form.get("anio")?.reset();
@@ -112,8 +119,58 @@ export class AutoForm extends ImageUpload {
     })
   }
 
-  cargarAuto(){
-    this.vehiculoService.getDetalleVehiculo(this.id!)
+  cargarAutoParaEditar() {
+    this.vehiculoService.getDetalleAuto(this.id).subscribe({
+      next: (auto) => {
+        this.vehiculoService.getModelos("AUTO", auto.marca).subscribe(
+          mod => this.modelos.set(mod)
+        );
+
+        this.vehiculoService.getAnios("AUTO", auto.modelo).subscribe(
+          anio => this.anios.set(anio)
+        );
+
+        this.vehiculoService.getSubmodelos(auto.modelo, auto.anio).subscribe(
+          sub => this.submodelos.set(sub)
+        );
+
+        this.form.patchValue({
+          marca: auto.marca,
+          modelo: auto.modelo,
+          anio: auto.anio,
+          idTrim: auto.idTrim,
+          precio: auto.precio,
+          kilometraje: auto.kilometraje,
+          patente: auto.patente,
+          color: auto.color
+        })
+      },
+      error:()=>console.log("Error al cargar el auto")
+    })
   }
 
+  editarAuto(){
+    const formulario = this.form.getRawValue();
+
+    const request: CrearAutoRequest = {
+      idTrim: formulario.idTrim,
+      precio: formulario.precio,
+      color: formulario.color,
+      kilometraje: formulario.kilometraje,
+      patente: formulario.patente,
+    }
+
+    this.vehiculoService.modificarAuto(this.id, request).subscribe({
+      next: () => this.router.navigate(['/vehiculos']),
+      error: (e) => console.log("No se puedo crear el auto", e)
+    })
+  }
+
+  onSubmit(){
+    if(this.isEditable){
+      this.editarAuto();
+    }else{
+      this.agregarAuto();
+    }
+  }
 }
