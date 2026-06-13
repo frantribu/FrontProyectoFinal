@@ -29,5 +29,5 @@ export interface CrearVehiculoRequest {
     precio: number,
     kilometraje: number,
     patente: string,
-    color: string,
+    color: string
 }

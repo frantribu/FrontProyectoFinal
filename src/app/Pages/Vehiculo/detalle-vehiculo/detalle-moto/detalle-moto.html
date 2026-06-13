@@ -1,1 +1,80 @@
-<p>detalle-moto works!</p>
+<div class="container-detalle-vehiculo">
+    <div class="titulo-vehiculo">
+        <h2>{{moto()?.marca}} {{moto()?.modelo}} {{moto()?.version}} {{moto()?.motor}}
+            {{moto()?.anio}}
+        </h2>
+    </div>
+
+    <div class="container-info-vehiculo">
+        <p class="info-meta">
+            <span class="info-estado">{{ moto()?.estado }}</span>
+            · Ingreso {{ moto()?.fechaIngreso }}
+        </p>
+
+        <div class="patente-vehiculo-container">
+            <div class="patente-vehiculo">
+                <span class="patente-header">Argentina</span>
+                <span class="patente-numero">{{ moto()?.patente }}</span>
+            </div>
+        </div>
+
+        <div class="info-precio">
+            <span class="info-precio-valor">${{ moto()?.precio }}</span>
+        </div>
+
+        <hr class="info-divider">
+
+        <div class="info-atributos">
+            <p class="info-fila">
+                <span class="info-label">Color:</span>
+                <span class="info-valor">{{ moto()?.color }}</span>
+            </p>
+            <p class="info-fila">
+                <span class="info-label">Kilometraje:</span>
+                <span class="info-valor">{{ moto()?.kilometraje }} km</span>
+            </p>
+            <p class="info-fila">
+                <span class="info-label">Combustión:</span>
+                <span class="info-valor">{{ moto()?.combustion }}</span>
+            </p>
+        </div>
+
+        <hr class="info-divider">
+
+        <div class="info-descripcion">
+            <h3 class="info-seccion-titulo">Descripción</h3>
+            <p class="info-descripcion-texto">{{ moto()?.descripcion }}</p>
+        </div>
+    </div>
+
+    <div class="container-imagenes">
+        @if (moto()?.imagenes!.length > 1) {
+        <div class="carousel-container">
+            <button type="button" class="carousel-btn carousel-btn-prev" (click)="anterior()"
+                aria-label="Imagen anterior">
+                <span class="material-symbols-outlined">chevron_left</span>
+
+            </button>
+
+            <div class="carousel-viewport">
+                <img class="imagen-vehiculo" [src]="baseUrl + moto()!.imagenes![indiceImagen()]">
+            </div>
+            <button type="button" class="carousel-btn carousel-btn-next" (click)="siguiente()"
+                aria-label="Imagen siguiente">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </div>
+        <div class="carousel-imagenes">
+            @for(imagen of moto()?.imagenes; track $index) {
+            <img class="imagen-vehiculo" [class.active]="$index === indiceImagen()" (click)="irAImagen($index)"
+                [src]="baseUrl + imagen">
+            }
+        </div>
+        } @else {
+        <div class="carousel-viewport">
+            <img class="imagen-vehiculo" [src]="baseUrl + moto()!.imagenes![0]">
+        </div>
+
+        }
+    </div>
+</div>

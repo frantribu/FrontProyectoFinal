@@ -71,7 +71,8 @@
         </div>
         <div class="carousel-imagenes">
             @for(imagen of auto()?.imagenes; track $index) {
-            <img class="imagen-vehiculo" [class.active]="$index === indiceImagen()" (click)="irAImagen($index)" [src]="baseUrl + imagen">
+            <img class="imagen-vehiculo" [class.active]="$index === indiceImagen()" (click)="irAImagen($index)"
+                [src]="baseUrl + imagen">
             }
         </div>
         } @else {
@@ -82,4 +83,7 @@
         }
     </div>
 </div>
+}@else{
+<p>El vehiculo no existe</p>
+<button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
 }
