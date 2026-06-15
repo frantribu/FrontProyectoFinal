@@ -20,5 +20,9 @@ export const routes: Routes = [
     {path:"vehiculos/moto/:id/editar", loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/moto-form/moto-form").then(c=>c.MotoFormComponent)},
 
     {path:"talleres", loadComponent:()=>import("./Pages/Taller/list-talleres/list-talleres").then(c=>c.ListTalleres)},
-    {path:"talleres/nuevo", loadComponent:()=>import("./Pages/Taller/taller-form/taller-form").then(c=>c.TallerForm)}
+    {path:"talleres/nuevo", loadComponent:()=>import("./Pages/Taller/taller-form/taller-form").then(c=>c.TallerForm)},
+
+    {path:"ventas", loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
+    {path:"ventas/nuevo/:id", loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
+
 ];

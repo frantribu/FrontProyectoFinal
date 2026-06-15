@@ -77,4 +77,8 @@ export class Vehiculos {
     }
   }
 
+  venderVehiculo(id:number){
+    this.router.navigate([`/ventas/nuevo/${id}`])
+  }
+
 }

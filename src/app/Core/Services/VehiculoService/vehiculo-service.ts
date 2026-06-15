@@ -23,6 +23,14 @@ export class VehiculoService {
     });
   }
 
+  getDetalleVehiculo(id: number): Observable<VehiculoResponse> {
+    return this.http.get<VehiculoResponse>(this.url + `/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  } 
+
   getDetalleAuto(id: number): Observable<AutoDetalleResponse> {
     return this.http.get<AutoDetalleResponse>(this.url + `/${id}`, {
       headers: {

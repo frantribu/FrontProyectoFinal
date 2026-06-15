@@ -1,8 +1,8 @@
 export interface UsuarioResponse{
-    id:Number;
-    nombre:String;
-    apellido:String;
-    rol:String;
-    email:String;
-    activo:Boolean;
+    id:number;
+    nombre:string;
+    apellido:string;
+    rol:string;
+    email:string;
+    activo:boolean;
 }

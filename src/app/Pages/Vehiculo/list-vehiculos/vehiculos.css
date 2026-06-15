@@ -142,12 +142,12 @@ tbody tr:hover {
 
 .container-acciones{
     display: flex;
+    align-items: center;
     gap: 10px;
-   
 }
 
 .acciones{
-    text-align: right;
+    justify-items: right;
 }
 
 .container-acciones button{
@@ -160,6 +160,14 @@ tbody tr:hover {
 
 .button-modificar{
     color: var(--color-info-action);
+}
+
+.button-vender{
+    display: flex;
+    align-items: center;
+    background-color: green;
+    padding: 5px;
+    border-radius: 7px;
 }
 
 .estado-disponible{
