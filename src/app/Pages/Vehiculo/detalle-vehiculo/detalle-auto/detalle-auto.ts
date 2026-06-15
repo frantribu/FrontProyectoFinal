@@ -32,8 +32,8 @@ export class DetalleAuto {
     this.vehiculoService.getDetalleAuto(id).subscribe({
       next:(v)=>{
         this.auto.set(v)
+        console.log(v.imagenes);
         this.loading.set(false)
-        console.log(v);
       },
       error:(e)=>{
         if(e.status===403){

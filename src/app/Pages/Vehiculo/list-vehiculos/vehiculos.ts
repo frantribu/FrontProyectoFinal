@@ -4,6 +4,7 @@ import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { Router, RouterLink } from "@angular/router";
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vehiculos',
@@ -18,17 +19,26 @@ export class Vehiculos {
 
   rol = this.authService.getRol();
 
-  vehiculos = signal<VehiculoResponse[]>([])
+  vehiculos = signal<VehiculoResponse[]>([]);
+  estadoSeleccionado=signal<string>("");
+
+  estados=toSignal(this.vehiculoService.getEstados(), {initialValue:[]});
 
   constructor() {
     this.getVehiculos();
   }
 
   getVehiculos() {
-    this.vehiculoService.getVehiculos().subscribe({
+    this.vehiculoService.getVehiculos(this.estadoSeleccionado()).subscribe({
       next: (v) => this.vehiculos.set(v),
       error: (err) => console.log(err)
     })
+  }
+
+  onEstadoChange(event:Event){
+    const value=(event.target as HTMLSelectElement).value;
+    this.estadoSeleccionado.set(value);
+    this.getVehiculos();
   }
 
   eliminarVehiculo(id: number) {

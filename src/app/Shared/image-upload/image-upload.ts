@@ -42,4 +42,5 @@ export class ImageUpload implements OnDestroy{
   ngOnDestroy() {
     this.previewUrls.forEach(url => URL.revokeObjectURL(url));
   }
+
 }

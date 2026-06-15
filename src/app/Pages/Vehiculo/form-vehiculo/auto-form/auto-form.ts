@@ -1,9 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, signal, viewChild } from '@angular/core';
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Submodelo } from '../../../../Core/Models/Vehiculo';
+import { Submodelo } from '../../../../Core/Models/Auto';
 import { CrearAutoRequest } from '../../../../Core/Models/Auto';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
@@ -13,11 +13,12 @@ import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
   templateUrl: './auto-form.html',
   styleUrl: './auto-form.css',
 })
-export class AutoForm extends ImageUpload {
+export class AutoForm {
   private vehiculoService = inject(VehiculoService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private imageUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
   isEditable = !!this.id;
@@ -31,6 +32,7 @@ export class AutoForm extends ImageUpload {
     kilometraje: [0, Validators.required],
     patente: ['', Validators.required],
     color: ['', Validators.required],
+    descripcion: ['']
   })
 
   marcas = toSignal(this.vehiculoService.getMarcas("AUTO"), { initialValue: [] });
@@ -39,13 +41,12 @@ export class AutoForm extends ImageUpload {
   anios = signal<number[]>([]);
   submodelos = signal<Submodelo[]>([]);
 
-  constructor(){
-    super();
-    if(this.isEditable){
+  constructor() {
+    if (this.isEditable) {
       this.cargarAutoParaEditar();
     }
   }
-  
+
   onMarcaChange() {
     this.form.get("modelo")?.reset();
     this.form.get("anio")?.reset();
@@ -111,9 +112,10 @@ export class AutoForm extends ImageUpload {
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
+      descripcion:formulario.descripcion
     }
 
-    this.vehiculoService.agregarAuto(request, this.imagenes()).subscribe({
+    this.vehiculoService.agregarAuto(request, this.imageUpload().imagenes()).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("No se puedo crear el auto", e)
     })
@@ -142,14 +144,15 @@ export class AutoForm extends ImageUpload {
           precio: auto.precio,
           kilometraje: auto.kilometraje,
           patente: auto.patente,
-          color: auto.color
+          color: auto.color,
+          descripcion:auto.descripcion
         })
       },
-      error:()=>console.log("Error al cargar el auto")
+      error: () => console.log("Error al cargar el auto")
     })
   }
 
-  editarAuto(){
+  editarAuto() {
     const formulario = this.form.getRawValue();
 
     const request: CrearAutoRequest = {
@@ -158,6 +161,7 @@ export class AutoForm extends ImageUpload {
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
+      descripcion:formulario.descripcion
     }
 
     this.vehiculoService.modificarAuto(this.id, request).subscribe({
@@ -166,10 +170,10 @@ export class AutoForm extends ImageUpload {
     })
   }
 
-  onSubmit(){
-    if(this.isEditable){
+  onSubmit() {
+    if (this.isEditable) {
       this.editarAuto();
-    }else{
+    } else {
       this.agregarAuto();
     }
   }

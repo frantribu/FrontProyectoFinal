@@ -1,11 +1,11 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { AuthService } from '../../Services/AuthService/auth-service';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 import { UsuarioResponse } from '../../Models/Usuario';
 
 @Component({
   selector: 'app-nav',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })

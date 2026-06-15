@@ -12,3 +12,8 @@ export interface AutoDetalleResponse extends VehiculoDetalleResponse {
 export interface CrearAutoRequest extends CrearVehiculoRequest{
     idTrim: number,
 }
+
+export interface Submodelo {
+    id: number,
+    description: string
+}

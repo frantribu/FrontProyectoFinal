@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -14,10 +14,11 @@ import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
   templateUrl: './moto-form.html',
   styleUrls: ['./moto-form.css']
 })
-export class MotoFormComponent extends ImageUpload {
+export class MotoFormComponent{
   private fb = inject(FormBuilder);
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
+  private imagenUpload=viewChild.required(ImageUpload);
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
@@ -53,7 +54,6 @@ export class MotoFormComponent extends ImageUpload {
       error: () => console.log("Error al mostrar los modelos")
     })
   }
-  
 
   // ================= ENVIO DEL FORMULARIO =================
 
@@ -76,7 +76,7 @@ export class MotoFormComponent extends ImageUpload {
       color: formulario.color
     }
 
-    this.vehiculoService.agregarMoto(request, this.imagenes()).subscribe({
+    this.vehiculoService.agregarMoto(request, this.imagenUpload().imagenes()).subscribe({
       next: () => {
         this.router.navigate(['/vehiculos'])
         console.log(request);

@@ -20,14 +20,16 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     imagenes: string[] | null;
 }
 
-export interface Submodelo {
-    id: number,
-    description: string
-}
-
 export interface CrearVehiculoRequest {
     precio: number,
     kilometraje: number,
     patente: string,
     color: string
+    descripcion:string;
 }
+
+export interface Estado{
+    name:string;
+    label:string;
+}
+

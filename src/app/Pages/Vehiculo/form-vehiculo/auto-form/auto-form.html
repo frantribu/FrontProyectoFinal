@@ -59,6 +59,12 @@
             <label for="color-input">Color</label>
             <input type="text" id="color-input" placeholder="" formControlName="color">
         </div>
+
+         <div class="container-input">
+            <label for="descripcion-input">Descripcion</label>
+            <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
+        </div>
+
         <app-image-upload></app-image-upload>
         <button type="submit" [disabled]="form.invalid">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
     </form>

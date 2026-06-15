@@ -6,8 +6,7 @@
 }@else if (auto()){
 <div class="container-detalle-vehiculo">
     <div class="titulo-vehiculo">
-        <h2>{{auto()?.marca}} {{auto()?.modelo}} {{auto()?.version}} {{auto()?.motor}}
-            {{auto()?.anio}}
+        <h2>{{auto()?.marca}} {{auto()?.modelo}}
         </h2>
     </div>
 
@@ -32,16 +31,38 @@
 
         <div class="info-atributos">
             <p class="info-fila">
+                <span class="info-label">Version:</span>
+                <span class="info-valor">{{ auto()?.version }}</span>
+            </p>
+
+             <p class="info-fila">
+                <span class="info-label">Año:</span>
+                <span class="info-valor">{{ auto()?.anio }}</span>
+            </p>
+
+            <p class="info-fila">
                 <span class="info-label">Color:</span>
                 <span class="info-valor">{{ auto()?.color }}</span>
             </p>
+
             <p class="info-fila">
                 <span class="info-label">Kilometraje:</span>
                 <span class="info-valor">{{ auto()?.kilometraje }} km</span>
             </p>
+
             <p class="info-fila">
                 <span class="info-label">Combustión:</span>
                 <span class="info-valor">{{ auto()?.combustion }}</span>
+            </p>
+
+             <p class="info-fila">
+                <span class="info-label">Potencia:</span>
+                <span class="info-valor">{{ auto()?.potencia }} hp</span>
+            </p>
+
+             <p class="info-fila">
+                <span class="info-label">Puertas:</span>
+                <span class="info-valor">{{ auto()?.puertas }}</span>
             </p>
         </div>
 
