@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest, Submodelo } from '../../Models/Auto';
 import { Estado, VehiculoResponse } from '../../Models/Vehiculo';
 import { CrearMotoRequest, MotoDetalleResponse, TipoMoto } from '../../Models/Moto';
+import { CrearVentaRequest } from '../../Models/Venta';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,14 @@ export class VehiculoService {
       }
     });
   }
+
+  agregarVenta(request:CrearVentaRequest){
+      return this.http.put(`${this.url}/vender`, request, {
+        headers:{
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }
 
   getMarcas(tipo: String): Observable<String[]> {
     return this.http.get<String[]>(this.url + `/marcas?tipo=${tipo}`, {
