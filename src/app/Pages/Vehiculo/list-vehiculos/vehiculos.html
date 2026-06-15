@@ -63,8 +63,8 @@
                             [class]="'estado-' + v.estado.toLowerCase()">{{v.estado.toLowerCase()}}</span>
                     </td>
 
-                    @if (v.estado.toLowerCase()!="vendido") {
                     <td class="acciones">
+                        @if (v.estado.toLowerCase()!="vendido") {
                         <div class="container-acciones">
                             @if(rol=="admin"){
                             <button class="button-eliminar"
@@ -90,9 +90,8 @@
                             }
 
                         </div>
+                        }
                     </td>
-                    }
-
                 </tr>
                 }
             </tbody>

@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
-import { VentaService } from '../../../Core/Services/VentaService/venta-service';
 import { CrearVentaRequest } from '../../../Core/Models/Venta';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +16,6 @@ import { ClienteResponse } from '../../../Core/Models/Cliente';
 })
 export class FormVenta {
   private fb = inject(FormBuilder);
-  private ventaService = inject(VentaService);
   private authService = inject(AuthService);
   private clienteService = inject(ClienteService);
   private vehiculoService = inject(VehiculoService);
@@ -31,7 +29,7 @@ export class FormVenta {
   vehiculo = toSignal(this.vehiculoService.getDetalleVehiculo(this.vehiculoId));
   clientes = signal<ClienteResponse[]>([]);
 
-  constructor(){
+  constructor() {
     this.getClientes()
   }
 
@@ -50,19 +48,16 @@ export class FormVenta {
       vendedorId: this.usuarioLogueado!.id
     }
 
-    this.ventaService.agregarVenta(venta).subscribe({
+    this.vehiculoService.agregarVenta(venta).subscribe({
       next: () => this.router.navigate(['/ventas']),
-      error:(e)=>console.log("Error al cargar la venta: ", e)
+      error: (e) => console.log("Error al cargar la venta: ", e)
     })
   }
 
-  getClientes(){
+  getClientes() {
     this.clienteService.getClientes(true).subscribe({
-      next:(cli)=>{this.clientes.set(cli)
-
-        console.log(this.clientes())
-      },
-      error:()=>console.log("Error al cargar los clientes")
+      next: (cli) => this.clientes.set(cli),
+      error: () => console.log("Error al cargar los clientes")
     })
   }
 }

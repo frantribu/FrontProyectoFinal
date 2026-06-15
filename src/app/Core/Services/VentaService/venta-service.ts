@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CrearVentaRequest } from '../../Models/Venta';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +10,8 @@ export class VentaService {
   private http=inject(HttpClient);
   private token=localStorage.getItem("authToken")
 
-  agregarVenta(request:CrearVentaRequest){
-    return this.http.post(this.url, request, {
+  ventasTotales():Observable<number>{
+    return this.http.get<number>(`${this.url}/cantidad`, {
       headers:{
         Authorization: `Bearer ${this.token}`
       }
