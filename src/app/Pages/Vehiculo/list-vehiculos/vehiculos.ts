@@ -92,7 +92,8 @@ export class Vehiculos {
       width:"400px",
       data:{vehiculoId}
     }).afterClosed().subscribe(resultado=>{
-      if(resultado===true){
+      if(resultado===true)//tiene que coincidir con lo que le pasamos al dialogRef.close() del modal
+        {
         this.getVehiculos();
       }
     })

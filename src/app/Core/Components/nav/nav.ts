@@ -1,7 +1,7 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../Services/AuthService/auth-service';
-import { RouterLink, RouterLinkActive } from "@angular/router";
-import { UsuarioResponse } from '../../Models/Usuario';
+import { Router, RouterLinkActive } from '@angular/router';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-nav',
@@ -10,6 +10,12 @@ import { UsuarioResponse } from '../../Models/Usuario';
   styleUrl: './nav.css',
 })
 export class Nav {
+  authService=inject(AuthService)
+  router = inject(Router)
+
+  navigateToUsers(){
+    return this.router.navigate(['/users'])
+  }
   auth = inject(AuthService);
   menuUserOpen=false;
 

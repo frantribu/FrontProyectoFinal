@@ -4,9 +4,12 @@ import { authenticatedGuard } from './Core/Guards/Authenticated/authenticated-gu
 
 export const routes: Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
+    
     {path: "login", canActivate:[authenticatedGuard], loadComponent: () => import("./Pages/login/login").then(c=>c.Login)},
 
     {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)},
+
+    {path:"users", loadComponent:()=> import("./Pages/users/users").then(c => c.Users)},
 
     {path:"vehiculos", loadComponent:()=>import("./Pages/Vehiculo/list-vehiculos/vehiculos").then(c=>c.Vehiculos)},
     {path:"vehiculos/nuevo", loadComponent:()=>import("./Pages/Vehiculo/vehiculo-selector/vehiculo-selector").then(c=>c.VehiculoSelector)},

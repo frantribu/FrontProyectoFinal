@@ -68,16 +68,14 @@
                         <div class="container-acciones">
                             @if(rol=="admin"){
 
-                             <button class="button-accion"
-                                (click)="abrirModal(v.id); $event.stopPropagation()">
-                                <span
-                                    class="material-symbols-outlined">
+                            <button class="button-accion" (click)="abrirModal(v.id); $event.stopPropagation()">
+                                <span class="material-symbols-outlined">
                                     build
                                 </span>
                                 <span>Asignar a taller</span>
                             </button>
-                            
-                            
+
+
                             <button class="button-accion"
                                 (click)="eliminarVehiculo(v.id); $event.stopPropagation()"><span
                                     class="material-symbols-outlined">
@@ -106,5 +104,6 @@
             </tbody>
 
         </table>
+
     </div>
 </div>
