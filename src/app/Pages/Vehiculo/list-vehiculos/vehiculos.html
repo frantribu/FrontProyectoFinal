@@ -59,35 +59,44 @@
                     <td>{{v.patente}}</td>
                     <td>${{v.precio | number }}</td>
                     <td>{{v.kilometraje | number}} km</td>
-                    <td><span class="estado-vehiculo"
-                            [class]="'estado-' + v.estado.toLowerCase()">{{v.estado.toLowerCase()}}</span>
+                    <td class="columna-estado"><span class="estado-vehiculo"
+                            [class]="'estado-' + v.estado.name.toLowerCase()">{{v.estado.label}}</span>
                     </td>
 
                     <td class="acciones">
-                        @if (v.estado.toLowerCase()!="vendido") {
+                        @if (v.estado.name.toLowerCase()=="disponible") {
                         <div class="container-acciones">
                             @if(rol=="admin"){
-                            <button class="button-eliminar"
+
+                             <button class="button-accion"
+                                (click)="abrirModal(v.id); $event.stopPropagation()">
+                                <span
+                                    class="material-symbols-outlined">
+                                    build
+                                </span>
+                                <span>Asignar a taller</span>
+                            </button>
+                            
+                            
+                            <button class="button-accion"
                                 (click)="eliminarVehiculo(v.id); $event.stopPropagation()"><span
                                     class="material-symbols-outlined">
                                     delete
                                 </span>
                             </button>
                             }
-                            <button class="button-modificar" (click)="modificarVehiculo(v); $event.stopPropagation()">
+                            <button class="button-accion" (click)="modificarVehiculo(v); $event.stopPropagation()">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </button>
 
-                            @if(v.estado.toLowerCase()=="disponible"){
                             <button class="button-vender" (click)="venderVehiculo(v.id); $event.stopPropagation()">
                                 <span>Vender</span>
                                 <span class="material-symbols-outlined">
                                     attach_money
                                 </span>
                             </button>
-                            }
 
                         </div>
                         }

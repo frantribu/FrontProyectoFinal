@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { Router, RouterLink } from "@angular/router";
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { AsignarTallerModal } from '../../../Core/Components/asignar-taller-modal/asignar-taller-modal';
 
 @Component({
   selector: 'app-vehiculos',
@@ -15,13 +17,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class Vehiculos {
   private vehiculoService = inject(VehiculoService);
   private authService = inject(AuthService);
-  private router = inject(Router)
+  private router = inject(Router);
+  private dialog=inject(MatDialog);
 
   rol = this.authService.getRol();
 
   vehiculos = signal<VehiculoResponse[]>([]);
-  estadoSeleccionado=signal<string>("");
 
+  estadoSeleccionado=signal<string>(""); // Para filtrar
   estados=toSignal(this.vehiculoService.getEstados(), {initialValue:[]});
 
   constructor() {
@@ -81,4 +84,17 @@ export class Vehiculos {
     this.router.navigate([`/ventas/nuevo/${id}`])
   }
 
+
+  ///METODO PARA GESTIONAR EL MODAL
+
+  abrirModal(vehiculoId:number){
+    this.dialog.open(AsignarTallerModal, {
+      width:"400px",
+      data:{vehiculoId}
+    }).afterClosed().subscribe(resultado=>{
+      if(resultado===true){
+        this.getVehiculos();
+      }
+    })
+  }
 }

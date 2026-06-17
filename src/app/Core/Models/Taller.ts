@@ -29,3 +29,9 @@ export interface Especialidades{
     nombre:string;
     label:string;
 }
+
+export interface AsignarTallerRequest{
+    idVehiculo:number;
+    idTaller:number;
+    motivo:string;
+}

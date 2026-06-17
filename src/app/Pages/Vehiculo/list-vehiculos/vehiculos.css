@@ -9,13 +9,13 @@
     justify-content: space-between;
 }
 
-.container-acciones{
+.container-acciones {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-select{
+select {
     cursor: pointer;
     padding: 6px 30px 6px 5px;
     background-color: var(--color-bg-surface);
@@ -96,7 +96,7 @@ td {
     padding: 13px 16px;
 }
 
-tbody{
+tbody {
     text-transform: capitalize;
 }
 
@@ -124,45 +124,60 @@ tbody tr:hover {
     border: 1px solid var(--color-border-strong);
 }
 
-.anio-vehiculo{
+.anio-vehiculo {
     color: var(--color-text-muted);
 }
 
-.tipo-vehiculo{
+.tipo-vehiculo {
     background-color: var(--color-bg-chip);
     padding: 3px 7px;
     border-radius: 10px;
     color: var(--color-text-tertiary);
 }
 
-.estado-vehiculo{
-    padding: 3px 8px;
-    border-radius: 10px;
-}
-
-.container-acciones{
+.estado-vehiculo {
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 15px;
+    width: 120px;
+}
+
+.container-acciones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
-.acciones{
+.acciones {
     justify-items: right;
+    width: 1%;/*con esto le decimos a la columna que ocupe de ancho lo que el contenido necesita*/
+    white-space: nowrap;/*enita que el contenido se separe en varias lineas*/
 }
 
-.container-acciones button{
+.container-acciones button {
     cursor: pointer;
 }
 
-.button-eliminar{
-    color: var(--color-danger-action);
+.button-accion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 14, 14);
+    padding: 5px;
+    border: 0.5px solid rgb(92, 92, 92);
+    border-radius:10px;
+    transition: background-color 0.2s;
+    gap: 5px;
 }
 
-.button-modificar{
-    color: var(--color-info-action);
+.button-accion:hover{
+    background-color: rgba(71, 71, 71, 0.11);
 }
 
-.button-vender{
+.button-vender {
     display: flex;
     align-items: center;
     background-color: green;
@@ -170,28 +185,26 @@ tbody tr:hover {
     border-radius: 7px;
 }
 
-.estado-disponible{
+.estado-disponible {
     background-color: var(--color-success-bg);
     color: var(--color-success-text);
     border: 1px solid var(--color-success-border);
-    font-size: 13px;
 }
 
-.estado-reservado{
+.estado-reservado {
     background-color: var(--color-warning-bg);
     color: var(--color-warning-text);
     border: 1px solid var(--color-warning-border);
 }
 
-.estado-reparacion{
+.estado-enreparacion {
     background-color: var(--color-danger-bg);
     color: var(--color-danger-text);
     border: 1px solid var(--color-danger-border);
 }
 
-.estado-vendido{
+.estado-vendido {
     background-color: var(--color-neutral-bg);
     color: var(--color-neutral-text);
     border: 1px solid var(--color-neutral-border);
 }
-

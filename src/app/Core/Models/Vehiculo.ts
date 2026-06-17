@@ -7,7 +7,7 @@ export interface VehiculoResponse {
     tipo: string;
     kilometraje: number;
     fechaIngreso: Date;
-    estado: string;
+    estado: Estado;
     patente: string;
     anio: number;
 }
