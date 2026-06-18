@@ -4,38 +4,51 @@ import { UsuarioResponse } from '../../Models/Usuario';
 
 @Injectable({
   providedIn: 'root',
-}) 
+})
 
-export class UsuarioService{
+export class UsuarioService {
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
-  private token=localStorage.getItem("authToken");
+  private token = localStorage.getItem("authToken");
 
-   getEncargados(){
+  getEncargados() {
     return this.http.get<UsuarioResponse[]>(this.url + "/encargados", {
-      headers:{
+      headers: {
         Authorization: `Bearer ${this.token}`
       }
     })
   }
 
-  getAll(){
-    return this.http.get<UsuarioResponse[]>(this.url)
+  getAll(activo: Boolean | null) {
+    if (activo == null) {
+      return this.http.get<UsuarioResponse[]>(this.url, {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }else{
+       return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`, {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }
+
   }
 
-  getUserById(id:number){
+  getUserById(id: number) {
     return this.http.get<UsuarioResponse>(`${this.url}/${id}`)
   }
 
-  postUser(user: Partial<UsuarioResponse>){
+  postUser(user: Partial<UsuarioResponse>) {
     return this.http.post(this.url, user)
   }
 
-  patchUser(id: number, user: Partial<UsuarioResponse>){
+  patchUser(id: number, user: Partial<UsuarioResponse>) {
     return this.http.patch(`${this.url}/${id}`, user)
   }
 
-  deleteUser(id: number){
+  deleteUser(id: number) {
     this.http.delete(`${this.url}/${id}`)
   }
 }

@@ -1,5 +1,17 @@
-<section>
-    @for (user of users(); track user.id) {
-        <app-card-usuario [Cuser]="user"></app-card-usuario>
-    }
-</section>
+<div class="container-usuarios">
+    <div class="header-usuarios">
+        <h2>Usuarios</h2>
+
+        <select (change)="onActivoChange($event)">
+            <option value="">Todos</option>
+            <option [value]="true">Activo</option>
+            <option [value]="false">Inactivo</option>
+        </select>
+    </div>
+
+    <div class="container-list-usuarios">
+        @for (user of users(); track user.id) {
+            <app-card-usuario [user]="user"></app-card-usuario>
+        }
+    </div>
+</div>

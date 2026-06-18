@@ -6,6 +6,7 @@ export interface TallerResponse{
     especialidad:string;
     nombre:string;
     activo:boolean;
+    reparacionesActivas:number;
 }
 
 export interface TallerDetalleResponse{

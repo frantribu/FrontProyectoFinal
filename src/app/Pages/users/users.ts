@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UsuarioService } from '../../Core/Services/UsuarioService/usuario-service';
 import { CardUsuario } from "../../Shared/card-usuario/card-usuario";
+import { UsuarioResponse } from '../../Core/Models/Usuario';
+import { E } from '@angular/cdk/keycodes';
 
 
 @Component({
@@ -12,6 +14,34 @@ import { CardUsuario } from "../../Shared/card-usuario/card-usuario";
   styleUrl: './users.css',
 })
 export class Users {
-  service = inject(UsuarioService);
-  users = toSignal(this.service.getAll(), {initialValue:[]});
+  usuarioService = inject(UsuarioService);
+  users = signal<UsuarioResponse[]>([]);
+
+  activoSeleccionado = signal<boolean | null>(null)
+
+  constructor() {
+    this.getUsers()
+  }
+
+  getUsers() {
+    this.usuarioService.getAll(this.activoSeleccionado()).subscribe({
+      next: (u) => {
+        this.users.set(u);
+      },
+      error: () => console.log("Error al cargar los usuarios")
+    })
+  }
+
+  onActivoChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+
+    if (value == '') {
+      this.activoSeleccionado.set(null)
+    } else if (value == "true") {
+      this.activoSeleccionado.set(true)
+    }else{
+      this.activoSeleccionado.set(false)
+    }
+    this.getUsers()
+  }
 }
