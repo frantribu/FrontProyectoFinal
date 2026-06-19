@@ -1,1 +1,39 @@
-<p>list-reparaciones works!</p>
+<div class="container-list">
+  <h2>Historial de Reparaciones de mi Taller</h2>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha Entrada</th>
+          <th>Vehículo</th>
+          <th>Motivo / Descripción</th>
+          <th>Estado</th>
+          <th>Fecha Salida</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (rep of reparaciones(); track rep.id) {
+          <tr>
+            <td>{{ rep.fechaDeEntrada }}</td>
+            <td>
+              {{ rep.vehiculoMarca }} {{ rep.vehiculoModelo }} 
+              <span class="patente">({{ rep.vehiculoPatente }})</span>
+            </td>
+            <td>{{ rep.motivo }}</td>
+            <td>
+              <span class="badge" [className]="'badge ' + rep.estadoReparacion.toLowerCase()">
+                {{ rep.estadoReparacion }}
+              </span>
+            </td>
+            <td>{{ rep.fechaDeSalida ? rep.fechaDeSalida : 'En curso...' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="no-data">No se encontraron reparaciones registradas en este taller.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

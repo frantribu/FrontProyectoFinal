@@ -1,29 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-// Definimos la interfaz del Request basada en tu DTO de Java justo arriba
-export interface CrearReparacionRequest {
-  idTaller: number;
-  idVehiculo: number;
-  fechaDeEntrada: string; // Viaja como string en formato YYYY-MM-DD
+export interface HistorialReparacionResponse {
+  id: number;
+  vehiculoMarca?: string; 
+  vehiculoModelo?: string;  
+  vehiculoPatente?: string;
+  fechaDeEntrada: string;
   fechaDeSalida: string | null;
-  descripcion: string;
+  estadoReparacion: string;
+  motivo: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReparacionService {
- 
-  private url = "http://localhost:8080/api/reparaciones"; 
+  
+  private url = "http://localhost:8080/historial/reparaciones"; 
   private http = inject(HttpClient);
-  private token = localStorage.getItem("authToken");
 
-  agregarReparacion(request: CrearReparacionRequest) {
-    return this.http.post(this.url, request, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
+ 
+  private getHeaders() {
+    const token = localStorage.getItem("authToken");
+    return { Authorization: `Bearer ${token}` };
+  }
+
+  agregarReparacion(request: any) {
+    return this.http.post(this.url, request, { headers: this.getHeaders() });
+  }
+
+
+  getReparacionesPorTaller(idTaller: number): Observable<HistorialReparacionResponse[]> {
+    return this.http.get<HistorialReparacionResponse[]>(`${this.url}/taller/${idTaller}`, {
+      headers: this.getHeaders()
     });
   }
 }

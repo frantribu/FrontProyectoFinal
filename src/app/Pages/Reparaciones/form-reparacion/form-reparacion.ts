@@ -6,6 +6,7 @@ import { ReparacionService } from '../../../Core/Services/ReparacionService/repa
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
 
+const hoy = new Date().toISOString().split('T')[0];
 
 @Component({
   selector: 'app-reparacion-form',
@@ -21,26 +22,23 @@ export class ReparacionFormComponent {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
 
-  // Cargamos los talleres y vehículos disponibles para los <select>
   talleres = toSignal(this.tallerService.getTalleres(), { initialValue: [] });
   vehiculos = toSignal(this.vehiculoService.getVehiculos("DISPONIBLE"), { initialValue: [] }); // O el método que uses para listar vehículos
 
   form = this.fb.nonNullable.group({
     idTaller: ['', Validators.required],
     idVehiculo: ['', Validators.required],
-    fechaDeEntrada: ['', Validators.required],
+    fechaDeEntrada: [hoy, Validators.required],
     fechaDeSalida: [''], 
     descripcion: ['', [Validators.required, Validators.maxLength(500)]]
   });
 
-  // ================= ENVIO DEL FORMULARIO =================
 
   agregarReparacion() {
     if (this.form.invalid) return;
 
     const formulario = this.form.getRawValue();
 
-    // Mapeamos exactamente al DTO de tu Backend
     const request = {
       idTaller: Number(formulario.idTaller),
       idVehiculo: Number(formulario.idVehiculo),
