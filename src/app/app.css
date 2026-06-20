@@ -7,6 +7,8 @@
 header {
     height: 100vh;
     background-color: var(--color-bg-shell);
+    position: sticky;
+    top: 0;
 }
 
 .sidebar {

@@ -22,7 +22,7 @@ export class ReparacionFormComponent {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
 
-  talleres = toSignal(this.tallerService.getTalleres(), { initialValue: [] });
+  talleres = toSignal(this.tallerService.getTalleres("true"), { initialValue: [] });
   vehiculos = toSignal(this.vehiculoService.getVehiculos("DISPONIBLE"), { initialValue: [] }); // O el método que uses para listar vehículos
 
   form = this.fb.nonNullable.group({

@@ -32,13 +32,11 @@ export class DetalleAuto {
     this.vehiculoService.getDetalleAuto(id).subscribe({
       next:(v)=>{
         this.auto.set(v)
-        console.log(v.imagenes);
         this.loading.set(false)
       },
       error:(e)=>{
         if(e.status===403){
           this.error.set("El vehiculo no existe")
-          console.log(e)
         }else{
           this.error.set("Ocurrio un error")
         }

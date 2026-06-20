@@ -26,8 +26,7 @@
             <label for="encargado">Encargado del taller</label>
 
             <select formControlName="idEncargadoTaller">
-                <option value="">Selecciona un encargado</option>
-
+                <option value="0">Selecciona un encargado</option>
                 @for (e of encargados(); track e.id) {
                 <option [value]="e.id">{{e.nombre}} {{e.apellido}}</option>
                 }

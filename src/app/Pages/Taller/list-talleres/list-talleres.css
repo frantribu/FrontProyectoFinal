@@ -1,0 +1,130 @@
+.container-talleres{
+    padding: 20px;
+}
+
+.container-list-talleres {
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+table {
+    background-color: var(--color-bg-elevated);
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-text-primary);
+}
+
+thead {
+    color: var(--color-text-table-header);
+    font-size: 11px;
+    border-bottom: 0.5px solid var(--color-border-default);
+}
+
+thead tr {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 13px 16px;
+}
+
+tbody {
+    text-transform: capitalize;
+}
+
+tbody tr {
+    border-bottom: 0.5px solid var(--color-border-subtle);
+    transition: background-color 0.2s;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: var(--color-overlay-row-hover);
+}
+
+.reparacionesActivas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 15px;
+    width: 120px;
+}
+
+.reparaciones-cero {
+    background-color: rgba(146, 159, 179, 0.1);
+    color: rgba(148, 163, 184, .6);
+    border: 1px solid rgba(148, 163, 184, .6);
+}
+
+.reparaciones-mas-de-cero {
+    background-color: rgba(245, 158, 11, .12);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, .12);
+}
+
+.estado-activo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 15px;
+    width: 100px;
+}
+
+.activo{
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-border);
+}
+
+.inactivo{
+    background-color: rgba(146, 159, 179, 0.1);
+    color: rgba(148, 163, 184, .6);
+    border: 1px solid rgba(148, 163, 184, .6);
+}
+
+.acciones{
+    width: 1%;
+}
+
+.container-acciones{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container-acciones button {
+    cursor: pointer;
+}
+
+.button-accion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 14, 14);
+    padding: 5px;
+    border: 0.5px solid rgb(92, 92, 92);
+    border-radius: 10px;
+    transition: background-color 0.2s;
+    gap: 5px;
+}
+
+.activar, .desactivar{
+    width: 110px;
+}
+
+.button-accion:hover {
+    background-color: rgba(71, 71, 71, 0.11);
+}
+
+
+

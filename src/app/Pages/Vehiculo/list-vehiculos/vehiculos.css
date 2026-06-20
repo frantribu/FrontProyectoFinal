@@ -121,17 +121,6 @@ tbody tr:hover {
     background-color: var(--color-overlay-row-hover);
 }
 
-.card-vehiculo {
-    background-color: var(--color-bg-elevated);
-    border: 1px solid var(--color-border-default);
-    border-radius: 10px;
-    transition: border 0.2s;
-}
-
-.card-vehiculo:hover {
-    border: 1px solid var(--color-border-strong);
-}
-
 .anio-vehiculo {
     color: var(--color-text-muted);
 }

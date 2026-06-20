@@ -17,7 +17,7 @@ export class AsignarTallerModal {
   private data = inject(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<AsignarTallerModal>);
 
-  talleres = toSignal(this.tallerService.getTalleres(), { initialValue: [] });
+  talleres = toSignal(this.tallerService.getTalleres("true"), { initialValue: [] });
 
   form = this.fb.nonNullable.group({
     tallerId: [0, Validators.required],
@@ -26,11 +26,7 @@ export class AsignarTallerModal {
 
   asignarTaller() {
     if(this.form.invalid)return;
-
-    console.log("data: ", this.data);
-    console.log("id: ", this.data.vehiculoId);
     
-  
     const formulario = this.form.getRawValue()
 
     const request: AsignarTallerRequest = {

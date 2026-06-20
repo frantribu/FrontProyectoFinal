@@ -1,38 +1,34 @@
 import { historialReparacionResponse } from "./HistorialReparacion";
 import { UsuarioResponse } from "./Usuario";
 
-export interface TallerResponse{
-    id:number;
-    especialidad:string;
-    nombre:string;
-    activo:boolean;
-    reparacionesActivas:number;
+export interface TallerResponse {
+    id: number;
+    especialidad: string;
+    nombre: string;
+    activo: boolean;
+    reparacionesActivas: number;
+    direccion: string;
+    encargadoTaller: UsuarioResponse;
 }
 
-export interface TallerDetalleResponse{
-    id:number;
-    especialidad:string;
-    nombre:string;
-    activo:boolean;
-    encargadoTaller:UsuarioResponse;
-    direccion:string;
-    historialReparacion:historialReparacionResponse[];
+export interface TallerDetalleResponse extends TallerResponse{
+    historialReparacion: historialReparacionResponse[];
 }
 
-export interface CrearTallerRequest{
-    especialidad:string;
-    nombre:string;
-    idEncargadoTaller:number;
-    direccion:string;
+export interface CrearTallerRequest {
+    especialidad: string;
+    nombre: string;
+    idEncargadoTaller: number;
+    direccion: string;
 }
 
-export interface Especialidades{
-    nombre:string;
-    label:string;
+export interface Especialidades {
+    nombre: string;
+    label: string;
 }
 
-export interface AsignarTallerRequest{
-    idVehiculo:number;
-    idTaller:number;
-    motivo:string;
+export interface AsignarTallerRequest {
+    idVehiculo: number;
+    idTaller: number;
+    motivo: string;
 }
