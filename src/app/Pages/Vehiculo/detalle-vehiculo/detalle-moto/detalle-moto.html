@@ -1,8 +1,12 @@
+@if(loading()){
+<p>Cargando...</p>
+}@else if (error()) {
+<p>{{error()}}</p>
+<button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
+}@else if (moto()){
 <div class="container-detalle-vehiculo">
     <div class="titulo-vehiculo">
-        <h2>{{moto()?.marca}} {{moto()?.modelo}} {{moto()?.version}} {{moto()?.motor}}
-            {{moto()?.anio}}
-        </h2>
+        <h2>{{moto()?.marca}} {{moto()?.modelo}} {{moto()?.version}} {{moto()?.motor}} {{moto()?.anio}}</h2>
     </div>
 
     <div class="container-info-vehiculo">
@@ -53,7 +57,6 @@
             <button type="button" class="carousel-btn carousel-btn-prev" (click)="anterior()"
                 aria-label="Imagen anterior">
                 <span class="material-symbols-outlined">chevron_left</span>
-
             </button>
 
             <div class="carousel-viewport">
@@ -74,7 +77,10 @@
         <div class="carousel-viewport">
             <img class="imagen-vehiculo" [src]="baseUrl + moto()!.imagenes![0]">
         </div>
-
         }
     </div>
 </div>
+}@else{
+<p>El vehiculo no existe</p>
+<button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
+}
