@@ -10,59 +10,59 @@ import { MotoDetalleResponse } from '../../../../Core/Models/Moto';
   styleUrl: './detalle-moto.css',
 })
 export class DetalleMoto {
-  private vehiculoService=inject(VehiculoService);
-  private route=inject(ActivatedRoute);
+  private vehiculoService = inject(VehiculoService);
+  private route = inject(ActivatedRoute);
+  router = inject(Router);
 
-  baseUrl="http://localhost:8080/ImagenesVehiculo/";
+  baseUrl = "http://localhost:8080/ImagenesVehiculo/";
   
-  router=inject(Router);
-  moto=signal<MotoDetalleResponse | null>(null);
-  loading=signal<boolean>(false);
-  error=signal<string|null>(null);
-  indiceImagen=signal<number>(0);
+  moto = signal<MotoDetalleResponse | null>(null);
+  loading = signal<boolean>(false);
+  error = signal<string | null>(null);
+  indiceImagen = signal<number>(0);
 
-  constructor(){
-    const id=Number(this.route.snapshot.paramMap.get("id"));
+  constructor() {
+    const id = Number(this.route.snapshot.paramMap.get("id"));
     this.cargarVehiculo(id);
   }
 
-  cargarVehiculo(id:number){
+  cargarVehiculo(id: number) {
     this.loading.set(true);
     this.vehiculoService.getDetalleMoto(id).subscribe({
-      next:(v)=>{
-        this.moto.set(v)
-        this.loading.set(false)
+      next: (v) => {
+        this.moto.set(v);
+        this.loading.set(false);
         console.log(v);
       },
-      error:(e)=>{
-        if(e.status===403){
-          this.error.set("El vehiculo no existe")
-          console.log(e)
-        }else{
-          this.error.set("Ocurrio un error")
+      error: (e) => {
+        if (e.status === 403) {
+          this.error.set("El vehiculo no existe");
+          console.log(e);
+        } else {
+          this.error.set("Ocurrio un error");
         }
-        this.loading.set(false)
+        this.loading.set(false);
       }
-    })
+    });
   }
 
-  anterior(){
-    if(this.indiceImagen() > 0){
+  anterior() {
+    if (this.indiceImagen() > 0) {
       this.indiceImagen.set(this.indiceImagen() - 1);
-    }else{
+    } else {
       this.indiceImagen.set(this.moto()!.imagenes!.length - 1);
     }
   }
 
-  siguiente(){
-    if(this.indiceImagen() < this.moto()!.imagenes!.length - 1){
+  siguiente() {
+    if (this.indiceImagen() < this.moto()!.imagenes!.length - 1) {
       this.indiceImagen.set(this.indiceImagen() + 1);
-    }else{
+    } else {
       this.indiceImagen.set(0);
     }
   }
 
-  irAImagen(index:number){
+  irAImagen(index: number) {
     this.indiceImagen.set(index);
   }
 }
