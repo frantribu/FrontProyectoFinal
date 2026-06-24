@@ -20,6 +20,13 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     imagenes: string[] | null;
 }
 
+export interface VehiculoReparacionResponse{
+    id:number;
+    marca:string;
+    modelo:string;
+    version:string;
+}
+
 export interface CrearVehiculoRequest {
     precio: number,
     kilometraje: number,

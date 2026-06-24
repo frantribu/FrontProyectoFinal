@@ -12,7 +12,7 @@ export interface TallerResponse {
 }
 
 export interface TallerDetalleResponse extends TallerResponse{
-    historialReparacion: historialReparacionResponse[];
+    historialReparaciones: historialReparacionResponse[];
 }
 
 export interface CrearTallerRequest {

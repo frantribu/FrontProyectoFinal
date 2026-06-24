@@ -1,4 +1,55 @@
-<div>
-    <p>{{taller()?.direccion}}</p>
+<div class="container-detalle-taller">
+    <div class="container-nombre-taller">
+        <a routerLink="/talleres">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
 
+        <h2>Taller {{taller()?.nombre}}</h2>
+    </div>
+    <div class="info-taller">
+        <div class="container-ubicacion">
+            <div>
+                <span class="material-symbols-outlined icono-ubi">
+                    location_on
+                </span>
+            </div>
+
+            <div class="container-detalle">
+                <span>Direccion</span>
+                <p>{{taller()?.direccion}}</p>
+            </div>
+        </div>
+
+        @if (authService.getRol().toLowerCase()=="admin") {
+        <div class="container-detalle">
+            <span>Encargado</span>
+            <p>{{taller()?.encargadoTaller?.nombre}} {{taller()?.encargadoTaller?.apellido}}</p>
+        </div>
+        }
+
+    </div>
+
+    <div class="tabs">
+        <button (click)="cambiarVista('activas')" [class.activa]="vistaActual()==='activas'">
+            Activas({{reparacionesActivas()?.length}})
+        </button>
+
+        <button (click)="cambiarVista('finalizadas')" [class.activa]="vistaActual()==='finalizadas'">
+            Finalizadas({{reparacionesFinalizadas()?.length}})
+        </button>
+    </div>
+
+    <div>
+        @for (r of reparacionesVisibles(); track r.id) {
+        <div>
+            <div>
+                <p>{{r.vehiculo.marca}} {{r.vehiculo.modelo}}</p>
+                <span>{{r.vehiculo.version}}</span>
+            </div>
+            <p>{{r.estadoReparacion}}</p>
+        </div>
+        }
+    </div>
 </div>

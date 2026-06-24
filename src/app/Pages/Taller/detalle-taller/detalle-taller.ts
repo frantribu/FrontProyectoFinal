@@ -1,29 +1,51 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { TallerDetalleResponse } from '../../../Core/Models/Taller';
+import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 
 @Component({
   selector: 'app-detalle-taller',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './detalle-taller.html',
   styleUrl: './detalle-taller.css',
 })
 export class DetalleTaller {
-  private route=inject(ActivatedRoute);
-  private tallerService=inject(TallerService);
+  private route = inject(ActivatedRoute);
+  private tallerService = inject(TallerService);
+  authService=inject(AuthService);
 
-  taller=signal<TallerDetalleResponse | null>(null);
+  taller = signal<TallerDetalleResponse | null>(null);
+  vistaActual = signal<'activas' | 'finalizadas'>('activas');
 
-  constructor(){
-    const id=Number(this.route.snapshot.paramMap.get("id"));    
-    this.cargarTaller(id);    
+  reparacionesActivas=computed(()=>
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion!="ENTREGADO")
+  );
+
+  reparacionesFinalizadas=computed(()=>
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion=="ENTREGADO")
+  );
+
+  reparacionesVisibles = computed(() =>
+    this.vistaActual() == "activas" ?
+      this.reparacionesActivas() : this.reparacionesFinalizadas()
+  );
+
+  constructor() {
+    const id = Number(this.route.snapshot.paramMap.get("id"));
+    this.cargarTaller(id);
   }
 
-  cargarTaller(id:number){
+  cargarTaller(id: number) {
     this.tallerService.getDetalleTaller(id).subscribe({
-      next:(t)=>this.taller.set(t),
-      error:(e)=>console.log("Error al ver el taller del vehiculo")
+      next: (t) => this.taller.set(t),
+      error: () => console.log("Error al ver el taller del vehiculo")
     })
   }
+
+  cambiarVista(vista:'activas'|'finalizadas'){
+    this.vistaActual.set(vista);
+  }
+
+
 }

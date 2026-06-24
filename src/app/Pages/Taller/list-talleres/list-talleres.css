@@ -9,6 +9,38 @@
     margin: 20px 0;
 }
 
+.div-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+select {
+    cursor: pointer;
+    padding: 6px 30px 6px 5px;
+    background-color: var(--color-bg-surface);
+    border-radius: 5px;
+    border: 0.5px solid var(--color-border-muted);
+}
+
+select:hover {
+    border-color: var(--color-border-hover);
+}
+
+select:focus {
+    border-color: var(--color-border-focus);
+}
+
+.add-taller a {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
 table {
     background-color: var(--color-bg-elevated);
     width: 100%;

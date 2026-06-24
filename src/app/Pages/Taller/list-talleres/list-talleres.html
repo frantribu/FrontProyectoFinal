@@ -1,5 +1,5 @@
 <div class="container-talleres">
-    <div>
+    <div class="div-header">
         <div>
             <select (change)="onEstadoChange($event)">
                 <option value="">Todos</option>
@@ -8,7 +8,13 @@
             </select>
         </div>
 
-        <a routerLink="/talleres/nuevo">Agregar taller</a>
+        <div class="add-taller">
+            <a routerLink="/talleres/nuevo">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                Agregar taller</a>
+        </div>
     </div>
 
     <div class="container-list-talleres">
