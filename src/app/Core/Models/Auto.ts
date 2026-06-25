@@ -6,8 +6,14 @@ export interface AutoDetalleResponse extends VehiculoDetalleResponse {
     tipoAuto: string;
     tipoDeTraccion: string;
     transmision: string;
+    idTrim:number;
 }
 
 export interface CrearAutoRequest extends CrearVehiculoRequest{
     idTrim: number,
+}
+
+export interface Submodelo {
+    id: number,
+    description: string
 }

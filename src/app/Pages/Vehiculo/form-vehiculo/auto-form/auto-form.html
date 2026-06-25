@@ -1,5 +1,5 @@
 <div class="container-auto-form">
-    <form [formGroup]="form" (submit)="agregarAuto()">
+    <form [formGroup]="form" (submit)="onSubmit()">
         <div class="container-select">
             <label for="marca-select">Marca</label>
             <select formControlName="marca" (change)="onMarcaChange()">
@@ -34,10 +34,11 @@
         <div class="container-select">
             <label for="submodelo-select">Version</label>
             <select formControlName="idTrim">
-                <option [value]="0">Selecciona un submodelo</option>
+                <option value=0>Selecciona la version</option>
                 @for (sub of submodelos(); track sub.id) {
                 <option [value]="sub.id">{{sub.description}}</option>
                 }
+
             </select>
         </div>
 
@@ -58,7 +59,13 @@
             <label for="color-input">Color</label>
             <input type="text" id="color-input" placeholder="" formControlName="color">
         </div>
+
+         <div class="container-input">
+            <label for="descripcion-input">Descripcion</label>
+            <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
+        </div>
+
         <app-image-upload></app-image-upload>
-        <button type="submit" [disabled]="form.invalid">Agregar vehiculo</button>
+        <button type="submit" [disabled]="form.invalid">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
     </form>
 </div>

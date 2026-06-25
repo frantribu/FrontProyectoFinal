@@ -11,10 +11,10 @@
         </div>
 
         <div class="resumen-cards">
-            <app-card-resumen icono="assignment" titulo="Facturacion" valor="$4.2M"></app-card-resumen>
-            <app-card-resumen icono="toys" titulo="Ventas" valor="10"></app-card-resumen>
-            <app-card-resumen icono="build" titulo="Reparaciones" valor="15"></app-card-resumen>
-            <app-card-resumen icono="group" titulo="Clientes" valor="20"></app-card-resumen>
+            <app-card-resumen icono="assignment" titulo="Facturacion" [valor]="42"></app-card-resumen>
+            <app-card-resumen icono="toys" titulo="Ventas" [valor]="totalDeVentas()"></app-card-resumen>
+            <app-card-resumen icono="build" titulo="Reparaciones" [valor]="15"></app-card-resumen>
+            <app-card-resumen icono="group" titulo="Clientes" [valor]="20"></app-card-resumen>
         </div>
     </div>
 

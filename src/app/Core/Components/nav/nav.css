@@ -70,6 +70,7 @@ hr {
 .nav-section li {
     color: var(--color-text-tertiary);
     transition: background-color 0.2s, color 0.2s;
+    border-radius: 8px;
 }
 
 .nav-section li a {
@@ -78,6 +79,11 @@ hr {
     align-items: center;
     padding: 6px 16px;
     gap: 5px;
+}
+
+.nav-section li a.active{
+    background-color: var(--color-primary-muted-bg);
+    border-radius: 8px;
 }
 
 .nav-section li:hover {

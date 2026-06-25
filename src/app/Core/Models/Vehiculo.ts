@@ -7,7 +7,7 @@ export interface VehiculoResponse {
     tipo: string;
     kilometraje: number;
     fechaIngreso: Date;
-    estado: string;
+    estado: Estado;
     patente: string;
     anio: number;
 }
@@ -20,14 +20,23 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     imagenes: string[] | null;
 }
 
-export interface Submodelo {
-    id: number,
-    description: string
+export interface VehiculoReparacionResponse{
+    id:number;
+    marca:string;
+    modelo:string;
+    version:string;
 }
 
 export interface CrearVehiculoRequest {
     precio: number,
     kilometraje: number,
     patente: string,
-    color: string,
+    color: string
+    descripcion:string;
 }
+
+export interface Estado{
+    name:string;
+    label:string;
+}
+

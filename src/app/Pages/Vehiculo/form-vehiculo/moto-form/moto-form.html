@@ -1,7 +1,8 @@
-<div class="container-auto-form container-moto-form" (submit)="agregarMoto()">
+
+<div class="container-moto-form" (submit)="agregarMoto()">
     <form [formGroup]="form">
 
-        <div>
+        <div class="container-select">
             <label for="marca">Marca</label>
             <select formControlName="marca" (change)="onMarcaChange()">
                 <option value="">Selecciona una marca</option>
@@ -11,7 +12,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="container-select">
             <label for="modelo">Modelo</label>
             <select formControlName="modelo">
                 <option value="">Selecciona un modelo</option>

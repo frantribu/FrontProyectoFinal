@@ -1,10 +1,21 @@
 <div class="container-vehiculos">
     <div class="header-vehiculos">
-        <div class="container-buscador">
-            <span class="material-symbols-outlined">
-                search
-            </span>
-            <input type="text" placeholder="Buscador">
+        <div class="container-acciones">
+            <div class="container-buscador">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+                <input type="text" placeholder="Buscador">
+            </div>
+
+            <div class="container-filtros">
+                <select (change)="onEstadoChange($event)">
+                    <option value="">Todos</option>
+                    @for (e of estados(); track e.name) {
+                    <option [value]="e.name">{{e.label}}</option>
+                    }
+                </select>
+            </div>
         </div>
 
         <div class="add-vehiculo">
@@ -32,11 +43,11 @@
 
             <tbody>
                 @for (v of vehiculos(); track v.id) {
-                <tr (click)="verDetalle(v.id)">
+                <tr (click)="verDetalle(v)">
                     <td>
                         <div>
                             <div class="info-vehiculo">
-                                {{v.marca}} {{v.modelo}} {{v.version}}
+                                {{v.marca}} {{v.modelo}}
                             </div>
                             <div class="anio-vehiculo">
                                 {{v.anio}}
@@ -48,29 +59,51 @@
                     <td>{{v.patente}}</td>
                     <td>${{v.precio | number }}</td>
                     <td>{{v.kilometraje | number}} km</td>
-                    <td><span class="estado-vehiculo"
-                            [class]="'estado-' + v.estado.toLowerCase()">{{v.estado.toLowerCase()}}</span>
+                    <td class="columna-estado"><span class="estado-vehiculo"
+                            [class]="'estado-' + v.estado.name.toLowerCase()">{{v.estado.label}}</span>
                     </td>
+
                     <td class="acciones">
+                        @if (v.estado.name.toLowerCase()=="disponible") {
                         <div class="container-acciones">
                             @if(rol=="admin"){
-                            <button class="button-eliminar" (click)="eliminarVehiculo(v.id); $event.stopPropagation()"><span
+
+                            <button class="button-accion" (click)="abrirModal(v.id); $event.stopPropagation()">
+                                <span class="material-symbols-outlined">
+                                    build
+                                </span>
+                                <span>Asignar a taller</span>
+                            </button>
+
+
+                            <button class="button-accion"
+                                (click)="eliminarVehiculo(v.id); $event.stopPropagation()"><span
                                     class="material-symbols-outlined">
                                     delete
                                 </span>
                             </button>
                             }
-                            <button class="button-modificar">
+                            <button class="button-accion" (click)="modificarVehiculo(v); $event.stopPropagation()">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </button>
+
+                            <button class="button-vender" (click)="venderVehiculo(v.id); $event.stopPropagation()">
+                                <span>Vender</span>
+                                <span class="material-symbols-outlined">
+                                    attach_money
+                                </span>
+                            </button>
+
                         </div>
+                        }
                     </td>
                 </tr>
                 }
             </tbody>
 
         </table>
+
     </div>
 </div>

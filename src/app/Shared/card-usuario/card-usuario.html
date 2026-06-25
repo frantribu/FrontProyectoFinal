@@ -1,5 +1,10 @@
-<section>
-    <h2>{{Cuser()?.nombre}}</h2>
-    <p>{{Cuser()?.apellido}}</p>
-    <h3>{{Cuser()?.rol}}</h3>
+<section class="card-usuario">
+    <div class="card-header">
+        <h2>{{ user()?.nombre }}</h2>
+        <span class="rol-usuario">{{ user()?.rol }}</span>
+    </div>
+
+    <p class="apellido-usuario">
+        {{ user()?.apellido }}
+    </p>
 </section>

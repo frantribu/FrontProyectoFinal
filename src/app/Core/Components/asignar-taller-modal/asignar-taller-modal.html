@@ -1,0 +1,24 @@
+<div class="container-modal">
+    <h2>Asignar vehiculo al taller</h2>
+
+    <form [formGroup]="form" (submit)="asignarTaller()">
+        <div>
+            <label>Taller</label>
+            <select formControlName="tallerId">
+                <option value="">Selecciona un taller</option>
+
+                @for (taller of talleres(); track taller.id) {
+                <option [value]="taller.id">{{taller.nombre}} - {{taller.especialidad}}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>Motivo</label>
+            <input type="text" formControlName="motivo">
+        </div>
+
+        <button type="submit">Asignar</button>
+    </form>
+
+</div>

@@ -15,7 +15,7 @@
 
             <ul>
                 <li>
-                    <a routerLink="/home">
+                    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <span class="material-symbols-outlined">
                             home
                         </span>
@@ -24,7 +24,7 @@
                 </li>
 
                 <li>
-                    <a routerLink="/vehiculos">
+                    <a routerLink="/vehiculos" routerLinkActive="active">
                         <span class="material-symbols-outlined">
                             directions_car
                         </span>
@@ -33,7 +33,7 @@
                 </li>
 
                 <li>
-                    <a href="">
+                    <a routerLink="/ventas" routerLinkActive="active">
                         <span class="material-symbols-outlined">
                             analytics
                         </span>
@@ -49,7 +49,7 @@
             <ul>
                 @if (auth.getRol().toLowerCase()==="admin") {
                 <li>
-                    <a routerLink="/talleres">
+                    <a routerLink="/talleres" routerLinkActive="active">
                         <span class="material-symbols-outlined">
                             <span class="material-symbols-outlined">
                                 handyman
@@ -68,30 +68,41 @@
                         <span class="nav-label">Reparaciones</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="">
-                        <span class="material-symbols-outlined">
-                            calendar_month
-                        </span>
-                        <span class="nav-label">Turnos</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="nav-section">
             <p>GESTION</p>
 
-
             <ul>
                 <li>
-                    <a routerLink="/users">
+                    <a routerLink="/users" routerLinkActive="active">
                         <span class="material-symbols-outlined">
                             group
                         </span>
                         <span class="nav-label">Usuarios</span>
                     </a>
+                </li>
 
+                <li>
+                    <a routerLink="">
+                        <span class="material-symbols-outlined">
+                            identity_platform
+                        </span>
+                        <span>
+                            Clientes
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <span class="material-symbols-outlined">
+                            leaderboard
+                        </span>
+                        <span>
+                            Reportes
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>

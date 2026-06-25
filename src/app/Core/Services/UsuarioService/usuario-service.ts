@@ -8,62 +8,50 @@ import { UsuarioRequest } from '../../Models/UsuarioRequest';
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioService{
+
+export class UsuarioService {
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
-  private token = localStorage.getItem("authToken")
+  private token = localStorage.getItem("authToken");
 
-  getAll(): Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(this.url, {
-      headers:{
+  getEncargados() {
+    return this.http.get<Usuario[]>(this.url + "/encargados", {
+      headers: {
         Authorization: `Bearer ${this.token}`
       }
     })
   }
 
-  getUserById(id:number){
-    return this.http.get<Usuario>(`${this.url}/${id}`, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+  getAll(activo: Boolean | null) {
+    if (activo == null) {
+      return this.http.get<Usuario[]>(this.url, {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }else{
+       return this.http.get<Usuario[]>(`${this.url}?activo=${activo}`, {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }
+
   }
 
-  createUser(user: UsuarioRequest): Observable<Usuario>{
-    return this.http.post<Usuario>(this.url, user, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+  getUserById(id: number) {
+    return this.http.get<Usuario>(`${this.url}/${id}`)
   }
 
-  patchUser(id: number, user: Partial<Usuario>){
-    return this.http.patch(`${this.url}/${id}`, user, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+  postUser(user: Partial<Usuario>) {
+    return this.http.post(this.url, user)
   }
 
-  deleteUser(id: number){
-    this.http.delete(`${this.url}/${id}`, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+  patchUser(id: number, user: Partial<Usuario>) {
+    return this.http.patch(`${this.url}/${id}`, user)
   }
 
-  getRoles(){
-    return this.http.get<Rol[]>(this.url + "/roles", {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+  deleteUser(id: number) {
+    this.http.delete(`${this.url}/${id}`)
   }
-
-  
-
-
-
-
 }

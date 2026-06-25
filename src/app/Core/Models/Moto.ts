@@ -12,7 +12,6 @@ export interface CrearMotoRequest extends CrearVehiculoRequest{
     anio:number;
     motor:string;
     combustion:string;
-    descripcion:string;
     cilindrada:number;
     tipoMoto:string;
 }

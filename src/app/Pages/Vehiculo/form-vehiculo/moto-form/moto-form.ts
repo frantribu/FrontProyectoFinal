@@ -1,10 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
+import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CrearMotoRequest } from '../../../Core/Models/Moto';
+import { CrearMotoRequest } from '../../../../Core/Models/Moto';
 import { Router } from '@angular/router';
-import { ImageUpload } from '../../../Shared/image-upload/image-upload';
+import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
 
 @Component({
@@ -14,10 +14,11 @@ import { ImageUpload } from '../../../Shared/image-upload/image-upload';
   templateUrl: './moto-form.html',
   styleUrls: ['./moto-form.css']
 })
-export class MotoFormComponent extends ImageUpload {
+export class MotoFormComponent{
   private fb = inject(FormBuilder);
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
+  private imagenUpload=viewChild.required(ImageUpload);
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
@@ -34,7 +35,7 @@ export class MotoFormComponent extends ImageUpload {
     cilindrada: [0, [Validators.required, Validators.min(1)]],
     precio: [0, [Validators.required, Validators.min(1)]],
     kilometraje: [0, [Validators.required, Validators.min(0)]],
-    patente: ['', [Validators.required, Validators.maxLength(10)]],
+    patente: ['', [Validators.required, Validators.maxLength(10)],],
     color: ['', Validators.required],
     descripcion: ['', Validators.required]
   });
@@ -53,9 +54,8 @@ export class MotoFormComponent extends ImageUpload {
       error: () => console.log("Error al mostrar los modelos")
     })
   }
-  
 
-  // ================= ENVÍO DEL FORMULARIO =================
+  // ================= ENVIO DEL FORMULARIO =================
 
   agregarMoto() {
     const formulario = this.form.getRawValue();
@@ -76,7 +76,7 @@ export class MotoFormComponent extends ImageUpload {
       color: formulario.color
     }
 
-    this.vehiculoService.agregarMoto(request, this.imagenes()).subscribe({
+    this.vehiculoService.agregarMoto(request, this.imagenUpload().imagenes()).subscribe({
       next: () => {
         this.router.navigate(['/vehiculos'])
         console.log(request);

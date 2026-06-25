@@ -1,8 +1,89 @@
-<div>
+<div class="container-talleres">
+    <div class="div-header">
+        <div>
+            <select (change)="onEstadoChange($event)">
+                <option value="">Todos</option>
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+            </select>
+        </div>
 
-    <a routerLink="/talleres/nuevo">Agregar taller</a>
-    
-    @for (taller of talleres(); track taller.id) {
-        <p>{{taller.nombre}}</p>
-    }
+        <div class="add-taller">
+            <a routerLink="/talleres/nuevo">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                Agregar taller</a>
+        </div>
+    </div>
+
+    <div class="container-list-talleres">
+        <table>
+            <thead>
+                <tr>
+                    <th>TALLER</th>
+                    <th>DIRECCION</th>
+                    <th>ESPECIALIDAD</th>
+                    <th>ENCARGADO</th>
+                    <th>REPARACIONES ACTIVAS</th>
+                    <th>ESTADO</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (taller of talleres(); track taller.id) {
+                <tr>
+                    <td>{{taller.nombre}}</td>
+                    <td>{{taller.direccion}}</td>
+                    <td>{{taller.especialidad}}</td>
+                    <td>{{taller.encargadoTaller.nombre}} {{taller.encargadoTaller.apellido}}</td>
+                    <td><span class="reparacionesActivas"
+                            [class]="taller.reparacionesActivas===0 ? 'reparaciones-cero' : 'reparaciones-mas-de-cero'">
+                            {{taller.reparacionesActivas}} activas
+                        </span>
+                    </td>
+                    <td>
+                        @if(taller.activo){
+                        <span class="estado-activo activo">Activo</span>
+                        }@else {
+                        <span class="estado-activo inactivo">Inactivo</span>
+                        }
+                    </td>
+
+                    <td class="acciones">
+                        <div class="container-acciones">
+                            <button class="button-accion" (click)="verDetalle(taller.id)">
+                                <span class="material-symbols-outlined">
+                                    visibility
+                                </span>
+                            </button>
+                            @if (taller.activo==true) {
+                            <button class="button-accion desactivar" (click)="desactivarTaller(taller.id)">
+                                <span class="material-symbols-outlined">
+                                    mode_off_on
+                                </span>
+                                <span>
+                                    Desactivar
+                                </span>
+                            </button>
+                            }@else {
+                            <button class="button-accion activar" (click)="reactivarTaller(taller.id)">
+                                <span class="material-symbols-outlined">
+                                    restart_alt
+                                </span>
+                                <span>
+                                    Reactivar
+                                </span>
+                            </button>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
