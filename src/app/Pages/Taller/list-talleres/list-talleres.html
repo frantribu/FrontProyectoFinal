@@ -36,7 +36,7 @@
                 <tr>
                     <td>{{taller.nombre}}</td>
                     <td>{{taller.direccion}}</td>
-                    <td>{{taller.especialidad}}</td>
+                    <td>{{taller.especialidad.label}}</td>
                     <td>{{taller.encargadoTaller.nombre}} {{taller.encargadoTaller.apellido}}</td>
                     <td><span class="reparacionesActivas"
                             [class]="taller.reparacionesActivas===0 ? 'reparaciones-cero' : 'reparaciones-mas-de-cero'">

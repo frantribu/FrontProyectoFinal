@@ -37,7 +37,7 @@ export class MotoFormComponent{
     kilometraje: [0, [Validators.required, Validators.min(0)]],
     patente: ['', [Validators.required, Validators.maxLength(10)],],
     color: ['', Validators.required],
-    descripcion: ['', Validators.required]
+    descripcion: ['']
   });
 
   onMarcaChange() {

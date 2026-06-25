@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { TallerResponse } from '../../../Core/Models/Taller';
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-list-talleres',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './list-talleres.html',
   styleUrl: './list-talleres.css',
 })

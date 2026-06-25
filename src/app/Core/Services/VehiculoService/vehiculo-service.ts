@@ -2,9 +2,10 @@ import { HttpClient, } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest, Submodelo } from '../../Models/Auto';
-import { Estado, VehiculoResponse } from '../../Models/Vehiculo';
+import { VehiculoResponse } from '../../Models/Vehiculo';
 import { CrearMotoRequest, MotoDetalleResponse, TipoMoto } from '../../Models/Moto';
 import { CrearVentaRequest } from '../../Models/Venta';
+import { EnumResponse } from '../../Models/Enum';
 
 @Injectable({
   providedIn: 'root',
@@ -88,8 +89,8 @@ export class VehiculoService {
     });
   }
 
-  getEstados(): Observable<Estado[]> {
-    return this.http.get<Estado[]>(this.url + "/estados", {
+  getEstados(): Observable<EnumResponse[]> {
+    return this.http.get<EnumResponse[]>(this.url + "/estados", {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

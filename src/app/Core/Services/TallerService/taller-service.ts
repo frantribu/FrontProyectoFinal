@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AsignarTallerRequest, CrearTallerRequest, Especialidades, TallerDetalleResponse, TallerResponse } from '../../Models/Taller';
+import { AsignarTallerRequest, CrearTallerRequest, TallerDetalleResponse, TallerResponse } from '../../Models/Taller';
+import { EnumResponse } from '../../Models/Enum';
 
 @Injectable({
   providedIn: 'root',
@@ -59,8 +60,8 @@ export class TallerService {
     })
   }
 
-  obtenerEspecialidades(): Observable<Especialidades[]> {
-    return this.http.get<Especialidades[]>(this.url + "/especialidades", {
+  obtenerEspecialidades(): Observable<EnumResponse[]> {
+    return this.http.get<EnumResponse[]>(this.url + "/especialidades", {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

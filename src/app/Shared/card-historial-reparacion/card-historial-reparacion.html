@@ -1,0 +1,42 @@
+<div class="container-card" [class]="'card-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
+    <div class="container-info-vehiculo">
+        <div class="icono-vehiculo">
+            @if (reparacion()?.vehiculo?.tipo?.toLowerCase()=='auto') {
+            <span class="material-symbols-outlined">
+                directions_car
+            </span>
+            }@else if (reparacion()?.vehiculo?.tipo?.toLowerCase()=="moto") {
+            <span class="material-symbols-outlined">
+                two_wheeler
+            </span>
+            }
+        </div>
+        <div class="info-vehiculo">
+            <p>{{reparacion()?.vehiculo?.marca}} {{reparacion()?.vehiculo?.modelo}}</p>
+            <span>{{reparacion()?.vehiculo?.version}}</span>
+        </div>
+    </div>
+
+    <div class="container-info-reparacion">
+        <div class="estado" [class]="'estado-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
+            <span class="material-symbols-outlined">
+                circle
+            </span>
+            <p>{{reparacion()?.estadoReparacion?.label}}</p>
+        </div>
+
+        <div class="container-fechas">
+            <div class="fecha-ingreso">
+                <span>Fecha de ingreso</span>
+                <p>{{reparacion()?.fechaDeEntrada}}</p>
+            </div>
+
+            @if(reparacion()?.estadoReparacion?.name?.toLowerCase()=="entregado"){
+            <div class="fecha-salida">
+                <span>Fecha de salida</span>
+                <p>{{reparacion()?.fechaDeSalida}}</p>
+            </div>
+            }
+        </div>
+    </div>
+</div>

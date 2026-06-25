@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReparacionService, HistorialReparacionResponse } from '../../../Core/Services/ReparacionService/reparacion-service';
+import { ReparacionService } from '../../../Core/Services/ReparacionService/reparacion-service';
+import { HistorialReparacionResponse } from '../../../Core/Models/HistorialReparacion';
 
 @Component({
   selector: 'app-list-reparaciones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './list-reparaciones.html',
   styleUrl: './list-reparaciones.css',
 })

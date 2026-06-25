@@ -3,10 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { TallerDetalleResponse } from '../../../Core/Models/Taller';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
+import { CardHistorialReparacion } from '../../../Shared/card-historial-reparacion/card-historial-reparacion';
 
 @Component({
   selector: 'app-detalle-taller',
-  imports: [RouterLink],
+  imports: [RouterLink, CardHistorialReparacion],
   templateUrl: './detalle-taller.html',
   styleUrl: './detalle-taller.css',
 })
@@ -19,11 +20,11 @@ export class DetalleTaller {
   vistaActual = signal<'activas' | 'finalizadas'>('activas');
 
   reparacionesActivas=computed(()=>
-    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion!="ENTREGADO")
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion.name!="ENTREGADO")
   );
 
   reparacionesFinalizadas=computed(()=>
-    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion=="ENTREGADO")
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion.name=="ENTREGADO")
   );
 
   reparacionesVisibles = computed(() =>
