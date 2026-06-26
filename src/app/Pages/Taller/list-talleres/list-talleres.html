@@ -40,7 +40,8 @@
                     <td>{{taller.encargadoTaller.nombre}} {{taller.encargadoTaller.apellido}}</td>
                     <td><span class="reparacionesActivas"
                             [class]="taller.reparacionesActivas===0 ? 'reparaciones-cero' : 'reparaciones-mas-de-cero'">
-                            {{taller.reparacionesActivas}} activas
+                            {{taller.reparacionesActivas}} 
+                            {{taller.reparacionesActivas===1 ? 'activa' : 'activas'}}
                         </span>
                     </td>
                     <td>
@@ -58,25 +59,15 @@
                                     visibility
                                 </span>
                             </button>
-                            @if (taller.activo==true) {
-                            <button class="button-accion desactivar" (click)="desactivarTaller(taller.id)">
+                
+                            <button class="button-accion activarDesactivar" (click)="toggleEstadoTaller(taller)">
                                 <span class="material-symbols-outlined">
-                                    mode_off_on
+                                    {{taller.activo ? 'mode_off_on' : 'restart_alt'}}
                                 </span>
                                 <span>
-                                    Desactivar
+                                    {{taller.activo ? 'Desactivar' : 'Activar'}}
                                 </span>
                             </button>
-                            }@else {
-                            <button class="button-accion activar" (click)="reactivarTaller(taller.id)">
-                                <span class="material-symbols-outlined">
-                                    restart_alt
-                                </span>
-                                <span>
-                                    Reactivar
-                                </span>
-                            </button>
-                            }
                         </div>
                     </td>
                 </tr>

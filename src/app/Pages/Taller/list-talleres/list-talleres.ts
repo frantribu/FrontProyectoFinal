@@ -27,17 +27,14 @@ export class ListTalleres {
     })
   }
 
-  desactivarTaller(idTaller:number){
-    this.tallerService.desactivarTaller(idTaller).subscribe({
-      next:()=>this.getTalleres(),
-      error:(e)=>console.log("Error al desactivar el taller")
-    })
-  }
+  toggleEstadoTaller(taller:TallerResponse){
+    const request=taller.activo ?
+     this.tallerService.desactivarTaller(taller.id)
+     : this.tallerService.reactivarTaller(taller.id);
 
-  reactivarTaller(idTaller:number){
-    this.tallerService.reactivarTaller(idTaller).subscribe({
+    request.subscribe({
       next:()=>this.getTalleres(),
-      error:(e)=>console.log("Error al reactivar el taller")
+      error:()=>console.log("Error al cambiar el estado del taller")
     })
   }
 

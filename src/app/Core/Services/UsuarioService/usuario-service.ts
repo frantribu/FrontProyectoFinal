@@ -19,21 +19,12 @@ export class UsuarioService {
     })
   }
 
-  getAll(activo: Boolean | null) {
-    if (activo == null) {
-      return this.http.get<UsuarioResponse[]>(this.url, {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      })
-    }else{
+  getAll(activo: string) {
        return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`, {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
       })
-    }
-
   }
 
   getUserById(id: number) {
@@ -44,11 +35,19 @@ export class UsuarioService {
     return this.http.post(this.url, user)
   }
 
-  patchUser(id: number, user: Partial<UsuarioResponse>) {
-    return this.http.patch(`${this.url}/${id}`, user)
+  activarUsuario(id: number) {
+    return this.http.patch(`${this.url}/${id}/activar`, {}, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 
   deleteUser(id: number) {
-    this.http.delete(`${this.url}/${id}`)
+    return this.http.delete(`${this.url}/${id}`, {
+      headers:{
+        Authorization: `Bearer ${this.token}`
+      }
+    })
   }
 }

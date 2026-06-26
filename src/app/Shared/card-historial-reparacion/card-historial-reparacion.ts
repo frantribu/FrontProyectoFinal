@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { HistorialReparacionResponse } from '../../Core/Models/HistorialReparacion';
 
 @Component({
@@ -10,4 +10,9 @@ import { HistorialReparacionResponse } from '../../Core/Models/HistorialReparaci
 export class CardHistorialReparacion {
   reparacion=input<HistorialReparacionResponse>();
 
+  mostrarMotivo=signal(false);
+
+  toggleMotivo(){
+    this.mostrarMotivo.set(!this.mostrarMotivo())
+  }
 }
