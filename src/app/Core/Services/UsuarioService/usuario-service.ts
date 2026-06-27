@@ -12,19 +12,11 @@ export class UsuarioService {
   private token = localStorage.getItem("authToken");
 
   getEncargados() {
-    return this.http.get<UsuarioResponse[]>(this.url + "/encargados", {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
   }
 
   getAll(activo: string) {
-       return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`, {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      })
+       return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`)
   }
 
   getUserById(id: number) {
@@ -36,18 +28,10 @@ export class UsuarioService {
   }
 
   activarUsuario(id: number) {
-    return this.http.patch(`${this.url}/${id}/activar`, {}, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.patch(`${this.url}/${id}/activar`, {})
   }
 
   deleteUser(id: number) {
-    return this.http.delete(`${this.url}/${id}`, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.delete(`${this.url}/${id}`)
   }
 }

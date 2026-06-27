@@ -45,6 +45,7 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
     this.router.navigate(['/login'])
   }
 
@@ -61,6 +62,14 @@ export class AuthService {
   getRol(){
     const user=this.getUser();
     return user ? `${user.rol.toLowerCase()}`:''
+  }
+
+  isAdmin():boolean{
+    return this.getRol().toLowerCase()==="admin";
+  }
+
+  isEncargado():boolean{
+    return this.getRol().toLowerCase()==="encargadotaller"
   }
 
 }

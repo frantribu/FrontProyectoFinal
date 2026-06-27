@@ -7,23 +7,15 @@ import { HistorialReparacionResponse } from '../../Models/HistorialReparacion';
   providedIn: 'root',
 })
 export class ReparacionService {
-  
   private url = "http://localhost:8080/historial/reparaciones"; 
   private http = inject(HttpClient);
 
- 
-  private getHeaders() {
-    const token = localStorage.getItem("authToken");
-    return { Authorization: `Bearer ${token}` };
-  }
 
   agregarReparacion(request: any) {
-    return this.http.post(this.url, request, { headers: this.getHeaders() });
+    return this.http.post(this.url, request);
   }
 
   getReparacionesPorTaller(idTaller: number): Observable<HistorialReparacionResponse[]> {
-    return this.http.get<HistorialReparacionResponse[]>(`${this.url}/taller/${idTaller}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<HistorialReparacionResponse[]>(`${this.url}/taller/${idTaller}`);
   }
 }

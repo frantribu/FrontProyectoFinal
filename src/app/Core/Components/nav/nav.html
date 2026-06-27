@@ -47,7 +47,6 @@
             <p>TALLER</p>
 
             <ul>
-                @if (auth.getRol().toLowerCase()==="admin") {
                 <li>
                     <a routerLink="/talleres" routerLinkActive="active">
                         <span class="material-symbols-outlined">
@@ -55,10 +54,9 @@
                                 handyman
                             </span>
                         </span>
-                        <span class="nav-label">Talleres</span>
+                        <span class="nav-label">{{authService.getRol().toLowerCase()=="admin" ? 'Talleres' : 'Mis talleres'}}</span>
                     </a>
                 </li>
-                }
 
                 <li>
                     <a href="">

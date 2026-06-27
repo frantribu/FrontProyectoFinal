@@ -70,7 +70,7 @@
 .campo-control{
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 3px;
 }
 
 .divForm label{
@@ -179,11 +179,11 @@ button[type=submit]:hover{
 }
 
 .error-container{
-    min-height: 20px;
+    min-height: 10px;
 }
 
 .error{
-    font-size: 13px;
+    font-size: 10px;
     color: var(--color-danger-text)
 }
 

@@ -10,61 +10,36 @@ import { EnumResponse } from '../../Models/Enum';
 export class TallerService {
   private url = "http://localhost:8080/taller";
   private http = inject(HttpClient);
-  private token = localStorage.getItem("authToken");
 
   getTalleres(activo:string): Observable<TallerResponse[]> {
-    return this.http.get<TallerResponse[]>(`${this.url}?activo=${activo}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<TallerResponse[]>(`${this.url}?activo=${activo}`)
   }
 
   getDetalleTaller(id:number):Observable<TallerDetalleResponse>{
-    return this.http.get<TallerDetalleResponse>(`${this.url}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<TallerDetalleResponse>(`${this.url}/${id}`)
+  }
+
+  getTalleresPorEncargado():Observable<TallerResponse[]>{
+    return this.http.get<TallerResponse[]>(`${this.url}/mis-talleres`)
   }
 
   crearTaller(request: CrearTallerRequest): Observable<TallerDetalleResponse> {
-    return this.http.post<TallerDetalleResponse>(this.url, request, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.post<TallerDetalleResponse>(this.url, request)
   }
 
   desactivarTaller(idTaller:number):Observable<void>{
-    return this.http.delete<void>(`${this.url}/${idTaller}`, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.delete<void>(`${this.url}/${idTaller}`)
   }
 
   reactivarTaller(idTaller:number):Observable<void>{
-    return this.http.patch<void>(`${this.url}/${idTaller}/activar`, {}, {
-      headers:{
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.patch<void>(`${this.url}/${idTaller}/activar`, {})
   }
 
   asignarVehiculo(request: AsignarTallerRequest) {
-    return this.http.post(`${this.url}/asignar-vehiculo`, request, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.post(`${this.url}/asignar-vehiculo`, request)
   }
 
   obtenerEspecialidades(): Observable<EnumResponse[]> {
-    return this.http.get<EnumResponse[]>(this.url + "/especialidades", {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<EnumResponse[]>(this.url + "/especialidades")
   }
 }

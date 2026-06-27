@@ -12,10 +12,6 @@ export class ClienteService {
   private token=localStorage.getItem("authToken");
 
   getClientes(activo:boolean):Observable<ClienteResponse[]>{
-    return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}`)
   }
 }

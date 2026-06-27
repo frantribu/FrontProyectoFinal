@@ -1,4 +1,5 @@
 <div class="container-talleres">
+    @if (authService.isAdmin()) {
     <div class="div-header">
         <div>
             <select (change)="onEstadoChange($event)">
@@ -16,6 +17,7 @@
                 Agregar taller</a>
         </div>
     </div>
+    }
 
     <div class="container-list-talleres">
         <table>
@@ -40,7 +42,7 @@
                     <td>{{taller.encargadoTaller.nombre}} {{taller.encargadoTaller.apellido}}</td>
                     <td><span class="reparacionesActivas"
                             [class]="taller.reparacionesActivas===0 ? 'reparaciones-cero' : 'reparaciones-mas-de-cero'">
-                            {{taller.reparacionesActivas}} 
+                            {{taller.reparacionesActivas}}
                             {{taller.reparacionesActivas===1 ? 'activa' : 'activas'}}
                         </span>
                     </td>
@@ -59,7 +61,8 @@
                                     visibility
                                 </span>
                             </button>
-                
+
+                            @if (authService.isAdmin()) {
                             <button class="button-accion activarDesactivar" (click)="toggleEstadoTaller(taller)">
                                 <span class="material-symbols-outlined">
                                     {{taller.activo ? 'mode_off_on' : 'restart_alt'}}
@@ -68,13 +71,12 @@
                                     {{taller.activo ? 'Desactivar' : 'Activar'}}
                                 </span>
                             </button>
+                            }
                         </div>
                     </td>
                 </tr>
                 }
             </tbody>
         </table>
-
     </div>
-
 </div>
