@@ -18,14 +18,14 @@ export class Vehiculos {
   private vehiculoService = inject(VehiculoService);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private dialog=inject(MatDialog);
+  private dialog = inject(MatDialog);
 
   rol = this.authService.getRol();
 
   vehiculos = signal<VehiculoResponse[]>([]);
 
-  estadoSeleccionado=signal<string>(""); // Para filtrar
-  estados=toSignal(this.vehiculoService.getEstados(), {initialValue:[]});
+  estadoSeleccionado = signal<string>(""); // Para filtrar
+  estados = toSignal(this.vehiculoService.getEstados(), { initialValue: [] });
 
   constructor() {
     this.getVehiculos();
@@ -38,8 +38,8 @@ export class Vehiculos {
     })
   }
 
-  onEstadoChange(event:Event){
-    const value=(event.target as HTMLSelectElement).value;
+  onEstadoChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
     this.estadoSeleccionado.set(value);
     this.getVehiculos();
   }
@@ -80,20 +80,23 @@ export class Vehiculos {
     }
   }
 
-  venderVehiculo(id:number){
-    this.router.navigate([`/ventas/nuevo/${id}`])
+  venderVehiculo(id: number) {
+    if (this.authService.isAdmin()) {
+      this.router.navigate([`/ventas/nuevo/${id}`])
+    }else{
+      this.router.navigate([`/mis-ventas/nuevo/${id}`])
+    }
   }
-
 
   ///METODO PARA GESTIONAR EL MODAL
 
-  abrirModal(vehiculoId:number){
+  abrirModal(vehiculoId: number) {
     this.dialog.open(AsignarTallerModal, {
-      width:"400px",
-      data:{vehiculoId}
-    }).afterClosed().subscribe(resultado=>{
-      if(resultado===true)//tiene que coincidir con lo que le pasamos al dialogRef.close() del modal
-        {
+      width: "400px",
+      data: { vehiculoId }
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === true)//tiene que coincidir con lo que le pasamos al dialogRef.close() del modal
+      {
         this.getVehiculos();
       }
     })

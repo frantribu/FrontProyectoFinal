@@ -72,4 +72,8 @@ export class AuthService {
     return this.getRol().toLowerCase()==="encargadotaller"
   }
 
+  isEmpleado():boolean{
+    return this.getRol().toLowerCase()==="empleado"
+  }
+
 }

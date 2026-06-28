@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest, Submodelo } from '../../Models/Auto';
 import { VehiculoResponse } from '../../Models/Vehiculo';
-import { CrearMotoRequest, MotoDetalleResponse, TipoMoto } from '../../Models/Moto';
+import { CrearMotoRequest, MotoDetalleResponse } from '../../Models/Moto';
 import { CrearVentaRequest } from '../../Models/Venta';
 import { EnumResponse } from '../../Models/Enum';
 
@@ -13,88 +13,47 @@ import { EnumResponse } from '../../Models/Enum';
 export class VehiculoService {
   private url = "http://localhost:8080/vehiculos"
   private http = inject(HttpClient)
-  private token = localStorage.getItem("authToken")
 
   /*--------------------------------------------------------VEHICULOS-----------------------------------------------------------------------------------*/
 
   getVehiculos(estado: string): Observable<VehiculoResponse[]> {
-    return this.http.get<VehiculoResponse[]>(`${this.url}?estado=${estado}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<VehiculoResponse[]>(`${this.url}?estado=${estado}`);
   }
 
   getDetalleVehiculo(id: number): Observable<VehiculoResponse> {
-    return this.http.get<VehiculoResponse>(this.url + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<VehiculoResponse>(this.url + `/${id}`)
   } 
 
   getDetalleAuto(id: number): Observable<AutoDetalleResponse> {
-    return this.http.get<AutoDetalleResponse>(this.url + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<AutoDetalleResponse>(this.url + `/${id}`);
   }
 
   getDetalleMoto(id: number): Observable<MotoDetalleResponse> {
-    return this.http.get<MotoDetalleResponse>(this.url + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<MotoDetalleResponse>(this.url + `/${id}`);
   }
 
-  agregarVenta(request:CrearVentaRequest){
-      return this.http.put(`${this.url}/vender`, request, {
-        headers:{
-          Authorization: `Bearer ${this.token}`
-        }
-      })
+  agregarVenta(vehiculoId:number,request:CrearVentaRequest){
+      return this.http.put(`${this.url}/vender/${vehiculoId}`, request)
     }
 
   getMarcas(tipo: String): Observable<String[]> {
-    return this.http.get<String[]>(this.url + `/marcas?tipo=${tipo}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<String[]>(this.url + `/marcas?tipo=${tipo}`);
   }
 
   getModelos(tipo: String, marca: String): Observable<String[]> {
-    return this.http.get<String[]>(this.url + `/modelos?tipo=${tipo}&make=${marca}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<String[]>(this.url + `/modelos?tipo=${tipo}&make=${marca}`);
   }
 
   getAnios(tipo: String, modelo: String): Observable<number[]> {
-    return this.http.get<number[]>(this.url + `/anios?tipo=${tipo}&model=${modelo}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<number[]>(this.url + `/anios?tipo=${tipo}&model=${modelo}`);
   }
 
   getSubmodelos(modelo: String, anio: number): Observable<Submodelo[]> {
-    return this.http.get<Submodelo[]>(this.url + `/submodelos?model=${modelo}&year=${anio}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.get<Submodelo[]>(this.url + `/submodelos?model=${modelo}&year=${anio}`);
   }
 
   getEstados(): Observable<EnumResponse[]> {
-    return this.http.get<EnumResponse[]>(this.url + "/estados", {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<EnumResponse[]>(this.url + "/estados")
   }
 
   /*------------------------------------------AUTO----------------------------------------------------*/
@@ -103,19 +62,11 @@ export class VehiculoService {
     const form = new FormData();
     form.append('datos', new Blob([JSON.stringify(auto)], { type: 'application/json' }));
     imagenes.forEach(img => form.append('files', img));
-    return this.http.post<AutoDetalleResponse>(this.url + `/autos`, form, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.post<AutoDetalleResponse>(this.url + `/autos`, form);
   }
 
   modificarAuto(id: number, auto: CrearAutoRequest): Observable<AutoDetalleResponse> {
-    return this.http.put<AutoDetalleResponse>(this.url + `/modificar/${id}`, auto, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.put<AutoDetalleResponse>(this.url + `/autos/${id}`, auto)
   }
 
   /*------------------------------------------MOTO----------------------------------------------------*/
@@ -124,27 +75,19 @@ export class VehiculoService {
     const form = new FormData();
     form.append('datos', new Blob([JSON.stringify(moto)], { type: 'application/json' }));
     imagenes.forEach(img => form.append('files', img));
-    return this.http.post<MotoDetalleResponse>(this.url + "/motos", form, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.post<MotoDetalleResponse>(this.url + "/motos", form)
+  }
+
+  modificarMoto(id:number, request:CrearMotoRequest):Observable<MotoDetalleResponse>{
+    return this.http.put<MotoDetalleResponse>(`${this.url}/motos/${id}`, request);
   }
 
   obtenerTiposMoto() {
-    return this.http.get<TipoMoto[]>(this.url + `/tipos-moto`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<EnumResponse[]>(this.url + `/tipos-moto`)
   }
 
   eliminarVehiculo(id: number) {
-    return this.http.delete(this.url + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.delete(this.url + `/${id}`)
   }
 
 

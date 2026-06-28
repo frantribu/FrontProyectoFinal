@@ -1,7 +1,7 @@
-import { Component, inject, OnDestroy, signal, viewChild } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Submodelo } from '../../../../Core/Models/Auto';
 import { CrearAutoRequest } from '../../../../Core/Models/Auto';
@@ -9,7 +9,7 @@ import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
 @Component({
   selector: 'app-auto-form',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, ImageUpload],
+  imports: [ReactiveFormsModule, ImageUpload],
   templateUrl: './auto-form.html',
   styleUrl: './auto-form.css',
 })
@@ -21,7 +21,7 @@ export class AutoForm {
   private imageUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditable = !!this.id;
+  isEditable = this.id !=null && this.id!==0
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -112,7 +112,7 @@ export class AutoForm {
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
-      descripcion:formulario.descripcion
+      descripcion: formulario.descripcion
     }
 
     this.vehiculoService.agregarAuto(request, this.imageUpload().imagenes()).subscribe({
@@ -145,10 +145,16 @@ export class AutoForm {
           kilometraje: auto.kilometraje,
           patente: auto.patente,
           color: auto.color,
-          descripcion:auto.descripcion
+          descripcion: auto.descripcion
         })
       },
-      error: () => console.log("Error al cargar el auto")
+      error: (e) => {
+        if (e.status === 403) {
+          this.router.navigate(['/vehiculos'])
+        } else {
+          console.log("Error al cargar el auto")
+        }
+      }
     })
   }
 
@@ -161,12 +167,12 @@ export class AutoForm {
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
-      descripcion:formulario.descripcion
+      descripcion: formulario.descripcion
     }
 
     this.vehiculoService.modificarAuto(this.id, request).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
-      error: (e) => console.log("No se puedo crear el auto", e)
+      error: (e) => console.log("No se puedo modificar el auto", e)
     })
   }
 

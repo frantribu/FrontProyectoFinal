@@ -26,7 +26,14 @@ export const routes: Routes = [
     {path:"talleres/nuevo", loadComponent:()=>import("./Pages/Taller/taller-form/taller-form").then(c=>c.TallerForm)},
     {path:"talleres/:id", loadComponent:()=>import("./Pages/Taller/detalle-taller/detalle-taller").then(c=>c.DetalleTaller)},
 
+    //PARA EL ENCARGADO DEL TALLER
+    {path:"mis-talleres", loadComponent:()=>import("./Pages/Taller/list-talleres/list-talleres").then(c=>c.ListTalleres)},
+    {path:"mis-talleres/:id", loadComponent:()=>import("./Pages/Taller/detalle-taller/detalle-taller").then(c=>c.DetalleTaller)},
+
     {path:"ventas", loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
     {path:"ventas/nuevo/:id", loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
 
+    //PARA EL EMPLEADO
+    {path:"mis-ventas", loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
+    {path:"mis-ventas/nuevo/:id", loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
 ];

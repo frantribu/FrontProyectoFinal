@@ -1,8 +1,9 @@
+import { EnumResponse } from "./Enum";
 import { CrearVehiculoRequest, VehiculoDetalleResponse } from "./Vehiculo";
 
 export interface MotoDetalleResponse extends VehiculoDetalleResponse {
-    TipoDeMoto: String;
-    Cilindrada: Number;
+    tipoMoto: EnumResponse;
+    cilindrada: number;
 }
 
 export interface CrearMotoRequest extends CrearVehiculoRequest{
@@ -14,9 +15,4 @@ export interface CrearMotoRequest extends CrearVehiculoRequest{
     combustion:string;
     cilindrada:number;
     tipoMoto:string;
-}
-
-export interface TipoMoto{
-    name:String,
-    label:String;
 }

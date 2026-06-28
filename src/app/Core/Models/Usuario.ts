@@ -6,3 +6,12 @@ export interface UsuarioResponse{
     email:string;
     activo:boolean;
 }
+
+export interface UsuarioRequest{
+    id : Number;
+    nombre: String;
+    apellido: String;
+    rol: String;
+    email: String;
+    password: String;
+}

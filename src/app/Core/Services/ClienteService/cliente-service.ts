@@ -9,7 +9,6 @@ import { ClienteResponse } from '../../Models/Cliente';
 export class ClienteService {
   private http=inject(HttpClient);
   private url= "http://localhost:8080/clientes";
-  private token=localStorage.getItem("authToken");
 
   getClientes(activo:boolean):Observable<ClienteResponse[]>{
     return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}`)

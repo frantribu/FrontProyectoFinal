@@ -10,7 +10,6 @@ export class ReparacionService {
   private url = "http://localhost:8080/historial/reparaciones"; 
   private http = inject(HttpClient);
 
-
   agregarReparacion(request: any) {
     return this.http.post(this.url, request);
   }

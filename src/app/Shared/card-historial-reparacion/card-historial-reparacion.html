@@ -25,7 +25,7 @@
                 </span>
                 <div class="fecha">
                     <span>FECHA DE INGRESO</span>
-                    <p>{{reparacion()?.fechaDeEntrada}}</p>
+                    <p>{{reparacion()?.fechaDeEntrada | date:'dd/MM/yyyy'}}</p>
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                 </span>
                 <div class="fecha">
                     <span>Fecha de salida</span>
-                    <p>{{reparacion()?.fechaDeSalida}}</p>
+                    <p>{{reparacion()?.fechaDeSalida | date:'dd/MM/yyyy'}}</p>
                 </div>
             </div>
             }

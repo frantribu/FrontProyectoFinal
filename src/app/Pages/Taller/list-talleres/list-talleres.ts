@@ -19,11 +19,7 @@ export class ListTalleres {
   talleres = signal<TallerResponse[]>([]);
 
   constructor() {
-    if (this.authService.isAdmin()) {
       this.getTalleres();
-    } else if (this.authService.isEncargado()) {
-      this.getTalleresPorEncargado();
-    }
   }
 
   getTalleres() {
@@ -32,15 +28,6 @@ export class ListTalleres {
     this.tallerService.getTalleres(this.activo()).subscribe({
       next: (t) => this.talleres.set(t),
       error: (e) => console.log("Error al cargar los talleres: ", e)
-    })
-  }
-
-  getTalleresPorEncargado() {
-    this.talleres.set([]);
-
-    this.tallerService.getTalleresPorEncargado().subscribe({
-      next: (t) => this.talleres.set(t),
-      error: () => console.log("Error al cargar los talleres")
     })
   }
 
@@ -62,7 +49,7 @@ export class ListTalleres {
   }
 
   verDetalle(id: number) {
-    this.router.navigate([`/talleres/${id}`])
+    this.router.navigate([`${this.authService.isAdmin() ? '/talleres/' : '/mis-talleres/'}`+ id])
   }
 
 }

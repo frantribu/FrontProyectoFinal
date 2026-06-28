@@ -1,9 +1,10 @@
 import { Component, input, signal } from '@angular/core';
 import { HistorialReparacionResponse } from '../../Core/Models/HistorialReparacion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-card-historial-reparacion',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './card-historial-reparacion.html',
   styleUrl: './card-historial-reparacion.css',
 })

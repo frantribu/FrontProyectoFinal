@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VehiculoDetalleResponse } from '../../../../Core/Models/Vehiculo';
+import { CommonModule } from '@angular/common';
 import { AutoDetalleResponse } from '../../../../Core/Models/Auto';
 
 @Component({
   selector: 'app-detalle-auto',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './detalle-auto.html',
   styleUrl: './detalle-auto.css',
 })
@@ -19,7 +19,6 @@ export class DetalleAuto {
   router=inject(Router);
   auto=signal<AutoDetalleResponse | null>(null);
   loading=signal<boolean>(false);
-  error=signal<string|null>(null);
   indiceImagen=signal<number>(0);
 
   constructor(){
@@ -36,9 +35,9 @@ export class DetalleAuto {
       },
       error:(e)=>{
         if(e.status===403){
-          this.error.set("El vehiculo no existe")
+          this.router.navigate(['/vehiculos'])
         }else{
-          this.error.set("Ocurrio un error")
+          console.log("Error al cargar el auto: ", e);
         }
         this.loading.set(false)
       }

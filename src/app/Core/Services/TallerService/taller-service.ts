@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { AsignarTallerRequest, CrearTallerRequest, TallerDetalleResponse, TallerResponse } from '../../Models/Taller';
 import { EnumResponse } from '../../Models/Enum';
+import { AuthService } from '../AuthService/auth-service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,28 +11,30 @@ import { EnumResponse } from '../../Models/Enum';
 export class TallerService {
   private url = "http://localhost:8080/taller";
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
 
-  getTalleres(activo:string): Observable<TallerResponse[]> {
-    return this.http.get<TallerResponse[]>(`${this.url}?activo=${activo}`)
+  getTalleres(activo: string): Observable<TallerResponse[]> {
+    if (this.authService.isAdmin()) {
+      return this.http.get<TallerResponse[]>(`${this.url}?activo=${activo}`)
+    }else if(this.authService.isEncargado()){
+      return this.http.get<TallerResponse[]>(`${this.url}/mis-talleres`)
+    }
+    return EMPTY;
   }
 
-  getDetalleTaller(id:number):Observable<TallerDetalleResponse>{
+  getDetalleTaller(id: number): Observable<TallerDetalleResponse> {
     return this.http.get<TallerDetalleResponse>(`${this.url}/${id}`)
-  }
-
-  getTalleresPorEncargado():Observable<TallerResponse[]>{
-    return this.http.get<TallerResponse[]>(`${this.url}/mis-talleres`)
   }
 
   crearTaller(request: CrearTallerRequest): Observable<TallerDetalleResponse> {
     return this.http.post<TallerDetalleResponse>(this.url, request)
   }
 
-  desactivarTaller(idTaller:number):Observable<void>{
+  desactivarTaller(idTaller: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${idTaller}`)
   }
 
-  reactivarTaller(idTaller:number):Observable<void>{
+  reactivarTaller(idTaller: number): Observable<void> {
     return this.http.patch<void>(`${this.url}/${idTaller}/activar`, {})
   }
 

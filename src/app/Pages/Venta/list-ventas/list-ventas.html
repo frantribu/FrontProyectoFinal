@@ -4,19 +4,6 @@
     <p class="subtitle">Registros de transacciones de vehículos en el sistema</p>
   </div>
 
-  @if (isLoading) {
-    <div class="loading-state">
-      <p>Buscando registros en el servidor...</p>
-    </div>
-  }
-
-  @if (errorMensaje) {
-    <div class="error-state">
-      {{ errorMensaje }}
-    </div>
-  }
-
-  @if (!isLoading && !errorMensaje) {
     <div class="table-responsive">
       <table class="ventas-table">
         <thead>
@@ -29,12 +16,12 @@
           </tr>
         </thead>
         <tbody>
-          @for (venta of ventas; track venta.vehiculoId) {
+          @for (venta of ventas(); track venta.id) {
             <tr>
               <td><span class="badge-id">#{{ venta.vehiculoId }}</span></td>
               <td>{{ venta.clienteId }}</td>
               <td>{{ venta.vendedorId }}</td>
-              <td class="precio">{{ venta.precioVenta | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td class="precio">{{ venta.precioVenta | currency:'USD':'symbol':'1.0-0' }}</td>
               <td>{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
             </tr>
           } @empty {
@@ -45,5 +32,4 @@
         </tbody>
       </table>
     </div>
-  }
 </div>
