@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rol, Usuario } from '../../Models/Usuario';
-import { Observable } from 'rxjs';
-import { UsuarioRequest } from '../../Models/UsuarioRequest';
 
 
 @Injectable({
@@ -12,31 +10,13 @@ import { UsuarioRequest } from '../../Models/UsuarioRequest';
 export class UsuarioService {
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
-  private token = localStorage.getItem("authToken");
 
   getEncargados() {
-    return this.http.get<Usuario[]>(this.url + "/encargados", {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<Usuario[]>(this.url + "/encargados")
   }
 
-  getAll(activo: Boolean | null) {
-    if (activo == null) {
-      return this.http.get<Usuario[]>(this.url, {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      })
-    }else{
-       return this.http.get<Usuario[]>(`${this.url}?activo=${activo}`, {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      })
-    }
-
+  getAll(activo: string) {
+       return this.http.get<Usuario[]>(`${this.url}?activo=${activo}`)
   }
 
   getUserById(id: number) {
@@ -50,16 +30,15 @@ export class UsuarioService {
   patchUser(id: number, user: Partial<Usuario>) {
     return this.http.patch(`${this.url}/${id}`, user)
   }
+  activarUsuario(id: number) {
+    return this.http.patch(`${this.url}/${id}/activar`, {})
+  }
 
   deleteUser(id: number) {
-    this.http.delete(`${this.url}/${id}`)
+    return this.http.delete(`${this.url}/${id}`)
   }
 
   getRoles(){
-    return this.http.get<Rol[]>(this.url + "/roles", {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    return this.http.get<Rol[]>(this.url + "/roles")
   }
 }

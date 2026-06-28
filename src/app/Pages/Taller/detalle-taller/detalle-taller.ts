@@ -1,29 +1,32 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { TallerDetalleResponse } from '../../../Core/Models/Taller';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
+import { CardHistorialReparacion } from '../../../Shared/card-historial-reparacion/card-historial-reparacion';
 
 @Component({
   selector: 'app-detalle-taller',
-  imports: [RouterLink],
+  imports: [RouterLink, CardHistorialReparacion],
   templateUrl: './detalle-taller.html',
   styleUrl: './detalle-taller.css',
 })
 export class DetalleTaller {
   private route = inject(ActivatedRoute);
   private tallerService = inject(TallerService);
+  private router=inject(Router);
+
   authService=inject(AuthService);
 
   taller = signal<TallerDetalleResponse | null>(null);
   vistaActual = signal<'activas' | 'finalizadas'>('activas');
 
   reparacionesActivas=computed(()=>
-    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion!="ENTREGADO")
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion.name!="ENTREGADO")
   );
 
   reparacionesFinalizadas=computed(()=>
-    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion=="ENTREGADO")
+    this.taller()?.historialReparaciones.filter(r=>r.estadoReparacion.name=="ENTREGADO")
   );
 
   reparacionesVisibles = computed(() =>
@@ -39,7 +42,13 @@ export class DetalleTaller {
   cargarTaller(id: number) {
     this.tallerService.getDetalleTaller(id).subscribe({
       next: (t) => this.taller.set(t),
-      error: () => console.log("Error al ver el taller del vehiculo")
+      error: (e) => {
+        if(e.status===403){
+          this.router.navigate([`${this.authService.isAdmin() ? '/talleres' : '/mis-talleres'}`])
+        }else{
+          console.log("Error al cargar el taller: ", e);
+        }
+      }
     })
   }
 

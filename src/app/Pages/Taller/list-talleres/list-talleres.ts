@@ -1,54 +1,55 @@
 import { Component, inject, signal } from '@angular/core';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { TallerResponse } from '../../../Core/Models/Taller';
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 
 @Component({
   selector: 'app-list-talleres',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './list-talleres.html',
   styleUrl: './list-talleres.css',
 })
 export class ListTalleres {
-  private tallerService=inject(TallerService);
-  private router=inject(Router);
+  private tallerService = inject(TallerService);
+  private router = inject(Router);
 
-  activo=signal<string>("");
-  talleres=signal<TallerResponse[]>([]);
+  authService = inject(AuthService);
+  activo = signal<string>("");
+  talleres = signal<TallerResponse[]>([]);
 
-  constructor(){
-    this.getTalleres();
+  constructor() {
+      this.getTalleres();
   }
 
-  getTalleres(){
+  getTalleres() {
+    this.talleres.set([]);
+
     this.tallerService.getTalleres(this.activo()).subscribe({
-      next:(t)=>this.talleres.set(t),
-      error:(e)=>console.log("Error al cargar los talleres: ", e)
+      next: (t) => this.talleres.set(t),
+      error: (e) => console.log("Error al cargar los talleres: ", e)
     })
   }
 
-  desactivarTaller(idTaller:number){
-    this.tallerService.desactivarTaller(idTaller).subscribe({
-      next:()=>this.getTalleres(),
-      error:(e)=>console.log("Error al desactivar el taller")
+  toggleEstadoTaller(taller: TallerResponse) {
+    const request = taller.activo ?
+      this.tallerService.desactivarTaller(taller.id)
+      : this.tallerService.reactivarTaller(taller.id);
+
+    request.subscribe({
+      next: () => this.getTalleres(),
+      error: () => console.log("Error al cambiar el estado del taller")
     })
   }
 
-  reactivarTaller(idTaller:number){
-    this.tallerService.reactivarTaller(idTaller).subscribe({
-      next:()=>this.getTalleres(),
-      error:(e)=>console.log("Error al reactivar el taller")
-    })
-  }
-
-  onEstadoChange(event:Event){
-    const value=(event.target as HTMLSelectElement).value;
+  onEstadoChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
     this.activo.set(value);
     this.getTalleres();
   }
 
-  verDetalle(id:number){
-    this.router.navigate([`/talleres/${id}`])
+  verDetalle(id: number) {
+    this.router.navigate([`${this.authService.isAdmin() ? '/talleres/' : '/mis-talleres/'}`+ id])
   }
 
 }

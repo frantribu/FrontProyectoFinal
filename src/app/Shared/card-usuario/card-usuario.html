@@ -7,4 +7,8 @@
     <p class="apellido-usuario">
         {{ Cuser()?.apellido }}
     </p>
+
+    <button (click)="toggleEstadoUsuario(user()!.id)">
+        {{user()?.activo ? 'Desactivar' : 'Reactivar'}}
+    </button>
 </section>

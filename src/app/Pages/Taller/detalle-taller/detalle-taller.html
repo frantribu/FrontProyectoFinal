@@ -41,15 +41,9 @@
         </button>
     </div>
 
-    <div>
+    <div class="container-reparaciones">
         @for (r of reparacionesVisibles(); track r.id) {
-        <div>
-            <div>
-                <p>{{r.vehiculo.marca}} {{r.vehiculo.modelo}}</p>
-                <span>{{r.vehiculo.version}}</span>
-            </div>
-            <p>{{r.estadoReparacion}}</p>
-        </div>
+            <app-card-historial-reparacion [reparacion]="r"></app-card-historial-reparacion>
         }
     </div>
 </div>

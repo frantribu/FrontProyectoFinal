@@ -15,7 +15,7 @@ export class Users {
   usuarioService = inject(UsuarioService);
   users = signal<Usuario[]>([]);
 
-  activoSeleccionado = signal<boolean | null>(null)
+  activoSeleccionado = signal<string>("")
 
   constructor() {
     this.getUsers()
@@ -32,14 +32,7 @@ export class Users {
 
   onActivoChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
-
-    if (value == '') {
-      this.activoSeleccionado.set(null)
-    } else if (value == "true") {
-      this.activoSeleccionado.set(true)
-    }else{
-      this.activoSeleccionado.set(false)
-    }
+    this.activoSeleccionado.set(value)
     this.getUsers()
   }
 }

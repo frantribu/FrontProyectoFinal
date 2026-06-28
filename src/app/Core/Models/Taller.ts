@@ -1,9 +1,10 @@
-import { historialReparacionResponse } from "./HistorialReparacion";
+import { EnumResponse } from "./Enum";
+import { HistorialReparacionResponse } from "./HistorialReparacion";
 import { Usuario } from "./Usuario";
 
 export interface TallerResponse {
     id: number;
-    especialidad: string;
+    especialidad: EnumResponse;
     nombre: string;
     activo: boolean;
     reparacionesActivas: number;
@@ -12,7 +13,7 @@ export interface TallerResponse {
 }
 
 export interface TallerDetalleResponse extends TallerResponse{
-    historialReparaciones: historialReparacionResponse[];
+    historialReparaciones: HistorialReparacionResponse[];
 }
 
 export interface CrearTallerRequest {
@@ -20,11 +21,6 @@ export interface CrearTallerRequest {
     nombre: string;
     idEncargadoTaller: number;
     direccion: string;
-}
-
-export interface Especialidades {
-    nombre: string;
-    label: string;
 }
 
 export interface AsignarTallerRequest {

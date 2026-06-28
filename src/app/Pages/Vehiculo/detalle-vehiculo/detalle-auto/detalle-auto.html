@@ -1,8 +1,5 @@
 @if(loading()){
 <p>Cargando...</p>
-}@else if (error()) {
-<p>{{error()}}</p>
-<button (click)="router.navigate(['/vehiculos'])">Volver al listado de vehiculos</button>
 }@else if (auto()){
 <div class="container-detalle-vehiculo">
     <div class="titulo-vehiculo">
@@ -13,7 +10,7 @@
     <div class="container-info-vehiculo">
         <p class="info-meta">
             <span class="info-estado">{{ auto()?.estado }}</span>
-            · Ingreso {{ auto()?.fechaIngreso }}
+            · Ingreso {{ auto()?.fechaIngreso | date:'dd/MM/yyyy' }}
         </p>
 
         <div class="patente-vehiculo-container">
@@ -24,7 +21,7 @@
         </div>
 
         <div class="info-precio">
-            <span class="info-precio-valor">${{ auto()?.precio }}</span>
+            <span class="info-precio-valor">${{ auto()?.precio | currency:'USD':'symbol':'1.0-0' }}</span>
         </div>
 
         <hr class="info-divider">

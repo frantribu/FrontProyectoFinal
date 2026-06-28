@@ -10,13 +10,12 @@ import { RouterLink } from "@angular/router";
   styleUrl: './nav.css',
 })
 export class Nav {
-  authService=inject(AuthService)
-  router = inject(Router)
-  auth = inject(AuthService);
+  authService=inject(AuthService);
+  router = inject(Router);
   menuUserOpen=false;
 
   getIniciales(): string {
-    const user = this.auth.getUser();
+    const user = this.authService.getUser();
     return user ? `${user?.nombre.charAt(0)}${user.apellido.charAt(0)} ` : ''
   }
 

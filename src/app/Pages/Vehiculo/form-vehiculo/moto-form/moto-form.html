@@ -1,6 +1,6 @@
 
-<div class="container-moto-form" (submit)="agregarMoto()">
-    <form [formGroup]="form">
+<div class="container-moto-form" >
+    <form [formGroup]="form" (submit)="onSubmit()">
 
         <div class="container-select">
             <label for="marca">Marca</label>
@@ -49,12 +49,12 @@
 
         <div class="container-input">
             <label for="motor-input">Tipo de motor</label>
-            <input type="TEXT" id="combustible-input" placeholder="" formControlName="motor">
+            <input type="text" id="combustible-input" placeholder="" formControlName="motor">
         </div>
 
         <div class="container-input">
             <label for="combustible-input">Tipo de combustible</label>
-            <input type="TEXT" id="combustible-input" placeholder="" formControlName="combustion">
+            <input type="text" id="combustible-input" placeholder="" formControlName="combustion">
         </div>
 
         <div class="container-input">
@@ -84,6 +84,6 @@
 
         <app-image-upload></app-image-upload>
 
-        <button type="submit" [disabled]="form.invalid">Agregar Moto</button>
+        <button type="submit" [disabled]="form.invalid">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
     </form>
 </div>

@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MotoDetalleResponse } from '../../../../Core/Models/Moto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-moto',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './detalle-moto.html',
   styleUrl: './detalle-moto.css',
 })
@@ -18,7 +19,6 @@ export class DetalleMoto {
   
   moto = signal<MotoDetalleResponse | null>(null);
   loading = signal<boolean>(false);
-  error = signal<string | null>(null);
   indiceImagen = signal<number>(0);
 
   constructor() {
@@ -36,10 +36,9 @@ export class DetalleMoto {
       },
       error: (e) => {
         if (e.status === 403) {
-          this.error.set("El vehiculo no existe");
-          console.log(e);
+          this.router.navigate(['/vehiculos'])
         } else {
-          this.error.set("Ocurrio un error");
+         console.log("Error al cargar la moto: ", e);    
         }
         this.loading.set(false);
       }

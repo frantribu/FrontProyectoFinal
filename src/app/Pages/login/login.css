@@ -62,6 +62,17 @@
     font-weight: 600;
 }
 
+.campo-formulario{
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-control{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
 .divForm label{
     display: flex;
     color: var(--color-text-subtle);
@@ -71,11 +82,11 @@
 }
 
 .divContenedorInputs{
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .divContenedorInputs > div{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 input{
@@ -116,6 +127,12 @@ button[type=submit]{
     padding: 10px;
     letter-spacing: 0.2px;
     transition: background-color 0.3s;
+}
+
+
+button[type=submit]:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 button[type=submit]:hover{
@@ -159,5 +176,14 @@ button[type=submit]:hover{
 
 .buttonContraseña img{
     width: 18px;
+}
+
+.error-container{
+    min-height: 10px;
+}
+
+.error{
+    font-size: 10px;
+    color: var(--color-danger-text)
 }
 

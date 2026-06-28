@@ -30,35 +30,61 @@
         </div>
 
         <div class="divForm">
-            <form [formGroup]="formLogin" (submit)="login()">
+            <form novalidate (submit)="login($event)">
                 <div class="divContenedorInputs">
-                    <div>
+                    <div class="campo-formulario">
                         <label for="email">Correo electronico</label>
-                        <div class="div-input-correo">
-                            <svg class="icono-input" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                <circle cx="12" cy="7" r="4" />
-                            </svg>
-                            <input type="text" placeholder="Tu correo electronico" formControlName="email">
+
+                        <div class="campo-control">
+                            <div class="div-input-correo">
+                                <svg class="icono-input" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <input type="text" placeholder="Tu correo electronico" [formField]="formLogin.email">
+                            </div>
+
+                            <div class="error-container">
+                                @if (formLogin.email().invalid() && formLogin.email().touched()) {
+                                @for (error of formLogin.email().errors(); track error.kind) {
+                                <span class="error">{{error.message}}</span>
+                                }
+                                }
+                            </div>
+
                         </div>
                     </div>
 
-                    <div>
+                    <div class="campo-formulario">
                         <label for="contraseña">Contraseña</label>
-                        <div class="div-input-password">
-                            <svg class="icono-input" viewBox="0 0 24 24" aria-hidden="true">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                            <input [type]="ocultar ? 'password' : 'text'" placeholder="Tu contraseña" formControlName="password">
-                            <button type="button" class="buttonContraseña" (click)="togglePassword()" [disabled]="formLogin.invalid">
-                                <img [src]="ocultar ? '/img/ojo-abierto.png':'/img/ojo (1).png'"  alt="ocultar/mostrar contraseña" class="icono-mostrarOcultar">
-                            </button>
+
+                        <div class="campo-control">
+                            <div class="div-input-password">
+                                <svg class="icono-input" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                <input [type]="ocultar ? 'password' : 'text'" placeholder="Tu contraseña"
+                                    [formField]="formLogin.password">
+                                <button type="button" class="buttonContraseña" (click)="togglePassword()">
+                                    <img [src]="ocultar ? '/img/ojo-abierto.png':'/img/ojo (1).png'"
+                                        alt="ocultar/mostrar contraseña" class="icono-mostrarOcultar">
+                                </button>
+                            </div>
+
+                            <div class="error-container">
+                                @if (formLogin.password().invalid() && formLogin.password().touched()) {
+                                @for (error of formLogin.password().errors(); track error.kind) {
+                                <span class="error">{{error.message}}</span>
+                                }
+                                }
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" [disabled]="formLogin.invalid">
+                <button type="submit" [disabled]="formLogin().invalid()">
                     <span>Ingresar al sistema</span>
                 </button>
             </form>

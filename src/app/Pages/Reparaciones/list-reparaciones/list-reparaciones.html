@@ -17,12 +17,11 @@
           <tr>
             <td>{{ rep.fechaDeEntrada }}</td>
             <td>
-              {{ rep.vehiculoMarca }} {{ rep.vehiculoModelo }} 
-              <span class="patente">({{ rep.vehiculoPatente }})</span>
+              {{ rep.vehiculo.marca }} {{ rep.vehiculo.modelo }} 
             </td>
-            <td>{{ rep.motivo }}</td>
+            <td>{{ rep.descripcion }}</td>
             <td>
-              <span class="badge" [className]="'badge ' + rep.estadoReparacion.toLowerCase()">
+              <span class="badge" [className]="'badge ' + rep.estadoReparacion.label.toLowerCase()">
                 {{ rep.estadoReparacion }}
               </span>
             </td>

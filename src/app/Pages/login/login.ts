@@ -1,34 +1,45 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../Core/Services/AuthService/auth-service';
 import { Router } from '@angular/router';
+import { LoginRequest } from '../../Core/Models/Login';
+import { email, form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [FormField],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-  private fb = inject(FormBuilder)
   private authService = inject(AuthService)
   private router = inject(Router)
-  ocultar=true
+  ocultar = true
 
-  formLogin = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+  loginRequest = signal<LoginRequest>({
+    email: '',
+    password: ''
   })
 
-  login() {
-    this.authService.login(this.formLogin.getRawValue()).subscribe({
-      next: () => this.router.navigate(['/home']),
-      error: (e) => console.log("Login fallido", e)
-    })
+  formLogin = form(this.loginRequest, (campo) => {
+    required(campo.email, { message: "El email es obligatorio" });
+    required(campo.password, { message: "La contraseña es obligatoria" });
+    email(campo.email, { message: "El email no tiene el formato correcto" })
+  })
+
+  login(event:Event) {
+    event.preventDefault();
+    
+    if (this.formLogin().valid()) {
+      this.authService.login(this.formLogin().value()).subscribe({
+        next: () => this.router.navigate(['/home']),
+        error: (e) => console.log("Login fallido", e)
+      })
+    }
   }
 
-  togglePassword(){
-    this.ocultar=!this.ocultar
+  togglePassword() {
+    this.ocultar = !this.ocultar
   }
 
 }

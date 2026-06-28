@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehiculo-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CrearMotoRequest } from '../../../../Core/Models/Moto';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
 
 
@@ -14,15 +14,19 @@ import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
   templateUrl: './moto-form.html',
   styleUrls: ['./moto-form.css']
 })
-export class MotoFormComponent{
+export class MotoFormComponent {
   private fb = inject(FormBuilder);
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
-  private imagenUpload=viewChild.required(ImageUpload);
+  private route = inject(ActivatedRoute);
+  private imagenUpload = viewChild.required(ImageUpload);
+
+  id = Number(this.route.snapshot.paramMap.get("id"));
+  isEditable = this.id !==null && this.id!==0
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
-  tiposMoto = toSignal(this.vehiculoService.obtenerTiposMoto(), {initialValue:[]})
+  tiposMoto = toSignal(this.vehiculoService.obtenerTiposMoto(), { initialValue: [] })
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -37,8 +41,14 @@ export class MotoFormComponent{
     kilometraje: [0, [Validators.required, Validators.min(0)]],
     patente: ['', [Validators.required, Validators.maxLength(10)],],
     color: ['', Validators.required],
-    descripcion: ['', Validators.required]
+    descripcion: ['']
   });
+
+  constructor(){
+    if(this.isEditable){
+      this.cargarMotoParaEditar();
+    }
+  }
 
   onMarcaChange() {
     this.form.get("modelo")?.reset();
@@ -79,10 +89,74 @@ export class MotoFormComponent{
     this.vehiculoService.agregarMoto(request, this.imagenUpload().imagenes()).subscribe({
       next: () => {
         this.router.navigate(['/vehiculos'])
-        console.log(request);
-
       },
       error: (e) => console.log("No se pudo crear la moto ", e)
     })
+  }
+
+  cargarMotoParaEditar() {
+    this.vehiculoService.getDetalleMoto(this.id).subscribe({
+      next: (moto) => {        
+        this.vehiculoService.getModelos("MOTO", moto.marca).subscribe(
+          mod => this.modelos.set(mod)
+        );
+
+        this.form.patchValue({
+          marca: moto.marca,
+          modelo: moto.modelo,
+          version: moto.version,
+          anio: moto.anio,
+          motor: moto.motor,
+          combustion: moto.combustion,
+          descripcion: moto.descripcion,
+          cilindrada: moto.cilindrada,
+          tipoMoto: moto.tipoMoto.name,
+          precio: moto.precio,
+          kilometraje: moto.kilometraje,
+          patente: moto.patente,
+          color: moto.color
+        })
+      },
+      error:(e)=>{
+        if(e.status===403){
+          this.router.navigate(['/vehiculos'])
+        }else{
+          console.log("Error al cargar la moto");
+        }
+      }
+    })
+  }
+
+  editarMoto() {
+    const formulario=this.form.getRawValue();
+
+    const request:CrearMotoRequest={
+      marca: formulario.marca,
+      modelo: formulario.modelo,
+      version: formulario.version,
+      anio: formulario.anio,
+      motor: formulario.motor,
+      combustion: formulario.combustion,
+      descripcion: formulario.descripcion,
+      cilindrada: formulario.cilindrada,
+      tipoMoto: formulario.tipoMoto,
+      precio: formulario.precio,
+      kilometraje: formulario.kilometraje,
+      patente: formulario.patente,
+      color: formulario.color
+    };
+
+    this.vehiculoService.modificarMoto(this.id, request).subscribe({
+      next:()=>this.router.navigate(['/vehiculos']),
+      error:(e)=>console.log("Error al modificar la moto: ", e)
+    })
+  } 
+
+  onSubmit(){
+    if(this.isEditable){
+      this.editarMoto()
+    }else{
+      this.agregarMoto()
+    }
   }
 }

@@ -16,8 +16,8 @@
             <select formControlName="especialidad">
                 <option value="">Selecciona una especialidad</option>
 
-                @for (e of especialidades(); track e.nombre) {
-                <option [value]="e.nombre">{{e.label}}</option>
+                @for (e of especialidades(); track e.name) {
+                <option [value]="e.name">{{e.label}}</option>
                 }
             </select>
         </div>

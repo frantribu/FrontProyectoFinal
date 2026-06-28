@@ -1,3 +1,5 @@
+import { EnumResponse } from "./Enum";
+
 export interface VehiculoResponse {
     id: number;
     marca: string;
@@ -7,7 +9,7 @@ export interface VehiculoResponse {
     tipo: string;
     kilometraje: number;
     fechaIngreso: Date;
-    estado: Estado;
+    estado: EnumResponse;
     patente: string;
     anio: number;
 }
@@ -25,6 +27,7 @@ export interface VehiculoReparacionResponse{
     marca:string;
     modelo:string;
     version:string;
+    tipo:string;
 }
 
 export interface CrearVehiculoRequest {
@@ -33,10 +36,5 @@ export interface CrearVehiculoRequest {
     patente: string,
     color: string
     descripcion:string;
-}
-
-export interface Estado{
-    name:string;
-    label:string;
 }
 
