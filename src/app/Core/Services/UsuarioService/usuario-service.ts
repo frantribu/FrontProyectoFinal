@@ -54,4 +54,12 @@ export class UsuarioService {
   deleteUser(id: number) {
     this.http.delete(`${this.url}/${id}`)
   }
+
+  getRoles(){
+    return this.http.get<Rol[]>(this.url + "/roles", {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+  }
 }
