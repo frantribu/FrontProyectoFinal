@@ -74,3 +74,19 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/*Estilo para el texto del error*/
+.error-message {
+    color: #e63946; /* Un rojo llamativo que contraste bien */
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: -2px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/*si el campo es inválido Y ya fue tocado*/
+input.ng-invalid.ng-touched, 
+select.ng-invalid.ng-touched {
+    border-color: #e63946;
+    background-color: var(--color-bg-surface);
+}
