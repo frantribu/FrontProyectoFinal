@@ -35,7 +35,10 @@ export class ReparacionFormComponent {
 
 
   agregarReparacion() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched(); //marca todo tocado cuando esta todo el form mal
+      return;
+    }
 
     const formulario = this.form.getRawValue();
 
@@ -49,7 +52,7 @@ export class ReparacionFormComponent {
 
     this.reparacionService.agregarReparacion(request).subscribe({
       next: () => {
-        this.router.navigate(['/reparaciones']); // Redirección al listado
+        this.router.navigate(['/reparaciones']); 
         console.log('Reparación registrada con éxito:', request);
       },
       error: (e) => console.error("No se pudo registrar la reparación", e)

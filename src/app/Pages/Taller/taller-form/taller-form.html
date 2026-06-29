@@ -1,39 +1,50 @@
 <div class="container-form">
-    <form [formGroup]="form" class="formulario" (submit)="crearTaller()">
+    <form [formGroup]="form" class="formulario" (ngSubmit)="crearTaller()">
 
         <div class="container-input">
             <label for="nombre">Nombre</label>
-            <input type="text" formControlName="nombre">
+            <input type="text" id="nombre" formControlName="nombre">
+            @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+                <span class="error-message">El nombre es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="direccion">Direccion</label>
-            <input type="text" formControlName="direccion">
+            <input type="text" id="direccion" formControlName="direccion">
+            @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
+                <span class="error-message">La dirección es obligatoria.</span>
+            }
         </div>
 
         <div class="container-select">
             <label for="especialidad">Especialidad</label>
-            <select formControlName="especialidad">
+            <select id="especialidad" formControlName="especialidad">
                 <option value="">Selecciona una especialidad</option>
 
                 @for (e of especialidades(); track e.name) {
-                <option [value]="e.name">{{e.label}}</option>
+                    <option [value]="e.name">{{e.label}}</option>
                 }
             </select>
+            @if (form.get('especialidad')?.invalid && form.get('especialidad')?.touched) {
+                <span class="error-message">Debes seleccionar una especialidad.</span>
+            }
         </div>
 
         <div class="container-select">
             <label for="encargado">Encargado del taller</label>
-
-            <select formControlName="idEncargadoTaller">
-                <option value="0">Selecciona un encargado</option>
+            <select id="encargado" formControlName="idEncargadoTaller">
+                <option [ngValue]="0">Selecciona un encargado</option>
                 @for (e of encargados(); track e.id) {
-                <option [value]="e.id">{{e.nombre}} {{e.apellido}}</option>
+                    <option [value]="e.id">{{e.nombre}} {{e.apellido}}</option>
                 }
             </select>
+            @if (form.get('idEncargadoTaller')?.invalid && form.get('idEncargadoTaller')?.touched) {
+                <span class="error-message">Debes asignar un encargado.</span>
+            }
         </div>
 
-        <button type="submit" [disabled]="form.invalid">
+        <button type="submit">
             Agregar taller
         </button>
     </form>

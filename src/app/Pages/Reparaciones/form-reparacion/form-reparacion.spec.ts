@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormReparacion } from './form-reparacion';
+import { FormReparacionComponent } from './form-reparacion';
 
-describe('FormReparacion', () => {
-  let component: FormReparacion;
-  let fixture: ComponentFixture<FormReparacion>;
+describe('FormReparacionComponent', () => {
+  let component: FormReparacionComponent;
+  let fixture: ComponentFixture<FormReparacionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormReparacion],
+      imports: [FormReparacionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FormReparacion);
+    fixture = TestBed.createComponent(FormReparacionComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
