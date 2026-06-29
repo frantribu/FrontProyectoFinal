@@ -1,15 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { UsuarioService } from '../../Core/Services/UsuarioService/usuario-service';
-import { CardUsuario } from "../../Shared/card-usuario/card-usuario";
-import { UsuarioResponse } from '../../Core/Models/Usuario';
-import { E } from '@angular/cdk/keycodes';
+import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
+import { CardUsuario } from "../../../Shared/card-usuario/card-usuario";
+import { UsuarioResponse } from '../../../Core/Models/Usuario';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-users',
-  imports: [CardUsuario],
+  imports: [CardUsuario, RouterLink],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })

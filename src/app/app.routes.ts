@@ -9,7 +9,8 @@ export const routes: Routes = [
 
     {path:"home", canActivate:[authGuard], loadComponent:()=> import("./Pages/home/home").then(c=>c.Home)},
 
-    {path:"users", loadComponent:()=> import("./Pages/users/users").then(c => c.Users)},
+    {path:"users", loadComponent:()=> import("./Pages/users/list-user/users").then(c => c.Users)},
+    {path:"users/nuevo", loadComponent:()=> import("./Pages/users/form-user/form-user").then(c => c.FormUser)},
 
     {path:"vehiculos", loadComponent:()=>import("./Pages/Vehiculo/list-vehiculos/vehiculos").then(c=>c.Vehiculos)},
     {path:"vehiculos/nuevo", loadComponent:()=>import("./Pages/Vehiculo/vehiculo-selector/vehiculo-selector").then(c=>c.VehiculoSelector)},
