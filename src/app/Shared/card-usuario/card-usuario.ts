@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { UsuarioResponse } from '../../Core/Models/Usuario';
 import { UsuarioService } from '../../Core/Services/UsuarioService/usuario-service';
 
@@ -11,7 +11,8 @@ import { UsuarioService } from '../../Core/Services/UsuarioService/usuario-servi
 export class CardUsuario {
   private usuarioService=inject(UsuarioService);
 
-  user = input<UsuarioResponse>()
+  user = input<UsuarioResponse>();
+  estadoModificado=output<void>();
 
   toggleEstadoUsuario(id:number){
     const request=this.user()?.activo ? 
@@ -19,7 +20,7 @@ export class CardUsuario {
     :this.usuarioService.activarUsuario(id);
 
     request.subscribe({
-      next:()=>console.log("Estado del usuario actualizado"),
+      next:()=>this.estadoModificado.emit(),
       error:()=>console.log("Error al cambiar el estado del usuario")
     })
   }

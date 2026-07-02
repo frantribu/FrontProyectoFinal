@@ -43,7 +43,7 @@
 
     <div class="container-reparaciones">
         @for (r of reparacionesVisibles(); track r.id) {
-            <app-card-historial-reparacion [reparacion]="r"></app-card-historial-reparacion>
+            <app-card-historial-reparacion [reparacion]="r" (estadoCambiado)="cargarTaller(r.idTaller)"></app-card-historial-reparacion>
         }
     </div>
 </div>

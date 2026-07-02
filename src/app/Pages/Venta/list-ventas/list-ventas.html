@@ -4,32 +4,28 @@
     <p class="subtitle">Registros de transacciones de vehículos en el sistema</p>
   </div>
 
-    <div class="table-responsive">
-      <table class="ventas-table">
-        <thead>
-          <tr>
-            <th>ID Vehículo</th>
-            <th>ID Cliente</th>
-            <th>ID Vendedor</th>
-            <th>Precio de Venta</th>
-            <th>Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (venta of ventas(); track venta.id) {
-            <tr>
-              <td><span class="badge-id">#{{ venta.vehiculoId }}</span></td>
-              <td>{{ venta.clienteId }}</td>
-              <td>{{ venta.vendedorId }}</td>
-              <td class="precio">{{ venta.precioVenta | currency:'USD':'symbol':'1.0-0' }}</td>
-              <td>{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="5" class="no-data">No tenés ventas registradas en el sistema.</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+  <div class="table-responsive">
+    <table class="ventas-table">
+      <thead>
+        <tr>
+          <th>ID Vehículo</th>
+          <th>ID Cliente</th>
+          <th>ID Vendedor</th>
+          <th>Precio de Venta</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (venta of ventas(); track venta.id) {
+        <tr>
+          <td><span class="badge-id">#{{ venta.vehiculoId }}</span></td>
+          <td>{{ venta.clienteId }}</td>
+          <td>{{ venta.vendedorId }}</td>
+          <td class="precio">{{ venta.precioVenta | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td>{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>

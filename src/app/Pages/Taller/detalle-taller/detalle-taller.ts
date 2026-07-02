@@ -44,6 +44,8 @@ export class DetalleTaller {
       next: (t) => this.taller.set(t),
       error: (e) => {
         if(e.status===403){
+          console.log(e);
+          
           this.router.navigate([`${this.authService.isAdmin() ? '/talleres' : '/mis-talleres'}`])
         }else{
           console.log("Error al cargar el taller: ", e);

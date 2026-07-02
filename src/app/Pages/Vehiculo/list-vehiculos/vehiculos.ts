@@ -49,11 +49,7 @@ export class Vehiculos {
 
     if (resultado) {
       this.vehiculoService.eliminarVehiculo(id).subscribe({
-        next: () => {
-          this.vehiculos.update(listaVehiculos =>
-            listaVehiculos.filter(v => v.id !== id)
-          )
-        },
+        next: () => this.getVehiculos(),
         error: (e) => {
           console.log("Error al eliminar el vehiculo: ", e);
 

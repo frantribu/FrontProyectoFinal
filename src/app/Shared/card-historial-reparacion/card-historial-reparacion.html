@@ -1,54 +1,77 @@
 <div class="container-card" [class]="'card-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
-    <div class="container-info-vehiculo">
-        <div class="div-datos-vehiculo">
-            <div class="icono-vehiculo">
-                @if (reparacion()?.vehiculo?.tipo?.toLowerCase()=='auto') {
-                <span class="material-symbols-outlined">
-                    directions_car
-                </span>
-                }@else if (reparacion()?.vehiculo?.tipo?.toLowerCase()=="moto") {
-                <span class="material-symbols-outlined">
-                    two_wheeler
-                </span>
+    <div class="info">
+        <div class="container-info-vehiculo">
+            <div class="div-datos-vehiculo">
+                <div class="icono-vehiculo">
+                    @if (reparacion()?.vehiculo?.tipo?.toLowerCase()=='auto') {
+                    <span class="material-symbols-outlined">
+                        directions_car
+                    </span>
+                    }@else if (reparacion()?.vehiculo?.tipo?.toLowerCase()=="moto") {
+                    <span class="material-symbols-outlined">
+                        two_wheeler
+                    </span>
+                    }
+                </div>
+                <div class="info-vehiculo">
+                    <p>{{reparacion()?.vehiculo?.marca}} {{reparacion()?.vehiculo?.modelo}}</p>
+                    <span>{{reparacion()?.vehiculo?.version}}</span>
+                </div>
+            </div>
+
+            <div class="container-fechas">
+                <div class="fecha-ingreso">
+                    <span class="material-symbols-outlined">
+                        schedule
+                    </span>
+                    <div class="fecha">
+                        <span>FECHA DE INGRESO</span>
+                        <p>{{reparacion()?.fechaDeEntrada | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+
+                @if(reparacion()?.estadoReparacion?.name?.toLowerCase()=="entregado"){
+                <div class="fecha-salida">
+                    <span class="material-symbols-outlined">
+                        schedule
+                    </span>
+                    <div class="fecha">
+                        <span>Fecha de salida</span>
+                        <p>{{reparacion()?.fechaDeSalida | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
                 }
             </div>
-            <div class="info-vehiculo">
-                <p>{{reparacion()?.vehiculo?.marca}} {{reparacion()?.vehiculo?.modelo}}</p>
-                <span>{{reparacion()?.vehiculo?.version}}</span>
-            </div>
-        </div>
-
-        <div class="container-fechas">
-            <div class="fecha-ingreso">
-                <span class="material-symbols-outlined">
-                    schedule
-                </span>
-                <div class="fecha">
-                    <span>FECHA DE INGRESO</span>
-                    <p>{{reparacion()?.fechaDeEntrada | date:'dd/MM/yyyy'}}</p>
-                </div>
-            </div>
-
-            @if(reparacion()?.estadoReparacion?.name?.toLowerCase()=="entregado"){
-            <div class="fecha-salida">
-                <span class="material-symbols-outlined">
-                    schedule
-                </span>
-                <div class="fecha">
-                    <span>Fecha de salida</span>
-                    <p>{{reparacion()?.fechaDeSalida | date:'dd/MM/yyyy'}}</p>
-                </div>
-            </div>
-            }
         </div>
     </div>
 
     <div class="container-estado-motivo">
-        <div class="estado" [class]="'estado-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
-            <span class="material-symbols-outlined">
-                circle
-            </span>
-            <p>{{reparacion()?.estadoReparacion?.label}}</p>
+        
+        <div class="container-estado-botones">
+            <div class="estado" [class]="'estado-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
+                <span class="material-symbols-outlined">
+                    circle
+                </span>
+                <p>{{reparacion()?.estadoReparacion?.label}}</p>
+            </div>
+
+            @if (reparacion()?.estadoReparacion?.name!="ENTREGADO") {
+            <div class="botones-estado">
+                <button type="button" (click)="retrocederEstado()" [disabled]="!puedeAnterior()">
+                    <span class="material-symbols-outlined">
+                        arrow_back
+                    </span>
+                    Volver a {{indiceActual()>0 ? `${estados[indiceActual()-1].toLowerCase()}` : ''}}
+                </button>
+
+                <button type="button" (click)="avanzarEstado()" [disabled]="!puedeSiguiente()">
+                    Ir a {{estados[indiceActual()+1].toLowerCase()}}
+                    <span class="material-symbols-outlined">
+                        arrow_forward
+                    </span>
+                </button>
+            </div>
+            }
         </div>
 
         <div class="container-motivo">
