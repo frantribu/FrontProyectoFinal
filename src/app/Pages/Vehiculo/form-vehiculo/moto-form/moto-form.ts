@@ -153,6 +153,11 @@ export class MotoFormComponent {
   } 
 
   onSubmit(){
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     if(this.isEditable){
       this.editarMoto()
     }else{

@@ -8,8 +8,10 @@
                 <option [value]="m">{{m}}</option>
                 }
             </select>
+            @if (form.get('marca')?.invalid && form.get('marca')?.touched) {
+                <span class="error-message">La marca es obligatoria.</span>
+            }
         </div>
-
 
         <div class="container-select">
             <label for="modelo-select">Modelo</label>
@@ -19,6 +21,9 @@
                 <option [value]="mod">{{mod}}</option>
                 }
             </select>
+            @if (form.get('modelo')?.invalid && form.get('modelo')?.touched) {
+                <span class="error-message">El modelo es obligatorio.</span>
+            }
         </div>
 
         <div class="container-select">
@@ -29,6 +34,14 @@
                 <option [value]="an">{{an}}</option>
                 }
             </select>
+            @if (form.get('anio')?.touched && form.get('anio')?.invalid) {
+                @if (form.get('anio')?.hasError('required') || form.get('anio')?.value === 0) {
+                    <span class="error-message">El año es obligatorio.</span>
+                }
+                @if (form.get('anio')?.hasError('min')) {
+                    <span class="error-message">El año debe ser válido (mayor a 1900).</span>
+                }
+            }
         </div>
 
         <div class="container-select">
@@ -38,34 +51,49 @@
                 @for (sub of submodelos(); track sub.id) {
                 <option [value]="sub.id">{{sub.description}}</option>
                 }
-
             </select>
+            @if (form.get('idTrim')?.invalid && form.get('idTrim')?.touched) {
+                <span class="error-message">La versión es obligatoria.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="precio-input">Precio</label>
             <input type="number" id="precio-input" placeholder="Precio" formControlName="precio">
+            @if (form.get('precio')?.invalid && form.get('precio')?.touched) {
+                <span class="error-message">El precio es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="kilometraje-input">Kilometraje</label>
             <input type="number" id="kilometraje-input" placeholder="" formControlName="kilometraje">
+            @if (form.get('kilometraje')?.invalid && form.get('kilometraje')?.touched) {
+                <span class="error-message">El kilometraje es obligatorio.</span>
+            }
         </div>
         <div class="container-input">
             <label for="patente-input">Patente</label>
             <input type="text" id="patente-input" placeholder="ABC123" formControlName="patente">
+            @if (form.get('patente')?.invalid && form.get('patente')?.touched) {
+                <span class="error-message">La patente es obligatoria.</span>
+            }
         </div>
         <div class="container-input">
             <label for="color-input">Color</label>
             <input type="text" id="color-input" placeholder="" formControlName="color">
+            @if (form.get('color')?.invalid && form.get('color')?.touched) {
+                <span class="error-message">El color es obligatorio.</span>
+            }
         </div>
 
          <div class="container-input">
             <label for="descripcion-input">Descripcion</label>
             <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
-        </div>
+            </div>
 
         <app-image-upload></app-image-upload>
-        <button type="submit" [disabled]="form.invalid">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
+        
+        <button type="submit">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
     </form>
 </div>
