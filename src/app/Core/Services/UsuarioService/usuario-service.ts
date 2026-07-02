@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioResponse } from '../../Models/Usuario';
+import { Observable } from 'rxjs';
+import { EnumResponse } from '../../Models/Enum';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +34,9 @@ export class UsuarioService {
 
   deleteUser(id: number) {
     return this.http.delete(`${this.url}/${id}`)
+  }
+
+  getRoles():Observable<EnumResponse[]>{
+    return this.http.get<EnumResponse[]>(this.url + "/roles")
   }
 }

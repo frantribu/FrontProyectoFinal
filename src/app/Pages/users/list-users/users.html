@@ -1,12 +1,20 @@
 <div class="container-usuarios">
     <div class="header-usuarios">
-        <h2>Usuarios</h2>
 
         <select (change)="onActivoChange($event)">
             <option value="">Todos</option>
             <option value="true">Activo</option>
             <option value="false">Inactivo</option>
         </select>
+        
+        <div class="add-user">
+            <a routerLink="/users/nuevo">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                Agregar Usuario</a>
+        </div>
+
     </div>
 
     <div class="container-list-usuarios">

@@ -4,9 +4,9 @@
 
 .header-usuarios {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
 .header-usuarios h2 {
@@ -35,4 +35,14 @@ select:focus {
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.add-user a {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
 }
