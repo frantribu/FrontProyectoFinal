@@ -38,6 +38,11 @@ export class FormVenta {
   })
 
   agregarVenta() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const formulario = this.form.getRawValue();
 
     const venta: CrearVentaRequest = {

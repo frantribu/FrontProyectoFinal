@@ -181,6 +181,11 @@ export class AutoForm {
   }
 
   onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     if (this.isEditable) {
       this.editarAuto();
     } else {

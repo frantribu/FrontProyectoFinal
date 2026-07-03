@@ -23,7 +23,7 @@ export class ReparacionFormComponent {
   private router = inject(Router);
 
   talleres = toSignal(this.tallerService.getTalleres("true"), { initialValue: [] });
-  vehiculos = toSignal(this.vehiculoService.getVehiculos("DISPONIBLE"), { initialValue: [] }); // O el método que uses para listar vehículos
+  vehiculos = toSignal(this.vehiculoService.getVehiculos("DISPONIBLE"), { initialValue: [] }); 
 
   form = this.fb.nonNullable.group({
     idTaller: ['', Validators.required],
@@ -36,7 +36,7 @@ export class ReparacionFormComponent {
 
   agregarReparacion() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); //marca todo tocado cuando esta todo el form mal
+      this.form.markAllAsTouched(); 
       return;
     }
 

@@ -1,5 +1,4 @@
-
-<div class="container-moto-form" >
+<div class="container-moto-form">
     <form [formGroup]="form" (submit)="onSubmit()">
 
         <div class="container-select">
@@ -10,6 +9,9 @@
                 <option [value]="m">{{m}}</option>
                 }
             </select>
+            @if (form.get('marca')?.invalid && form.get('marca')?.touched) {
+            <span class="error-message">La marca es obligatoria.</span>
+            }
         </div>
 
         <div class="container-select">
@@ -20,16 +22,30 @@
                 <option [value]="mod">{{mod}}</option>
                 }
             </select>
+            @if (form.get('modelo')?.invalid && form.get('modelo')?.touched) {
+            <span class="error-message">El modelo es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="anio-input">Año</label>
             <input type="number" id="anio-input" placeholder="" formControlName="anio">
+            @if (form.get('anio')?.touched && form.get('anio')?.invalid) {
+            @if (form.get('anio')?.hasError('required') || form.get('anio')?.value === 0) {
+            <span class="error-message">El año es obligatorio.</span>
+            }
+            @if (form.get('anio')?.hasError('min')) {
+            <span class="error-message">El año debe ser válido (mayor a 1900).</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="version-input">Versión</label>
             <input type="text" id="version-input" placeholder="" formControlName="version">
+            @if (form.get('version')?.invalid && form.get('version')?.touched) {
+            <span class="error-message">La versión es obligatoria.</span>
+            }
         </div>
 
         <div class="container-input">
@@ -37,49 +53,101 @@
             <select formControlName="tipoMoto">
                 <option value="">Selecciona un tipo de moto</option>
                 @for (t of tiposMoto(); track t.name) {
-                    <option [value]="t.name">{{t.label}}</option>
+                <option [value]="t.name">{{t.label}}</option>
                 }
             </select>
+            @if (form.get('tipoMoto')?.invalid && form.get('tipoMoto')?.touched) {
+            <span class="error-message">El tipo de moto es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="cilindrada-input">Cilindrada (cc)</label>
             <input type="number" id="cilindrada-input" placeholder="" formControlName="cilindrada">
+            @if (form.get('cilindrada')?.touched && form.get('cilindrada')?.invalid) {
+            @if (form.get('cilindrada')?.hasError('required') || form.get('cilindrada')?.value === 0) {
+            <span class="error-message">La cilindrada es obligatoria.</span>
+            }
+            @if (form.get('cilindrada')?.hasError('min')) {
+            <span class="error-message">La cilindrada debe ser mayor a 0.</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="motor-input">Tipo de motor</label>
-            <input type="text" id="combustible-input" placeholder="" formControlName="motor">
+            <input type="text" id="motor-input" placeholder="" formControlName="motor">
+            @if (form.get('motor')?.invalid && form.get('motor')?.touched) {
+            <span class="error-message">El tipo de motor es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="combustible-input">Tipo de combustible</label>
             <input type="text" id="combustible-input" placeholder="" formControlName="combustion">
+            @if (form.get('combustion')?.invalid && form.get('combustion')?.touched) {
+            <span class="error-message">El tipo de combustible es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
             <label for="precio-input">Precio de compra</label>
             <input type="number" id="precio-input" placeholder="" formControlName="precioCompra">
+            @if (form.get('precioCompra')?.touched && form.get('precioCompra')?.invalid) {
+            @if(form.get('precioCompra')?.hasError('required') || form.get('precioCompra')?.value === 0) {
+            <span class="error-message">El precio de compra es obligatorio.</span>
+            }
+            @if(form.get('precioCompra')?.hasError('min')) {
+            <span class="error-message">El precio de compra debe ser mayor a 0.</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="precio-input">Precio de venta</label>
             <input type="number" id="precio-input" placeholder="" formControlName="precioVenta">
+            @if (form.get('precioVenta')?.touched && form.get('precioVenta')?.invalid) {
+            @if(form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0) {
+            <span class="error-message">El precio de venta es obligatorio.</span>
+            }
+            @if(form.get('precioVenta')?.hasError('min')) {
+            <span class="error-message">El precio de compra debe ser mayor a 0.</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="kilometraje-input">Kilometraje</label>
             <input type="number" id="kilometraje-input" placeholder="" formControlName="kilometraje">
+            @if (form.get('kilometraje')?.touched && form.get('kilometraje')?.invalid) {
+            @if(form.get('kilometraje')?.hasError('required')) {
+            <span class="error-message">El kilometraje es obligatorio.</span>
+            }
+            @if(form.get('kilometraje')?.hasError('min')) {
+            <span class="error-message">El kilometraje no puede ser negativo.</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="patente-input">Patente</label>
             <input type="text" id="patente-input" placeholder="" formControlName="patente">
+            @if (form.get('patente')?.touched && form.get('patente')?.invalid) {
+            @if(form.get('patente')?.hasError('required')) {
+            <span class="error-message">La patente es obligatoria.</span>
+            }
+            @if(form.get('patente')?.hasError('maxlength')) {
+            <span class="error-message">La patente no puede superar los 10 caracteres.</span>
+            }
+            }
         </div>
 
         <div class="container-input">
             <label for="color-input">Color</label>
             <input type="text" id="color-input" placeholder="" formControlName="color">
+            @if (form.get('color')?.invalid && form.get('color')?.touched) {
+            <span class="error-message">El color es obligatorio.</span>
+            }
         </div>
 
         <div class="container-input">
@@ -89,6 +157,6 @@
 
         <app-image-upload></app-image-upload>
 
-        <button type="submit" [disabled]="form.invalid">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
+        <button type="submit">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
     </form>
 </div>
