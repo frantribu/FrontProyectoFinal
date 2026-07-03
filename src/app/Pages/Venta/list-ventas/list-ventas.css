@@ -1,0 +1,131 @@
+.container-ventas {
+    padding: 20px;
+}
+
+.header-ventas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-buscador {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.container-buscador span {
+    position: absolute;
+    color: var(--color-text-placeholder);
+    pointer-events: none;
+    transform: translateX(12px);
+}
+
+.container-buscador input {
+    background-color: var(--color-bg-input-muted);
+    padding: 5px 38px 5px 37px;
+    border-radius: 5px;
+    border: 0.5px solid var(--color-border-default);
+    outline: none;
+    color: var(--color-text-primary);
+}
+
+.container-buscador input:hover {
+    border-color: var(--color-border-hover);
+}
+
+.container-buscador input:focus {
+    border-color: var(--color-border-focus);
+}
+
+.container-buscador input::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+.kpi-container {
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.kpi-card {
+    flex: 1;
+    background: var(--color-bg-elevated);
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.kpi-card span {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.kpi-card strong {
+    font-size: 18px;
+}
+
+.container-list-ventas {
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 14px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    background-color: var(--color-bg-elevated);
+    color: var(--color-text-primary);
+}
+
+thead {
+    font-size: 11px;
+    color: var(--color-text-table-header);
+    border-bottom: 0.5px solid var(--color-border-default);
+}
+
+th,
+td {
+    padding: 13px 16px;
+    text-align: left;
+}
+
+tbody tr {
+    border-bottom: 0.5px solid var(--color-border-subtle);
+    transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+    background-color: var(--color-overlay-row-hover);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+.precio {
+    font-weight: 500;
+}
+
+.info-vehiculo {
+    font-weight: 500;
+}
+
+.positivo {
+    color: #2ecc71;
+}
+
+.negativo {
+    color: #e74c3c;
+}

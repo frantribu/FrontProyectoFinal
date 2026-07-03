@@ -34,7 +34,8 @@
                     <th>VEHICULO</th>
                     <th>TIPO</th>
                     <th>PATENTE</th>
-                    <th>PRECIO</th>
+                    <th>PRECIO DE COMPRA</th>
+                    <th>PRECIO DE VENTA</th>
                     <th>KILOMETROS</th>
                     <th>ESTADO</th>
                     <th></th>
@@ -57,7 +58,8 @@
 
                     <td><span class="tipo-vehiculo">{{v.tipo.toLowerCase()}}</span></td>
                     <td>{{v.patente}}</td>
-                    <td>{{v.precio | currency:'USD':'symbol':'1.0-0' }}</td>
+                    <td>{{v.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
+                    <td>{{v.precioVenta | currency:'USD':'symbol':'1.0-0' }}</td>
                     <td>{{v.kilometraje | number}} km</td>
                     <td class="columna-estado"><span class="estado-vehiculo"
                             [class]="'estado-' + v.estado.name.toLowerCase()">{{v.estado.label}}</span>

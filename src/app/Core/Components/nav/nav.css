@@ -1,6 +1,7 @@
 nav {
     display: flex;
     flex-direction: column;
+    background-color: var(--color-bg-elevated);
     color: var(--color-text-on-primary);
     width: 250px;
     height: 100vh;
@@ -81,7 +82,7 @@ hr {
     gap: 5px;
 }
 
-.nav-section li a.active{
+.nav-section li a.active {
     background-color: var(--color-primary-muted-bg);
     border-radius: 8px;
 }

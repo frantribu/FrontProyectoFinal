@@ -28,8 +28,9 @@ export class AutoForm {
     modelo: ['', Validators.required],
     anio: [0, [Validators.required, Validators.min(1900)]],
     idTrim: [0, Validators.required],
-    precio: [0, Validators.required],
-    kilometraje: [0, Validators.required],
+   precioCompra: [0, [Validators.required, Validators.min(1)]],
+    precioVenta: [0, [Validators.required, Validators.min(1)]],
+    kilometraje: [0, [Validators.required, Validators.min(0)]],
     patente: ['', Validators.required],
     color: ['', Validators.required],
     descripcion: ['']
@@ -108,7 +109,8 @@ export class AutoForm {
 
     const request: CrearAutoRequest = {
       idTrim: formulario.idTrim,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
@@ -141,7 +143,8 @@ export class AutoForm {
           modelo: auto.modelo,
           anio: auto.anio,
           idTrim: auto.idTrim,
-          precio: auto.precio,
+          precioCompra: auto.precioCompra,
+          precioVenta: auto.precioVenta,
           kilometraje: auto.kilometraje,
           patente: auto.patente,
           color: auto.color,
@@ -163,7 +166,8 @@ export class AutoForm {
 
     const request: CrearAutoRequest = {
       idTrim: formulario.idTrim,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,

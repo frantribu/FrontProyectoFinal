@@ -17,7 +17,7 @@
 
         <div class="container-input">
             <label for="precio">Precio</label>
-            <input type="number" formControlName="precioVenta">
+            <input [value]="vehiculo()?.precioVenta" type="number" formControlName="precioVenta">
         </div>
 
         <button (click)="agregarVenta()">

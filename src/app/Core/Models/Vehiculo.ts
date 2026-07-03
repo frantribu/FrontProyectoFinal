@@ -5,7 +5,8 @@ export interface VehiculoResponse {
     marca: string;
     modelo: string;
     version: string;
-    precio: number;
+    precioCompra: number;
+    precioVenta:number;
     tipo: string;
     kilometraje: number;
     fechaIngreso: Date;
@@ -31,7 +32,8 @@ export interface VehiculoReparacionResponse{
 }
 
 export interface CrearVehiculoRequest {
-    precio: number,
+    precioCompra: number,
+    precioVenta:number,
     kilometraje: number,
     patente: string,
     color: string

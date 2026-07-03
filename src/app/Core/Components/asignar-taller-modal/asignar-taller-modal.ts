@@ -41,7 +41,4 @@ export class AsignarTallerModal {
     })
   }
 
-  cerrar() {
-    this.dialogRef.close();
-  }
 }

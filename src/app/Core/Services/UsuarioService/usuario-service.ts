@@ -12,16 +12,20 @@ export class UsuarioService {
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
 
-  getEncargados() {
-    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
-  }
-
   getAll(activo: string) {
        return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`)
   }
 
   getUserById(id: number) {
     return this.http.get<UsuarioResponse>(`${this.url}/${id}`)
+  }
+
+   getEncargados() {
+    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
+  }
+
+   getEmpleados() {
+    return this.http.get<UsuarioResponse[]>(this.url + "/empleados")
   }
 
   postUser(user: Partial<UsuarioResponse>) {

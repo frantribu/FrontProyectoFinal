@@ -13,5 +13,4 @@ export class App{
   protected readonly title = signal('FrontProyectoFinal');
 
   authService=inject(AuthService)
-
 }
