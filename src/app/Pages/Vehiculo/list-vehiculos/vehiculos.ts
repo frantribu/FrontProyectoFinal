@@ -25,6 +25,8 @@ export class Vehiculos {
   vehiculos = signal<VehiculoResponse[]>([]);
 
   estadoSeleccionado = signal<string>(""); // Para filtrar
+  buscador = signal<string>("")
+
   estados = toSignal(this.vehiculoService.getEstados(), { initialValue: [] });
 
   constructor() {
@@ -32,10 +34,16 @@ export class Vehiculos {
   }
 
   getVehiculos() {
-    this.vehiculoService.getVehiculos(this.estadoSeleccionado()).subscribe({
+    this.vehiculoService.getVehiculos(this.estadoSeleccionado(), this.buscador()).subscribe({
       next: (v) => this.vehiculos.set(v),
       error: (err) => console.log(err)
     })
+  }
+
+  buscarVehiculo(event:Event){
+    const value=(event.target as HTMLInputElement).value;
+    this.buscador.set(value);
+    this.getVehiculos();
   }
 
   onEstadoChange(event: Event) {

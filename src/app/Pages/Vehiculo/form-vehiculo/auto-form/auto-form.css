@@ -7,27 +7,40 @@
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+    row-gap: 10px;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid var(--color-border-default);
     border-radius: 10px;
     background-color: var(--color-bg-elevated);
-    
 }
 
-.container-input, .container-select {
+.container-input,
+.container-select {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-bottom: 10px;
 }
 
-input, select{
+app-image-upload,
+form > button {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+}
+
+input,
+select {
     width: 100%;
     border: 0.5px solid var(--color-border-default);
     background-color: var(--color-bg-surface);
@@ -40,7 +53,8 @@ input, select{
     transition: border-color 0.30s, background-color 0.30s;
 }
 
-input:hover, select:hover{
+input:hover,
+select:hover {
     border-color: var(--color-border-hover);
 }
 
@@ -50,7 +64,7 @@ label {
     font-weight: 600;
 }
 
-button{
+button {
     cursor: pointer;
     background-color: var(--color-primary);
     padding: 7px;
@@ -58,20 +72,32 @@ button{
 }
 
 .error-message {
-    color: #e63946; 
+    color: #e63946;
     font-size: 11px;
     font-weight: 500;
     margin-top: -2px;
     animation: fadeIn 0.2s ease-in-out;
 }
 
-input.ng-invalid.ng-touched, 
+input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
     border-color: #e63946;
     background-color: var(--color-bg-surface);
 }
 
+button[type="submit"]:disabled{
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-2px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -61,7 +61,7 @@ export class AuthService {
 
   getRol(){
     const user=this.getUser();
-    return user ? `${user.rol.toLowerCase()}`:''
+    return user ? `${user.rol}`:''
   }
 
   isAdmin():boolean{

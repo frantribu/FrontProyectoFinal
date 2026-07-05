@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UsuarioResponse } from '../../Models/Usuario';
+import { UsuarioRequest, UsuarioResponse } from '../../Models/Usuario';
 import { Observable } from 'rxjs';
 import { EnumResponse } from '../../Models/Enum';
 
@@ -28,8 +28,8 @@ export class UsuarioService {
     return this.http.get<UsuarioResponse[]>(this.url + "/empleados")
   }
 
-  postUser(user: Partial<UsuarioResponse>) {
-    return this.http.post(this.url, user)
+  postUser(user: UsuarioRequest) {
+    return this.http.post<UsuarioResponse>(this.url, user)
   }
 
   activarUsuario(id: number) {

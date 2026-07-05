@@ -1,4 +1,5 @@
 import { EnumResponse } from "./Enum";
+import { HistorialReparacionResponse } from "./HistorialReparacion";
 
 export interface VehiculoResponse {
     id: number;
@@ -20,6 +21,7 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     motor: string;
     combustion: string;
     descripcion: string;
+    historialDeReparacion: HistorialReparacionResponse[];
     imagenes: string[] | null;
 }
 

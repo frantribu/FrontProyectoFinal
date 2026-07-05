@@ -47,6 +47,7 @@
           <th>CLIENTE</th>
           @if(authService.isAdmin()){
           <th>VENDEDOR</th>
+          <th>PRECIO COMPRA</th>
           }
           <th>PRECIO VENTA</th>
           @if (authService.isAdmin()) {
@@ -69,6 +70,7 @@
 
           @if(authService.isAdmin()){
           <td>{{ venta.vendedor.nombre }} {{ venta.vendedor.apellido }}</td>
+          <td>{{venta.vehiculo.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
           }
 
           <td class="precio">{{ venta.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0' }}</td>

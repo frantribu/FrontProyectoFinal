@@ -3,6 +3,7 @@ import { authGuard } from './Core/Guards/Auth/auth-guard';
 import { authenticatedGuard } from './Core/Guards/Authenticated/authenticated-guard';
 import { adminGuard } from './Core/Guards/Admin/admin-guard';
 import { empleadoGuard } from './Core/Guards/Empleado/empleado-guard';
+import { vehiculoDisponibleGuard } from './Core/Guards/VehiculoDisponible/vehiculo-disponible-guard';
 
 export const routes: Routes = [
     {path: "", redirectTo: "login", pathMatch: "full"},
@@ -34,7 +35,7 @@ export const routes: Routes = [
     {path:"mis-talleres/:id", loadComponent:()=>import("./Pages/Taller/detalle-taller/detalle-taller").then(c=>c.DetalleTaller)},
 
     {path:"ventas", loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
-    {path:"ventas/nuevo/:id", loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
+    {path:"ventas/nuevo/:id", canActivate:[vehiculoDisponibleGuard],loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
 
     //PARA EL EMPLEADO
     {path:"mis-ventas", canActivate:[empleadoGuard], loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},

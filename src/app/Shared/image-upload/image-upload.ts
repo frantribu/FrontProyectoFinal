@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, input, OnDestroy, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-image-upload',
@@ -7,8 +7,11 @@ import { Component, OnDestroy, signal } from '@angular/core';
   styleUrl: './image-upload.css',
 })
 export class ImageUpload implements OnDestroy{
-
+  urlBase = 'http://localhost:8080/ImagenesVehiculo/';
   imagenes = signal<File[]>([]);
+  imagenesExistentes = input<string[]>([]);
+  eliminarImagenExistente=output<string>();
+
   private previewUrls = new Map<File, string>();
 
   onFotoChange(event: Event) {
@@ -43,4 +46,7 @@ export class ImageUpload implements OnDestroy{
     this.previewUrls.forEach(url => URL.revokeObjectURL(url));
   }
 
+  eliminarImagenExis(nombre:string){
+    this.eliminarImagenExistente.emit(nombre);
+  }
 }

@@ -5,7 +5,7 @@
                 <span class="material-symbols-outlined">
                     search
                 </span>
-                <input type="text" placeholder="Buscador">
+                <input type="text" placeholder="Buscador" (input)="buscarVehiculo($event)" [value]="buscador()">
             </div>
 
             <div class="container-filtros">
@@ -68,7 +68,7 @@
                     <td class="acciones">
                         @if (v.estado.name.toLowerCase()=="disponible") {
                         <div class="container-acciones">
-                            @if(rol=="admin"){
+                            @if(rol.toLowerCase()==="admin"){
 
                             <button class="button-accion" (click)="abrirModal(v.id); $event.stopPropagation()">
                                 <span class="material-symbols-outlined">

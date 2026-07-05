@@ -1,19 +1,106 @@
-.container-input{
+.container-form {
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+}
+
+form {
+    width: 100%;
+    max-width: 650px;
+    background-color: var(--color-bg-elevated);
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 14px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
+    gap: 22px;
+}
+
+.container-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.container-input label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.container-input input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 0.5px solid var(--color-border-default);
+    background-color: var(--color-bg-input-muted);
+    color: var(--color-text-primary);
+    outline: none;
+    transition: border-color .2s;
+}
+
+.container-input input:hover {
+    border-color: var(--color-border-hover);
+}
+
+.container-input input:focus {
+    border-color: var(--color-border-focus);
+}
+
+.container-input input[readonly] {
+    cursor: default;
+    background-color: var(--color-bg-surface);
+}
+
+.container-input > div {
+    position: relative;
+}
+
+.container-input ul {
+    position: absolute;
+    width: 100%;
+    margin-top: 5px;
+    padding: 6px 0;
+    background-color: var(--color-bg-elevated);
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 10px;
+    max-height: 220px;
+}
+
+.container-input li {
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.container-input li:hover {
+    background-color: var(--color-overlay-row-hover);
 }
 
 .error-message {
-    color: #e63946; 
-    font-size: 11px;
-    font-weight: 500;
-    margin-top: 2px;
-    margin-bottom: 8px;
-    animation: fadeIn 0.2s ease-in-out;
+    color: var(--color-danger-text);
+    font-size: 13px;
 }
 
-input.ng-invalid.ng-touched, 
-select.ng-invalid.ng-touched {
-    border-color: #e63946;
-    background-color: var(--color-bg-surface);
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    font-weight: 500;
+    transition: opacity .2s;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

@@ -21,17 +21,20 @@ export class AutoForm {
   private imageUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditable = this.id !=null && this.id!==0
+  isEditable = this.id != null && this.id !== 0
+  imagenesActuales = signal<string[]>([])
+
+  mensajeError = signal<string>('');
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
     modelo: ['', Validators.required],
     anio: [0, [Validators.required, Validators.min(1900)]],
     idTrim: [0, Validators.required],
-   precioCompra: [0, [Validators.required, Validators.min(1)]],
+    precioCompra: [0, [Validators.required, Validators.min(1)]],
     precioVenta: [0, [Validators.required, Validators.min(1)]],
     kilometraje: [0, [Validators.required, Validators.min(0)]],
-    patente: ['', Validators.required],
+    patente: ['', [Validators.required, Validators.pattern(/^([A-Za-z]{2}\s?\d{3}\s?[A-Za-z]{2}|[A-Za-z]{3}\s?\d{3})$/)]],
     color: ['', Validators.required],
     descripcion: ['']
   })
@@ -124,8 +127,11 @@ export class AutoForm {
   }
 
   cargarAutoParaEditar() {
+
     this.vehiculoService.getDetalleAuto(this.id).subscribe({
       next: (auto) => {
+        this.imagenesActuales.set(auto.imagenes ?? [])
+
         this.vehiculoService.getModelos("AUTO", auto.marca).subscribe(
           mod => this.modelos.set(mod)
         );
@@ -174,7 +180,7 @@ export class AutoForm {
       descripcion: formulario.descripcion
     }
 
-    this.vehiculoService.modificarAuto(this.id, request).subscribe({
+    this.vehiculoService.modificarAuto(this.id, this.imageUpload().imagenes(), request).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("No se puedo modificar el auto", e)
     })
@@ -192,4 +198,33 @@ export class AutoForm {
       this.agregarAuto();
     }
   }
+
+  eliminarImagen(nombre: string) {
+    this.vehiculoService.eliminarImagen(this.id, nombre).subscribe({
+      next: () => {
+        this.imagenesActuales.update(imgs =>
+          imgs.filter(i => i !== nombre)
+        );
+      },
+      error: (err) => console.log(err)
+    })
+  }
+
+  validarPatente(event:Event) {
+    const value=(event.target as HTMLInputElement).value;
+    const patenteLimpia= value.replaceAll(/\s/g, "");
+
+    this.vehiculoService.validarPatente(patenteLimpia).subscribe({
+      next: (existe) => {
+        if (existe) {
+          this.mensajeError.set("La patente ya esta registrada")
+        }else{
+          this.mensajeError.set("")
+        }
+      },
+      error: (e) => console.log("Error al validad la patente: ", e)
+    })
+  }
 }
+
+

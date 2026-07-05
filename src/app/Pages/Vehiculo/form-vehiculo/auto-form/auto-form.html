@@ -92,10 +92,19 @@
         </div>
         <div class="container-input">
             <label for="patente-input">Patente</label>
-            <input type="text" id="patente-input" placeholder="ABC123" formControlName="patente">
-            @if (form.get('patente')?.invalid && form.get('patente')?.touched) {
-            <span class="error-message">La patente es obligatoria.</span>
+            <input type="text" id="patente-input" placeholder="ABC123/AA111AA" formControlName="patente" (input)="validarPatente($event)">
+            @if (form.get('patente')?.touched) {
+            @if(form.get("patente")?.hasError('pattern')){
+            <span class="error-message">Formato invalido</span>
+            }@else if (form.get("patente")?.hasError('required')) {
+            <span class="error-message">La patente es obligatoria</span>
             }
+
+            @if (mensajeError()) {
+                <span class="error-message">{{mensajeError()}}</span>
+            }
+            }
+
         </div>
         <div class="container-input">
             <label for="color-input">Color</label>
@@ -110,8 +119,9 @@
             <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
         </div>
 
-        <app-image-upload></app-image-upload>
+        <app-image-upload [imagenesExistentes]="imagenesActuales()"
+            (eliminarImagenExistente)="eliminarImagen($event)"></app-image-upload>
 
-        <button type="submit">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
+        <button type="submit" [disabled]="form.invalid">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>
     </form>
 </div>

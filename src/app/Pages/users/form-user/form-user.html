@@ -17,7 +17,7 @@
         </div>
     <div>
         <div class="divForm">
-            <form [formGroup]="form">
+            <form [formGroup]="form" (submit)="agregarAuto()">
                 <div class="divContenedorInputs">
                     <div>
             <label for="nombre">Nombre</label>
@@ -27,6 +27,12 @@
             <label for="apellido">Apellido</label>
             <input type="text" formControlName="apellido">
         </div>
+
+        <div>
+            <label for="dni">DNI</label>
+            <input type="text" formControlName="dni">
+        </div>
+
         <div>
             <label for="rol">Rol</label>
             <select formControlName="rol">

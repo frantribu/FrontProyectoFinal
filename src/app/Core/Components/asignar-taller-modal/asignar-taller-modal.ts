@@ -20,7 +20,7 @@ export class AsignarTallerModal {
   talleres = toSignal(this.tallerService.getTalleres("true"), { initialValue: [] });
 
   form = this.fb.nonNullable.group({
-    tallerId: [0, Validators.required],
+    tallerId: [null, Validators.required],
     motivo: ['', Validators.required]
   })
 
@@ -31,7 +31,7 @@ export class AsignarTallerModal {
 
     const request: AsignarTallerRequest = {
       idVehiculo: this.data.vehiculoId,
-      idTaller:formulario.tallerId,
+      idTaller:formulario.tallerId!,
       motivo:formulario.motivo
     }
 

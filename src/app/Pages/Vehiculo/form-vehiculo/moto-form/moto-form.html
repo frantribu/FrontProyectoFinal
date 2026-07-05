@@ -131,13 +131,16 @@
 
         <div class="container-input">
             <label for="patente-input">Patente</label>
-            <input type="text" id="patente-input" placeholder="" formControlName="patente">
-            @if (form.get('patente')?.touched && form.get('patente')?.invalid) {
-            @if(form.get('patente')?.hasError('required')) {
-            <span class="error-message">La patente es obligatoria.</span>
+            <input type="text" id="patente-input" placeholder="AAA111/A111AAA" formControlName="patente" (input)="validarPatente($event)">
+            @if (form.get('patente')?.touched) {
+            @if(form.get("patente")?.hasError('pattern')){
+            <span class="error-message">Formato invalido</span>
+            }@else if (form.get("patente")?.hasError('required')) {
+            <span class="error-message">La patente es obligatoria</span>
             }
-            @if(form.get('patente')?.hasError('maxlength')) {
-            <span class="error-message">La patente no puede superar los 10 caracteres.</span>
+
+            @if (mensajeError()) {
+            <span class="error-message">{{mensajeError()}}</span>
             }
             }
         </div>
@@ -157,6 +160,6 @@
 
         <app-image-upload></app-image-upload>
 
-        <button type="submit">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
+        <button [disabled]="form.invalid" type="submit">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
     </form>
 </div>

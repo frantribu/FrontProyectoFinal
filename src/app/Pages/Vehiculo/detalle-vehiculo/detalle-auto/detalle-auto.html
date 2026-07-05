@@ -9,7 +9,7 @@
 
     <div class="container-info-vehiculo">
         <p class="info-meta">
-            <span class="info-estado">{{ auto()?.estado }}</span>
+            <span class="info-estado">{{ auto()?.estado?.label }}</span>
             · Ingreso {{ auto()?.fechaIngreso | date:'dd/MM/yyyy' }}
         </p>
 
@@ -68,6 +68,12 @@
         <div class="info-descripcion">
             <h3 class="info-seccion-titulo">Descripción</h3>
             <p class="info-descripcion-texto">{{ auto()?.descripcion }}</p>
+        </div>
+
+        <div>
+            @for (r of auto()?.historialDeReparacion; track r.id) {
+                <p>{{r.descripcion}}</p>
+            }
         </div>
     </div>
 

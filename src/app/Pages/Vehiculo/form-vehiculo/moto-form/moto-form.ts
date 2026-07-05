@@ -24,6 +24,8 @@ export class MotoFormComponent {
   id = Number(this.route.snapshot.paramMap.get("id"));
   isEditable = this.id !==null && this.id!==0
 
+  mensajeError = signal<string>('');
+
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
   tiposMoto = toSignal(this.vehiculoService.obtenerTiposMoto(), { initialValue: [] })
@@ -40,7 +42,7 @@ export class MotoFormComponent {
     precioCompra: [0, [Validators.required, Validators.min(1)]],
     precioVenta: [0, [Validators.required, Validators.min(1)]],
     kilometraje: [0, [Validators.required, Validators.min(0)]],
-    patente: ['', [Validators.required, Validators.maxLength(10)],],
+    patente: ['', [Validators.required, Validators.pattern(/^\s*([a-zA-Z]{3}\s*\d{3}|[a-zA-Z]\s*\d{3}\s*[a-zA-Z]{3})\s*$/)]],
     color: ['', Validators.required],
     descripcion: ['']
   });
@@ -167,5 +169,21 @@ export class MotoFormComponent {
     }else{
       this.agregarMoto()
     }
+  }
+
+  validarPatente(event:Event) {
+    const value=(event.target as HTMLInputElement).value;
+    const patenteLimpia= value.replaceAll(/\s/g, "");
+
+    this.vehiculoService.validarPatente(patenteLimpia).subscribe({
+      next: (existe) => {
+        if (existe) {
+          this.mensajeError.set("La patente ya esta registrada")
+        }else{
+          this.mensajeError.set("")
+        }
+      },
+      error: (e) => console.log("Error al validad la patente: ", e)
+    })
   }
 }

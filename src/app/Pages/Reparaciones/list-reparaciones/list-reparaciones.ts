@@ -16,7 +16,6 @@ export class ListReparaciones implements OnInit {
   reparaciones = signal<HistorialReparacionResponse[]>([]);
 
   ngOnInit(): void {
-    
     const idTallerLogueado = localStorage.getItem("idTaller");
 
     if (idTallerLogueado) {
