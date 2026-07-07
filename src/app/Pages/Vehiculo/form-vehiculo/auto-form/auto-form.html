@@ -37,8 +37,7 @@
             @if (form.get('anio')?.touched && form.get('anio')?.invalid) {
             @if (form.get('anio')?.hasError('required') || form.get('anio')?.value === 0) {
             <span class="error-message">El año es obligatorio.</span>
-            }
-            @if (form.get('anio')?.hasError('min')) {
+            }@else if (form.get('anio')?.hasError('min')) {
             <span class="error-message">El año debe ser válido (mayor a 1900).</span>
             }
             }
@@ -64,22 +63,23 @@
             @if(form.get('precioCompra')?.hasError('required') || form.get('precioCompra')?.value === 0) {
             <span class="error-message">El precio de compra es obligatorio.</span>
             }
-            @if(form.get('precioCompra')?.hasError('min')) {
-            <span class="error-message">El precio de compra debe ser mayor a 0.</span>
-            }
             }
         </div>
 
         <div class="container-input">
             <label for="precio-input">Precio de venta</label>
-            <input type="number" id="precio-input" placeholder="Precio" formControlName="precioVenta">
-            @if (form.get('precioVenta')?.touched && form.get('precioVenta')?.invalid) {
-            @if(form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0) {
-            <span class="error-message">El precio de venta es obligatorio.</span>
-            }
-            @if(form.get('precioVenta')?.hasError('min')) {
-            <span class="error-message">El precio de venta debe ser mayor a 0.</span>
-            }
+            <input type="number" id="precio-input" placeholder="Precio" formControlName="precioVenta"
+                [class.input-error]="form.hasError('precioInvalido') && form.get('precioVenta')?.touched">
+            @if (form.get('precioVenta')?.touched) {
+                @if (form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0) {
+                <span class="error-message">
+                    El precio de venta es obligatorio.
+                </span>
+                }@else if (form.hasError('precioInvalido')) {
+                <span class="error-message">
+                    El precio de venta debe ser mayor al precio de compra.
+                </span>
+                }
             }
         </div>
 
@@ -90,18 +90,18 @@
             <span class="error-message">El kilometraje es obligatorio.</span>
             }
         </div>
+
         <div class="container-input">
             <label for="patente-input">Patente</label>
-            <input type="text" id="patente-input" placeholder="ABC123/AA111AA" formControlName="patente" (input)="validarPatente($event)">
+            <input type="text" id="patente-input" placeholder="ABC123/AA111AA" formControlName="patente" [class.input-error]="mensajeError()"
+                (input)="validarPatente($event)">
             @if (form.get('patente')?.touched) {
             @if(form.get("patente")?.hasError('pattern')){
             <span class="error-message">Formato invalido</span>
             }@else if (form.get("patente")?.hasError('required')) {
             <span class="error-message">La patente es obligatoria</span>
-            }
-
-            @if (mensajeError()) {
-                <span class="error-message">{{mensajeError()}}</span>
+            }@else if (mensajeError()) {
+            <span class="error-message">{{mensajeError()}}</span>
             }
             }
 

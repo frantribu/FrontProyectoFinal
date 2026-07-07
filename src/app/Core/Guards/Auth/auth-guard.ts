@@ -6,6 +6,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService=inject(AuthService);
   const router=inject(Router);
 
+   if(authService.isEncargado()){
+      return router.createUrlTree(['/mis-talleres']);
+  }
+
   if(authService.isAuthenticated()){
     return true;
   }

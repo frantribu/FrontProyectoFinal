@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CrearMotoRequest } from '../../../../Core/Models/Moto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
+import { ValidatorsPersonalizados } from '../../../../Shared/Validators/ValidatorsPersonalizados';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class MotoFormComponent {
   isEditable = this.id !==null && this.id!==0
 
   mensajeError = signal<string>('');
+  patenteOriginal=""
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
@@ -45,6 +47,8 @@ export class MotoFormComponent {
     patente: ['', [Validators.required, Validators.pattern(/^\s*([a-zA-Z]{3}\s*\d{3}|[a-zA-Z]\s*\d{3}\s*[a-zA-Z]{3})\s*$/)]],
     color: ['', Validators.required],
     descripcion: ['']
+  },{
+    validators:[ValidatorsPersonalizados.validarPrecioDeCompraVenta]
   });
 
   constructor(){
@@ -105,6 +109,9 @@ export class MotoFormComponent {
           mod => this.modelos.set(mod)
         );
 
+        this.patenteOriginal=moto.patente;
+        console.log(moto);
+        
         this.form.patchValue({
           marca: moto.marca,
           modelo: moto.modelo,
@@ -123,7 +130,7 @@ export class MotoFormComponent {
         })
       },
       error:(e)=>{
-        if(e.status===403){
+        if(e.status===404){
           this.router.navigate(['/vehiculos'])
         }else{
           console.log("Error al cargar la moto");
@@ -174,6 +181,13 @@ export class MotoFormComponent {
   validarPatente(event:Event) {
     const value=(event.target as HTMLInputElement).value;
     const patenteLimpia= value.replaceAll(/\s/g, "");
+
+    if(this.isEditable && patenteLimpia===this.patenteOriginal){
+      this.mensajeError.set("");
+      console.log(patenteLimpia);
+      
+      return;
+    }
 
     this.vehiculoService.validarPatente(patenteLimpia).subscribe({
       next: (existe) => {

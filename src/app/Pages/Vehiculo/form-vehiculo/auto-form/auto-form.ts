@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Submodelo } from '../../../../Core/Models/Auto';
 import { CrearAutoRequest } from '../../../../Core/Models/Auto';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
+import { ValidatorsPersonalizados } from '../../../../Shared/Validators/ValidatorsPersonalizados';
 
 @Component({
   selector: 'app-auto-form',
@@ -25,6 +26,7 @@ export class AutoForm {
   imagenesActuales = signal<string[]>([])
 
   mensajeError = signal<string>('');
+  patenteOriginal = ""
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
@@ -37,6 +39,8 @@ export class AutoForm {
     patente: ['', [Validators.required, Validators.pattern(/^([A-Za-z]{2}\s?\d{3}\s?[A-Za-z]{2}|[A-Za-z]{3}\s?\d{3})$/)]],
     color: ['', Validators.required],
     descripcion: ['']
+  }, {
+    validators: [ValidatorsPersonalizados.validarPrecioDeCompraVenta]
   })
 
   marcas = toSignal(this.vehiculoService.getMarcas("AUTO"), { initialValue: [] });
@@ -127,7 +131,6 @@ export class AutoForm {
   }
 
   cargarAutoParaEditar() {
-
     this.vehiculoService.getDetalleAuto(this.id).subscribe({
       next: (auto) => {
         this.imagenesActuales.set(auto.imagenes ?? [])
@@ -144,6 +147,8 @@ export class AutoForm {
           sub => this.submodelos.set(sub)
         );
 
+        this.patenteOriginal=auto.patente;
+
         this.form.patchValue({
           marca: auto.marca,
           modelo: auto.modelo,
@@ -158,7 +163,7 @@ export class AutoForm {
         })
       },
       error: (e) => {
-        if (e.status === 403) {
+        if (e.status === 404) {
           this.router.navigate(['/vehiculos'])
         } else {
           console.log("Error al cargar el auto")
@@ -210,20 +215,25 @@ export class AutoForm {
     })
   }
 
-  validarPatente(event:Event) {
-    const value=(event.target as HTMLInputElement).value;
-    const patenteLimpia= value.replaceAll(/\s/g, "");
+  validarPatente(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    const patenteLimpia = value.replaceAll(/\s/g, "").toUpperCase();
 
-    this.vehiculoService.validarPatente(patenteLimpia).subscribe({
-      next: (existe) => {
-        if (existe) {
-          this.mensajeError.set("La patente ya esta registrada")
-        }else{
-          this.mensajeError.set("")
-        }
-      },
-      error: (e) => console.log("Error al validad la patente: ", e)
-    })
+    if (this.isEditable && patenteLimpia === this.patenteOriginal) {
+      this.mensajeError.set("");
+      return;
+    }
+
+      this.vehiculoService.validarPatente(patenteLimpia).subscribe({
+        next: (existe) => {
+          if (existe) {
+            this.mensajeError.set("La patente ya esta registrada")
+          } else {
+            this.mensajeError.set("")
+          }
+        },
+        error: (e) => console.log("Error al validad la patente: ", e)
+      })
   }
 }
 

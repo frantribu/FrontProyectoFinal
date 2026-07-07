@@ -75,6 +75,15 @@ button[type="submit"]:disabled{
     opacity: 0.8;
 }
 
+.input-error {
+    border-color: #e63946;
+    background-color: var(--color-bg-surface);
+}
+
+.input-error:hover {
+    border-color: #e63946;
+}
+
 .error-message {
     color: #e63946; 
     font-size: 11px;

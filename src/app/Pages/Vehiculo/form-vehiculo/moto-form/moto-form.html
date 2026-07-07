@@ -105,14 +105,14 @@
 
         <div class="container-input">
             <label for="precio-input">Precio de venta</label>
-            <input type="number" id="precio-input" placeholder="" formControlName="precioVenta">
-            @if (form.get('precioVenta')?.touched && form.get('precioVenta')?.invalid) {
-            @if(form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0) {
-            <span class="error-message">El precio de venta es obligatorio.</span>
-            }
-            @if(form.get('precioVenta')?.hasError('min')) {
-            <span class="error-message">El precio de compra debe ser mayor a 0.</span>
-            }
+            <input type="number" id="precio-input" placeholder="" formControlName="precioVenta" [class.input-error]="form.get('precioVenta')?.touched && form.hasError('precioInvalido')">
+            @if (form.get('precioVenta')?.touched) {
+                @if(form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0){
+                <span class="error-message">El precio de venta es obligatorio.</span>
+                }
+                @else if(form.hasError("precioInvalido")){
+                <span class="error-message">El precio de venta debe ser mayor al precio de compra.</span>
+                }
             }
         </div>
 
@@ -122,8 +122,7 @@
             @if (form.get('kilometraje')?.touched && form.get('kilometraje')?.invalid) {
             @if(form.get('kilometraje')?.hasError('required')) {
             <span class="error-message">El kilometraje es obligatorio.</span>
-            }
-            @if(form.get('kilometraje')?.hasError('min')) {
+            }@else if(form.get('kilometraje')?.hasError('min')) {
             <span class="error-message">El kilometraje no puede ser negativo.</span>
             }
             }
@@ -131,15 +130,14 @@
 
         <div class="container-input">
             <label for="patente-input">Patente</label>
-            <input type="text" id="patente-input" placeholder="AAA111/A111AAA" formControlName="patente" (input)="validarPatente($event)">
+            <input type="text" id="patente-input" placeholder="AAA111/A111AAA" formControlName="patente"
+                (input)="validarPatente($event)" [class.input-error]="mensajeError()">
             @if (form.get('patente')?.touched) {
             @if(form.get("patente")?.hasError('pattern')){
             <span class="error-message">Formato invalido</span>
             }@else if (form.get("patente")?.hasError('required')) {
             <span class="error-message">La patente es obligatoria</span>
-            }
-
-            @if (mensajeError()) {
+            }@else if (mensajeError()) {
             <span class="error-message">{{mensajeError()}}</span>
             }
             }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -18,13 +18,19 @@ export class FormUser {
 
   roles = toSignal(this.userService.getRoles(), { initialValue: [] })
 
+  errorEmail=signal<string>("");
+  errorDni=signal<string>("");
+
   form = this.fb.nonNullable.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
-    dni:[0, [Validators.required, Validators.min(1)]],
+    dni: [0, [
+      Validators.required,
+      Validators.pattern(/^\d{7,8}$/)
+    ]],
     rol: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
-    password: ['', Validators.required]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(5)]]
   })
 
   agregarAuto() {
@@ -42,6 +48,38 @@ export class FormUser {
     this.userService.postUser(request).subscribe({
       next: () => this.router.navigate(['/users']),
       error: (e) => console.log("No se puedo crear el usuario", e)
+    })
+  }
+
+  validarEmail(event:Event){
+    const value=(event.target as HTMLInputElement).value;
+    const emailLimpio=value.trim().toLowerCase();
+
+    this.userService.validarEmail(emailLimpio).subscribe({
+      next:(existe)=>{
+        if(existe){
+          this.errorEmail.set("El correo electronico ya esta registrado")
+        }else{
+          this.errorEmail.set("")
+        }
+      },
+      error:()=>console.log("Error al validar el email")
+    })
+  }
+
+  validarDni(event:Event){
+    const value=(event.target as HTMLInputElement).value;
+    const dniLimpio=value.trim();
+
+    this.userService.validarDni(dniLimpio).subscribe({
+      next:(existe)=>{
+        if(existe){
+          this.errorDni.set("El DNI ya esta registrado")
+        }else{
+          this.errorDni.set("")
+        }
+      },
+      error:()=>console.log("Error al validar el dni")
     })
   }
 }

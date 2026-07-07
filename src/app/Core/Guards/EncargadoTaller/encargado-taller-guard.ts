@@ -10,5 +10,5 @@ export const encargadoTallerGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  return router.createUrlTree(['/home'])
+  return router.createUrlTree(['/mis-talleres'])
 };

@@ -43,4 +43,12 @@ export class UsuarioService {
   getRoles():Observable<EnumResponse[]>{
     return this.http.get<EnumResponse[]>(this.url + "/roles")
   }
+
+  validarEmail(email:string){
+    return this.http.get<boolean>(`${this.url}/validarEmail/${email}`)
+  }
+
+   validarDni(dni:string){
+    return this.http.get<boolean>(`${this.url}/validarDni/${dni}`)
+  }
 }

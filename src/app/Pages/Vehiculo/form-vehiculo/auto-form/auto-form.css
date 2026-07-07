@@ -29,7 +29,7 @@ form {
 }
 
 app-image-upload,
-form > button {
+form>button {
     grid-column: 1 / -1;
 }
 
@@ -79,13 +79,22 @@ button {
     animation: fadeIn 0.2s ease-in-out;
 }
 
+.input-error {
+    border-color: #e63946;
+    background-color: var(--color-bg-surface);
+}
+
+.input-error:hover {
+    border-color: #e63946;
+}
+
 input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
     border-color: #e63946;
     background-color: var(--color-bg-surface);
 }
 
-button[type="submit"]:disabled{
+button[type="submit"]:disabled {
     cursor: not-allowed;
     opacity: 0.8;
 }
