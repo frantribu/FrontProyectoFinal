@@ -67,3 +67,8 @@ select.ng-invalid.ng-touched {
     background-color: var(--color-bg-surface);
 }
 
+.opcion-nueva {
+    font-weight: 600;
+    color: var(--color-primary);
+    background-color: var(--color-bg-elevated);
+}

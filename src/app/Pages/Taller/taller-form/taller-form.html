@@ -21,7 +21,6 @@
             <label for="especialidad">Especialidad</label>
             <select id="especialidad" formControlName="especialidad">
                 <option value="">Selecciona una especialidad</option>
-
                 @for (e of especialidades(); track e.name) {
                     <option [value]="e.name">{{e.label}}</option>
                 }
@@ -33,11 +32,12 @@
 
         <div class="container-select">
             <label for="encargado">Encargado del taller</label>
-            <select id="encargado" formControlName="idEncargadoTaller">
+            <select id="encargado" formControlName="idEncargadoTaller" (change)="comprobarEncargado($event)">
                 <option [ngValue]="0">Selecciona un encargado</option>
                 @for (e of encargados(); track e.id) {
                     <option [value]="e.id">{{e.nombre}} {{e.apellido}}</option>
                 }
+                <option [value]="-1" class="opcion-nueva">+ Crear nuevo encargado...</option>
             </select>
             @if (form.get('idEncargadoTaller')?.invalid && form.get('idEncargadoTaller')?.touched) {
                 <span class="error-message">Debes asignar un encargado.</span>

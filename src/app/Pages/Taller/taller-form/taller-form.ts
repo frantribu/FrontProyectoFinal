@@ -24,10 +24,18 @@ export class TallerForm {
   form = this.fb.nonNullable.group({
     especialidad: ['', Validators.required],
     nombre: ['', Validators.required],
-    // Al pedir min(1), si el select queda en 0 da error. Si eligen un ID (ej: 4), pasa la validación.
     idEncargadoTaller: [0, [Validators.required, Validators.min(1)]],
     direccion: ['', Validators.required]
   });
+
+  comprobarEncargado(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    
+    if (Number(selectElement.value) === -1) {
+      // poner la ruta donde se crea el usuario
+      this.router.navigate(['']);
+    }
+  }
 
   crearTaller() {
     if (this.form.invalid) {
@@ -40,7 +48,7 @@ export class TallerForm {
     const request: CrearTallerRequest = {
       especialidad: formulario.especialidad,
       nombre: formulario.nombre,
-      idEncargadoTaller: Number(formulario.idEncargadoTaller), // se castea por seguridad
+      idEncargadoTaller: Number(formulario.idEncargadoTaller),
       direccion: formulario.direccion
     };
 
