@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-se
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UsuarioRequest } from '../../../Core/Models/Usuario';
 import { Router } from '@angular/router';
+import { ValidacionService } from '../../../Core/Services/ValidacionService/validacionService';
 
 @Component({
   selector: 'app-form-user',
@@ -15,6 +16,7 @@ export class FormUser {
   private fb = inject(FormBuilder);
   private userService = inject(UsuarioService);
   private router = inject(Router);
+  private validacionesService=inject(ValidacionService);
 
   roles = toSignal(this.userService.getRoles(), { initialValue: [] })
 
@@ -33,7 +35,8 @@ export class FormUser {
     password: ['', [Validators.required, Validators.minLength(5)]]
   })
 
-  agregarAuto() {
+  agregarUsuario() {
+
     const formulario = this.form.getRawValue();
 
     const request: UsuarioRequest = {
@@ -52,32 +55,26 @@ export class FormUser {
   }
 
   validarEmail(event:Event){
-    const value=(event.target as HTMLInputElement).value;
-    const emailLimpio=value.trim().toLowerCase();
+    const value=(event.target as HTMLInputElement).value.trim().toLowerCase();
 
-    this.userService.validarEmail(emailLimpio).subscribe({
+    if(!value) return;
+
+    this.validacionesService.validarEmail(value).subscribe({
       next:(existe)=>{
-        if(existe){
-          this.errorEmail.set("El correo electronico ya esta registrado")
-        }else{
-          this.errorEmail.set("")
-        }
+          this.errorEmail.set(existe ? "El correo electronico ya esta registrado" : '')
       },
       error:()=>console.log("Error al validar el email")
     })
   }
 
   validarDni(event:Event){
-    const value=(event.target as HTMLInputElement).value;
-    const dniLimpio=value.trim();
+    const value=(event.target as HTMLInputElement).value.trim();
 
-    this.userService.validarDni(dniLimpio).subscribe({
+    if(!value) return;
+
+    this.validacionesService.validarDni(value).subscribe({
       next:(existe)=>{
-        if(existe){
-          this.errorDni.set("El DNI ya esta registrado")
-        }else{
-          this.errorDni.set("")
-        }
+          this.errorDni.set(existe ? "El DNI ya esta registrado" : '')
       },
       error:()=>console.log("Error al validar el dni")
     })

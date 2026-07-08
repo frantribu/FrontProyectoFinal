@@ -23,10 +23,10 @@ export class MotoFormComponent {
   private imagenUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditable = this.id !==null && this.id!==0
+  isEditable = this.id !== null && this.id !== 0
 
   mensajeError = signal<string>('');
-  patenteOriginal=""
+  patenteOriginal = ""
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
@@ -47,12 +47,12 @@ export class MotoFormComponent {
     patente: ['', [Validators.required, Validators.pattern(/^\s*([a-zA-Z]{3}\s*\d{3}|[a-zA-Z]\s*\d{3}\s*[a-zA-Z]{3})\s*$/)]],
     color: ['', Validators.required],
     descripcion: ['']
-  },{
-    validators:[ValidatorsPersonalizados.validarPrecioDeCompraVenta]
+  }, {
+    validators: [ValidatorsPersonalizados.validarPrecioDeCompraVenta]
   });
 
-  constructor(){
-    if(this.isEditable){
+  constructor() {
+    if (this.isEditable) {
       this.cargarMotoParaEditar();
     }
   }
@@ -75,6 +75,8 @@ export class MotoFormComponent {
   // ================= ENVIO DEL FORMULARIO =================
 
   agregarMoto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearMotoRequest = {
@@ -88,7 +90,7 @@ export class MotoFormComponent {
       cilindrada: formulario.cilindrada,
       tipoMoto: formulario.tipoMoto,
       precioCompra: formulario.precioCompra,
-      precioVenta:formulario.precioVenta,
+      precioVenta: formulario.precioVenta,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
       color: formulario.color
@@ -104,14 +106,14 @@ export class MotoFormComponent {
 
   cargarMotoParaEditar() {
     this.vehiculoService.getDetalleMoto(this.id).subscribe({
-      next: (moto) => {        
+      next: (moto) => {
         this.vehiculoService.getModelos("MOTO", moto.marca).subscribe(
           mod => this.modelos.set(mod)
         );
 
-        this.patenteOriginal=moto.patente;
+        this.patenteOriginal = moto.patente;
         console.log(moto);
-        
+
         this.form.patchValue({
           marca: moto.marca,
           modelo: moto.modelo,
@@ -129,10 +131,10 @@ export class MotoFormComponent {
           color: moto.color
         })
       },
-      error:(e)=>{
-        if(e.status===404){
+      error: (e) => {
+        if (e.status === 404) {
           this.router.navigate(['/vehiculos'])
-        }else{
+        } else {
           console.log("Error al cargar la moto");
         }
       }
@@ -140,9 +142,11 @@ export class MotoFormComponent {
   }
 
   editarMoto() {
-    const formulario=this.form.getRawValue();
+    if (this.form.invalid) return;
 
-    const request:CrearMotoRequest={
+    const formulario = this.form.getRawValue();
+
+    const request: CrearMotoRequest = {
       marca: formulario.marca,
       modelo: formulario.modelo,
       version: formulario.version,
@@ -160,42 +164,37 @@ export class MotoFormComponent {
     };
 
     this.vehiculoService.modificarMoto(this.id, request).subscribe({
-      next:()=>this.router.navigate(['/vehiculos']),
-      error:(e)=>console.log("Error al modificar la moto: ", e)
+      next: () => this.router.navigate(['/vehiculos']),
+      error: (e) => console.log("Error al modificar la moto: ", e)
     })
-  } 
+  }
 
-  onSubmit(){
+  onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    if(this.isEditable){
+    if (this.isEditable) {
       this.editarMoto()
-    }else{
+    } else {
       this.agregarMoto()
     }
   }
 
-  validarPatente(event:Event) {
-    const value=(event.target as HTMLInputElement).value;
-    const patenteLimpia= value.replaceAll(/\s/g, "");
+  validarPatente(event: Event) {
+    if (this.form.invalid) return;
 
-    if(this.isEditable && patenteLimpia===this.patenteOriginal){
+    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "");
+
+    if (this.isEditable && value === this.patenteOriginal) {
       this.mensajeError.set("");
-      console.log(patenteLimpia);
-      
       return;
     }
 
-    this.vehiculoService.validarPatente(patenteLimpia).subscribe({
+    this.vehiculoService.validarPatente(value).subscribe({
       next: (existe) => {
-        if (existe) {
-          this.mensajeError.set("La patente ya esta registrada")
-        }else{
-          this.mensajeError.set("")
-        }
+        this.mensajeError.set(existe ? "La patente ya esta registrada" : "")
       },
       error: (e) => console.log("Error al validad la patente: ", e)
     })

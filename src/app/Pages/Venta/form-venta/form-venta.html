@@ -10,10 +10,19 @@
             <div>
                 <input type="text" (input)="buscarCliente($event)" [value]="busqueda()">
 
-                @if(mostrarLista() && clientes().length>0){
-                <ul>
+                @if(mostrarLista()){
+                <ul class="list-clients"> 
+                    <li class="add-cliente" (click)="abrirModal()">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
+                        Agregar cliente
+                    </li>
+
                     @for (cli of clientes(); track cli.id) {
                     <li (click)="seleccionarCliente(cli)">{{cli.nombre}} {{cli.apellido}} - {{cli.dni}}</li>
+                    }@empty {
+                        <li>No se encontraron clientes</li>
                     }
                 </ul>
                 }

@@ -112,6 +112,8 @@ export class AutoForm {
   }
 
   agregarAuto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearAutoRequest = {
@@ -147,7 +149,7 @@ export class AutoForm {
           sub => this.submodelos.set(sub)
         );
 
-        this.patenteOriginal=auto.patente;
+        this.patenteOriginal = auto.patente;
 
         this.form.patchValue({
           marca: auto.marca,
@@ -173,6 +175,8 @@ export class AutoForm {
   }
 
   editarAuto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearAutoRequest = {
@@ -216,24 +220,19 @@ export class AutoForm {
   }
 
   validarPatente(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    const patenteLimpia = value.replaceAll(/\s/g, "").toUpperCase();
+    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "").toUpperCase();
 
-    if (this.isEditable && patenteLimpia === this.patenteOriginal) {
+    if (this.isEditable && value === this.patenteOriginal) {
       this.mensajeError.set("");
       return;
     }
 
-      this.vehiculoService.validarPatente(patenteLimpia).subscribe({
-        next: (existe) => {
-          if (existe) {
-            this.mensajeError.set("La patente ya esta registrada")
-          } else {
-            this.mensajeError.set("")
-          }
+    this.vehiculoService.validarPatente(value).subscribe({
+      next: (existe) => {
+          this.mensajeError.set(existe ? "La patente ya esta registrada" : '')
         },
-        error: (e) => console.log("Error al validad la patente: ", e)
-      })
+      error: (e) => console.log("Error al validar la patente: ", e)
+    })
   }
 }
 

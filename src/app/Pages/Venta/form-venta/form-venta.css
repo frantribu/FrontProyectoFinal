@@ -104,3 +104,13 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.list-clients li{
+    display: flex;
+    align-items: center;
+}
+
+.add-cliente{
+    gap: 10px; 
+    border-bottom: 0.5px solid rgb(34, 34, 34);
+}

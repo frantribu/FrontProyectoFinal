@@ -6,6 +6,8 @@ import { ClienteService } from '../../../Core/Services/ClienteService/cliente-se
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
 import { ClienteResponse } from '../../../Core/Models/Cliente';
 import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearClienteModal } from '../../../Core/Components/crear-cliente-modal/crear-cliente-modal';
 
 @Component({
   selector: 'app-form-venta',
@@ -19,6 +21,7 @@ export class FormVenta {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
 
   vehiculoId = Number(this.route.snapshot.paramMap.get("id"));
 
@@ -96,4 +99,17 @@ export class FormVenta {
       }
     })
   }
+
+    ///METODO PARA ABRIR EL MODAL PARA CREAR EL CLIENTE
+  
+    abrirModal() {
+      this.dialog.open(CrearClienteModal, {
+        width: "400px"
+      }).afterClosed().subscribe(cliente => {
+        if (cliente)
+        {
+          this.seleccionarCliente(cliente);
+        }
+      })
+    }
 }
