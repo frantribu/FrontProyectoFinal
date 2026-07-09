@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
 import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
 import { CommonModule } from '@angular/common';
@@ -23,18 +23,28 @@ export class Vehiculos {
   rol = this.authService.getRol();
 
   vehiculos = signal<VehiculoResponse[]>([]);
-
   estadoSeleccionado = signal<string>(""); // Para filtrar
   buscador = signal<string>("")
 
   estados = toSignal(this.vehiculoService.getEstados(), { initialValue: [] });
 
+  private timerBusqueda:any;
+
   constructor() {
-    this.getVehiculos();
+    effect(()=>{
+      const busqueda=this.buscador();
+      const estado=this.estadoSeleccionado();
+
+      clearTimeout(this.timerBusqueda);
+
+      this.timerBusqueda=setTimeout(()=>{
+        this.getVehiculos(estado, busqueda)
+      }, 350)
+    })
   }
 
-  getVehiculos() {
-    this.vehiculoService.getVehiculos(this.estadoSeleccionado(), this.buscador()).subscribe({
+  getVehiculos(estado:string, busqueda:string) {
+    this.vehiculoService.getVehiculos(estado, busqueda).subscribe({
       next: (v) => this.vehiculos.set(v),
       error: (err) => console.log(err)
     })
@@ -43,13 +53,11 @@ export class Vehiculos {
   buscarVehiculo(event:Event){
     const value=(event.target as HTMLInputElement).value;
     this.buscador.set(value);
-    this.getVehiculos();
   }
 
   onEstadoChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     this.estadoSeleccionado.set(value);
-    this.getVehiculos();
   }
 
   eliminarVehiculo(id: number) {
@@ -57,7 +65,7 @@ export class Vehiculos {
 
     if (resultado) {
       this.vehiculoService.eliminarVehiculo(id).subscribe({
-        next: () => this.getVehiculos(),
+        next: () => this.getVehiculos(this.estadoSeleccionado(), this.buscador()),
         error: (e) => {
           console.log("Error al eliminar el vehiculo: ", e);
 
@@ -101,7 +109,7 @@ export class Vehiculos {
     }).afterClosed().subscribe(resultado => {
       if (resultado === true)//tiene que coincidir con lo que le pasamos al dialogRef.close() del modal
       {
-        this.getVehiculos();
+        this.getVehiculos(this.estadoSeleccionado(), this.buscador());
       }
     })
   }

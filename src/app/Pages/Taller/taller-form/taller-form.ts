@@ -32,8 +32,7 @@ export class TallerForm {
     const selectElement = event.target as HTMLSelectElement;
     
     if (Number(selectElement.value) === -1) {
-      // poner la ruta donde se crea el usuario
-      this.router.navigate(['']);
+      this.router.navigate(['/talleres/nuevo']);
     }
   }
 

@@ -131,7 +131,7 @@
         <div class="container-input">
             <label for="patente-input">Patente</label>
             <input type="text" id="patente-input" placeholder="AAA111/A111AAA" formControlName="patente"
-                (input)="validarPatente($event)" [class.input-error]="mensajeError()">
+                (blur)="validarPatente($event)" [class.input-error]="mensajeError()">
             @if (form.get('patente')?.touched) {
             @if(form.get("patente")?.hasError('pattern')){
             <span class="error-message">Formato invalido</span>

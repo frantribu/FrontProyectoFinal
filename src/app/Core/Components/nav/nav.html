@@ -1,4 +1,10 @@
-<nav>
+<button type="button" (click)="toggleNav()" class="button-nav">
+    <span class="material-symbols-outlined">
+        {{ navAbierto() ? 'close' : 'menu' }}
+    </span>
+</button>
+
+<nav [class.abierto]="navAbierto()">
     <div class="nav-header">
         <span class="material-symbols-outlined toys">toys</span>
         <div>

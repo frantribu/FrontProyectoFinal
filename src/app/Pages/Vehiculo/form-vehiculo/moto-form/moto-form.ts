@@ -112,7 +112,6 @@ export class MotoFormComponent {
         );
 
         this.patenteOriginal = moto.patente;
-        console.log(moto);
 
         this.form.patchValue({
           marca: moto.marca,

@@ -37,7 +37,7 @@
 
                 <div>
                     <label for="dni">DNI</label>
-                    <input type="text" formControlName="dni" (input)="validarDni($event)" [class.input-error]="errorDni()">
+                    <input type="text" formControlName="dni" (blur)="validarDni($event)" [class.input-error]="errorDni()">
 
                     @if(form.get("dni")?.touched){
                     @if (form.get("dni")?.hasError("required")) {
@@ -76,7 +76,7 @@
 
                 <div>
                     <label for="email">Email</label>
-                    <input type="text" formControlName="email" (input)="validarEmail($event)" [class.input-error]="errorEmail()">
+                    <input type="text" formControlName="email" (blur)="validarEmail($event)" [class.input-error]="errorEmail()">
 
                     @if(form.get("email")?.touched){
                     @if (form.get("email")?.hasError("required")) {

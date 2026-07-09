@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearVentaRequest } from '../../../Core/Models/Venta';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,8 +31,19 @@ export class FormVenta {
   busqueda=signal<string>('');
   mostrarLista=signal(false);
 
+  private timerBusqueda:any;
+
   constructor() {
-    this.getClientes();
+    effect(()=>{
+      const buscador=this.busqueda();
+
+      clearTimeout(this.timerBusqueda);
+
+      this.timerBusqueda=setTimeout(()=>{
+        this.getClientes(buscador)
+      }, 350)
+
+    })
     this.getVehiculo();
   }
 
@@ -70,8 +81,6 @@ export class FormVenta {
       this.mostrarLista.set(false)
       return;
     }
-
-    this.getClientes();
   }
 
   seleccionarCliente(cliente:ClienteResponse){
@@ -80,8 +89,8 @@ export class FormVenta {
     this.form.patchValue({clienteId:cliente.id as any})
   }
 
-  getClientes() {
-    this.clienteService.getClientes(true, this.busqueda()).subscribe({
+  getClientes(busqueda:string) {
+    this.clienteService.getClientes(true, busqueda).subscribe({
       next: (cli) => this.clientes.set(cli),
       error: () => console.log("Error al cargar los clientes")
     })
@@ -89,7 +98,10 @@ export class FormVenta {
 
   getVehiculo(){
     this.vehiculoService.getDetalleVehiculo(this.vehiculoId).subscribe({
-      next:(v)=>this.vehiculo.set(v),
+      next:(v)=>{
+        this.vehiculo.set(v);
+        this.form.patchValue({precioVenta:v.precioVenta});
+      },
       error:(e)=>{
         if(e.status==403){
           this.router.navigate(['/vehiculos'])

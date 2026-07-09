@@ -5,18 +5,19 @@
             <span>{{user()?.email}}</span>
         </div>
 
-        <span class="estado-usuario" [class]="user()?.activo ? 'activo' : 'inactivo'">{{user()?.activo ? 'Activo' : 'Inactivo'}}</span>
+        <span class="estado-usuario" [class]="user()?.activo ? 'activo' : 'inactivo'">{{user()?.activo ? 'Activo' :
+            'Inactivo'}}</span>
     </div>
 
-    @if(user()?.rol?.toLowerCase()!="admin"){
     <div class="card-footer">
         <span>
             {{ user()?.rol }}
         </span>
-
+        @if(user()?.rol?.toLowerCase()!="admin"){
         <button [class]="user()?.activo ? 'desactivar' : 'activar'" (click)="toggleEstadoUsuario(user()!.id)">
             {{ user()?.activo ? 'Desactivar' : 'Reactivar' }}
         </button>
+        }
     </div>
-    }
+
 </section>

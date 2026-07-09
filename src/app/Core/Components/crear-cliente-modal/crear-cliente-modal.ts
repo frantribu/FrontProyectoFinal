@@ -3,7 +3,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CrearClienteRequest } from '../../Models/Cliente';
 import { ClienteService } from '../../Services/ClienteService/cliente-service';
 import { ValidacionService } from '../../Services/ValidacionService/validacionService';
-import { DialogRef } from '@angular/cdk/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
