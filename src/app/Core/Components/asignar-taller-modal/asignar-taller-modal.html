@@ -2,23 +2,35 @@
     <h2>Asignar vehiculo al taller</h2>
 
     <form [formGroup]="form" (submit)="asignarTaller()">
-        <div>
+        <div class="field">
             <label>Taller</label>
             <select formControlName="tallerId">
-                <option value="">Selecciona un taller</option>
+                <option [value]="null">Selecciona un taller</option>
 
                 @for (taller of talleres(); track taller.id) {
-                <option [value]="taller.id">{{taller.nombre}} - {{taller.especialidad}}</option>
+                <option [value]="taller.id">{{taller.nombre}} - {{taller.especialidad.label}}</option>
                 }
             </select>
+
+             @if (form.get('tallerId')?.touched && form.get('tallerId')?.invalid) {
+                <span class="error-message">
+                    Debes seleccionar un taller.
+                </span>
+            }
         </div>
 
-        <div>
+        <div class="field">
             <label>Motivo</label>
             <input type="text" formControlName="motivo">
+
+             @if (form.get('motivo')?.touched && form.get('motivo')?.invalid) {
+                <span class="error-message">
+                    El motivo es obligatorio.
+                </span>
+            }
         </div>
 
-        <button type="submit">Asignar</button>
+        <button type="submit" [disabled]="form.invalid">Asignar</button>
     </form>
 
 </div>

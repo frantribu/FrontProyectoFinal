@@ -1,14 +1,23 @@
 <section class="card-usuario">
     <div class="card-header">
-        <h2>{{ user()?.nombre }}</h2>
-        <span class="rol-usuario">{{ user()?.rol }}</span>
+        <div>
+            <h2>{{ user()?.nombre }} {{ user()?.apellido }}</h2>
+            <span>{{user()?.email}}</span>
+        </div>
+
+        <span class="estado-usuario" [class]="user()?.activo ? 'activo' : 'inactivo'">{{user()?.activo ? 'Activo' :
+            'Inactivo'}}</span>
     </div>
 
-    <p class="apellido-usuario">
-        {{ user()?.apellido }}
-    </p>
+    <div class="card-footer">
+        <span>
+            {{ user()?.rol }}
+        </span>
+        @if(user()?.rol?.toLowerCase()!="admin"){
+        <button [class]="user()?.activo ? 'desactivar' : 'activar'" (click)="toggleEstadoUsuario(user()!.id)">
+            {{ user()?.activo ? 'Desactivar' : 'Reactivar' }}
+        </button>
+        }
+    </div>
 
-    <button (click)="toggleEstadoUsuario(user()!.id)">
-        {{user()?.activo ? 'Desactivar' : 'Reactivar'}}
-    </button>
 </section>

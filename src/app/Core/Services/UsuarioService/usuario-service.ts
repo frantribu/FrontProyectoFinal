@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UsuarioResponse } from '../../Models/Usuario';
+import { UsuarioRequest, UsuarioResponse } from '../../Models/Usuario';
 import { Observable } from 'rxjs';
 import { EnumResponse } from '../../Models/Enum';
 
@@ -12,10 +12,6 @@ export class UsuarioService {
   private url = "http://localhost:8080/usuarios"
   private http = inject(HttpClient);
 
-  getEncargados() {
-    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
-  }
-
   getAll(activo: string) {
        return this.http.get<UsuarioResponse[]>(`${this.url}?activo=${activo}`)
   }
@@ -24,8 +20,16 @@ export class UsuarioService {
     return this.http.get<UsuarioResponse>(`${this.url}/${id}`)
   }
 
-  postUser(user: Partial<UsuarioResponse>) {
-    return this.http.post(this.url, user)
+   getEncargados() {
+    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
+  }
+
+   getEmpleados() {
+    return this.http.get<UsuarioResponse[]>(this.url + "/empleados")
+  }
+
+  postUser(user: UsuarioRequest) {
+    return this.http.post<UsuarioResponse>(this.url, user)
   }
 
   activarUsuario(id: number) {
@@ -38,5 +42,13 @@ export class UsuarioService {
 
   getRoles():Observable<EnumResponse[]>{
     return this.http.get<EnumResponse[]>(this.url + "/roles")
+  }
+
+  validarEmail(email:string){
+    return this.http.get<boolean>(`${this.url}/validarEmail/${email}`)
+  }
+
+   validarDni(dni:string){
+    return this.http.get<boolean>(`${this.url}/validarDni/${dni}`)
   }
 }

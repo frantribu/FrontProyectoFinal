@@ -1,5 +1,5 @@
-<div>
-    <form [formGroup]="form">
+<div class="container-form">
+    <form [formGroup]="form" (submit)="agregarVenta()">
         <div class="container-input">
             <label for="vehiculo">Vehiculo</label>
             <input readonly [value]="vehiculo()?.marca + ' ' + vehiculo()?.modelo + ' ' + vehiculo()?.version">
@@ -7,20 +7,45 @@
 
         <div class="container-input">
             <label for="cliente">Cliente</label>
-            <select formControlName="clienteId">
-                <option value="">Selecciona un cliente</option>
-                @for (cli of clientes(); track cli.id) {
-                <option [value]="cli.id">{{cli.nombre}} {{cli.apellido}} - {{cli.dni}}</option>
+            <div>
+                <input type="text" (input)="buscarCliente($event)" [value]="busqueda()">
+
+                @if(mostrarLista()){
+                <ul class="list-clients"> 
+                    <li class="add-cliente" (click)="abrirModal()">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
+                        Agregar cliente
+                    </li>
+
+                    @for (cli of clientes(); track cli.id) {
+                    <li (click)="seleccionarCliente(cli)">{{cli.nombre}} {{cli.apellido}} - {{cli.dni}}</li>
+                    }@empty {
+                        <li>No se encontraron clientes</li>
+                    }
+                </ul>
                 }
-            </select>
+                @if (form.get('clienteId')?.invalid && form.get('clienteId')?.touched) {
+                <span class="error-message">El cliente es obligatorio.</span>
+                }
+            </div>
         </div>
 
         <div class="container-input">
             <label for="precio">Precio</label>
-            <input type="number" formControlName="precioVenta">
+            <input [value]="vehiculo()?.precioVenta" type="number" formControlName="precioVenta">
+            @if (form.get('precioVenta')?.invalid) {
+            @if (form.get('precioVenta')?.hasError('required') || form.get('precioVenta')?.value === 0) {
+            <span class="error-message">El precio de venta es obligatorio.</span>
+            }
+            @if (form.get('precioVenta')?.hasError('min')) {
+            <span class="error-message">El precio de venta debe ser mayor a 0.</span>
+            }
+            }
         </div>
 
-        <button (click)="agregarVenta()">
+        <button type="submit">
             Vender vehiculo
         </button>
     </form>

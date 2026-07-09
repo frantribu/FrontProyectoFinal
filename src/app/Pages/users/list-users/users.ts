@@ -5,14 +5,13 @@ import { CardUsuario } from "../../../Shared/card-usuario/card-usuario";
 import { UsuarioResponse } from '../../../Core/Models/Usuario';
 import { RouterLink } from '@angular/router';
 
-
 @Component({
   selector: 'app-users',
   imports: [CardUsuario, RouterLink],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
-export class Users {
+export class Users{
   usuarioService = inject(UsuarioService);
   users = signal<UsuarioResponse[]>([]);
 

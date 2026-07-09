@@ -10,3 +10,5 @@ export interface HistorialReparacionResponse{
     descripcion:string;
     estadoReparacion:EnumResponse;
 }
+
+export type EstadoReparacion = 'INGRESO' | 'DIAGNOSTICO' | 'REPARACION' | 'PRUEBA' | 'FINALIZADO' | 'ENTREGADO'

@@ -1,11 +1,13 @@
 import { EnumResponse } from "./Enum";
+import { HistorialReparacionResponse } from "./HistorialReparacion";
 
 export interface VehiculoResponse {
     id: number;
     marca: string;
     modelo: string;
     version: string;
-    precio: number;
+    precioCompra: number;
+    precioVenta:number;
     tipo: string;
     kilometraje: number;
     fechaIngreso: Date;
@@ -19,6 +21,7 @@ export interface VehiculoDetalleResponse extends VehiculoResponse {
     motor: string;
     combustion: string;
     descripcion: string;
+    historialDeReparacion: HistorialReparacionResponse[];
     imagenes: string[] | null;
 }
 
@@ -31,7 +34,8 @@ export interface VehiculoReparacionResponse{
 }
 
 export interface CrearVehiculoRequest {
-    precio: number,
+    precioCompra: number,
+    precioVenta:number,
     kilometraje: number,
     patente: string,
     color: string

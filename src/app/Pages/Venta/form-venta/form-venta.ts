@@ -1,13 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearVentaRequest } from '../../../Core/Models/Venta';
-import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService } from '../../../Core/Services/ClienteService/cliente-service';
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ClienteResponse } from '../../../Core/Models/Cliente';
 import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearClienteModal } from '../../../Core/Components/crear-cliente-modal/crear-cliente-modal';
 
 @Component({
   selector: 'app-form-venta',
@@ -21,28 +21,48 @@ export class FormVenta {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
 
   vehiculoId = Number(this.route.snapshot.paramMap.get("id"));
 
   vehiculo = signal<VehiculoResponse | null>(null);
   clientes = signal<ClienteResponse[]>([]);
 
+  busqueda=signal<string>('');
+  mostrarLista=signal(false);
+
+  private timerBusqueda:any;
+
   constructor() {
-    this.getClientes();
+    effect(()=>{
+      const buscador=this.busqueda();
+
+      clearTimeout(this.timerBusqueda);
+
+      this.timerBusqueda=setTimeout(()=>{
+        this.getClientes(buscador)
+      }, 350)
+
+    })
     this.getVehiculo();
   }
 
   form = this.fb.nonNullable.group({
     clienteId: [null, Validators.required],
-    precioVenta: [0, [Validators.required, Validators.min(1)]]
+    precioVenta: [this.vehiculo()?.precioVenta, [Validators.required, Validators.min(1)]]
   })
 
   agregarVenta() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const formulario = this.form.getRawValue();
 
     const venta: CrearVentaRequest = {
       clienteId: formulario.clienteId!,
-      precioVenta: formulario.precioVenta,
+      precioVenta: formulario.precioVenta!,
     }
 
     this.vehiculoService.agregarVenta(this.vehiculoId, venta).subscribe({
@@ -51,8 +71,26 @@ export class FormVenta {
     })
   }
 
-  getClientes() {
-    this.clienteService.getClientes("true").subscribe({
+  buscarCliente(event:Event){
+    const value=(event.target as HTMLInputElement).value;
+    this.busqueda.set(value);
+    this.mostrarLista.set(true);
+
+    if(!value.trim()){
+      this.clientes.set([]);
+      this.mostrarLista.set(false)
+      return;
+    }
+  }
+
+  seleccionarCliente(cliente:ClienteResponse){
+    this.mostrarLista.set(false);
+    this.busqueda.set(`${cliente.nombre} ${cliente.apellido} - ${cliente.dni}`)
+    this.form.patchValue({clienteId:cliente.id as any})
+  }
+
+  getClientes(busqueda:string) {
+    this.clienteService.getClientes(true, busqueda).subscribe({
       next: (cli) => this.clientes.set(cli),
       error: () => console.log("Error al cargar los clientes")
     })
@@ -60,7 +98,10 @@ export class FormVenta {
 
   getVehiculo(){
     this.vehiculoService.getDetalleVehiculo(this.vehiculoId).subscribe({
-      next:(v)=>this.vehiculo.set(v),
+      next:(v)=>{
+        this.vehiculo.set(v);
+        this.form.patchValue({precioVenta:v.precioVenta});
+      },
       error:(e)=>{
         if(e.status==403){
           this.router.navigate(['/vehiculos'])
@@ -70,4 +111,17 @@ export class FormVenta {
       }
     })
   }
+
+    ///METODO PARA ABRIR EL MODAL PARA CREAR EL CLIENTE
+  
+    abrirModal() {
+      this.dialog.open(CrearClienteModal, {
+        width: "400px"
+      }).afterClosed().subscribe(cliente => {
+        if (cliente)
+        {
+          this.seleccionarCliente(cliente);
+        }
+      })
+    }
 }

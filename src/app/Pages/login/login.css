@@ -3,9 +3,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .pageForm{
+    width: 100%;
+    max-width: 400px;
     background-color: var(--color-bg-elevated);
     padding: 32px;
     border-radius: 18px;
@@ -185,5 +188,57 @@ button[type=submit]:hover{
 .error{
     font-size: 10px;
     color: var(--color-danger-text)
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding-top: 40px;
+    }
+
+    .pageForm {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page {
+        padding: 20px;
+    }
+
+    .pageForm {
+        padding: 24px 18px;
+        border-radius: 12px;
+    }
+
+    .logo {
+        width: 38px;
+        padding: 8px;
+    }
+
+    .nombreEncabezado {
+        font-size: 15px;
+    }
+
+    .subnombreEncabezado {
+        font-size: 12px;
+    }
+
+    .divBienvenido h1 {
+        font-size: 22px;
+    }
+
+    .divBienvenido p {
+        font-size: 12px;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
 

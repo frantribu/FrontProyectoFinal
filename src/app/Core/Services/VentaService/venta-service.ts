@@ -12,9 +12,9 @@ export class VentaService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
-  getVentas(): Observable<VentaResponse[]> {
+  getVentas(empleadoId:string): Observable<VentaResponse[]> {
     if (this.authService.isAdmin()) {
-      return this.http.get<VentaResponse[]>(this.url);
+      return this.http.get<VentaResponse[]>(`${this.url}?empleadoId=${empleadoId}`);
     } else if (this.authService.isEmpleado()) {
       return this.http.get<VentaResponse[]>(`${this.url}/mis-ventas`);
     }

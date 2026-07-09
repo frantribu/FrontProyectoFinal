@@ -12,9 +12,10 @@ import { email, form, FormField, required } from '@angular/forms/signals';
   styleUrl: './login.css',
 })
 export class Login {
-  private authService = inject(AuthService)
-  private router = inject(Router)
-  ocultar = true
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  ocultar = true;
+  errorMensaje=signal<string>('');
 
   loginRequest = signal<LoginRequest>({
     email: '',
@@ -33,7 +34,15 @@ export class Login {
     if (this.formLogin().valid()) {
       this.authService.login(this.formLogin().value()).subscribe({
         next: () => this.router.navigate(['/home']),
-        error: (e) => console.log("Login fallido", e)
+        error: (e) => {
+          if(e.status===401){
+            this.errorMensaje.set("Credenciales incorrectas")
+          }else if(e.status===403){
+            this.errorMensaje.set("Usuario desactivado")
+          }else{
+            this.errorMensaje.set("Error")
+          }
+        }
       })
     }
   }

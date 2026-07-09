@@ -87,6 +87,12 @@
                 <button type="submit" [disabled]="formLogin().invalid()">
                     <span>Ingresar al sistema</span>
                 </button>
+
+    
+                @if(errorMensaje()){
+                <span class="error">{{errorMensaje()}}</span>
+                }
+        
             </form>
         </div>
     </div>

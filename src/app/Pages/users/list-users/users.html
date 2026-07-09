@@ -17,11 +17,9 @@
 
     </div>
 
-    
-
     <div class="container-list-usuarios">
         @for (user of users(); track user.id) {
-            <app-card-usuario [user]="user"></app-card-usuario>
+            <app-card-usuario [user]="user" (estadoModificado)="getUsers()"></app-card-usuario>
         }
     </div>
 </div>

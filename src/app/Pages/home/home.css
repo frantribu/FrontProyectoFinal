@@ -4,7 +4,7 @@ section {
     padding: 20px;
 }
 
-section > div{
+section>div {
     margin-bottom: 20px;
 }
 
@@ -21,20 +21,20 @@ section > div{
     align-items: center;
 }
 
-.material-symbols-outlined{
- font-size: 20px;
+.material-symbols-outlined {
+    font-size: 20px;
     color: var(--color-text-secondary);
     margin-right: 8px;
 }
 
-.container-title-section{
+.container-title-section {
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.title-section{
+.title-section {
     color: var(--color-text-secondary);
     font-weight: 500;
 }
@@ -45,14 +45,13 @@ section > div{
 
 .resumen-cards {
     display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit,minmax(140px, 1fr));
     gap: 10px;
 }
 
 .accesos-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
 }
 
@@ -66,5 +65,9 @@ section > div{
 
 .card-acceso:hover {
     border: 1px solid var(--color-border-hover);
-        border-radius: 10px;
+    border-radius: 10px;
+}
+
+@media (max-width:768px) {
+   
 }

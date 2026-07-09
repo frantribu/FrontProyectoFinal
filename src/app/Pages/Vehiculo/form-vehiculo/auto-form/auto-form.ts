@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Submodelo } from '../../../../Core/Models/Auto';
 import { CrearAutoRequest } from '../../../../Core/Models/Auto';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
+import { ValidatorsPersonalizados } from '../../../../Shared/Validators/ValidatorsPersonalizados';
 
 @Component({
   selector: 'app-auto-form',
@@ -21,18 +22,25 @@ export class AutoForm {
   private imageUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditable = this.id !=null && this.id!==0
+  isEditable = this.id != null && this.id !== 0
+  imagenesActuales = signal<string[]>([])
+
+  mensajeError = signal<string>('');
+  patenteOriginal = ""
 
   form = this.fb.nonNullable.group({
     marca: ['', Validators.required],
     modelo: ['', Validators.required],
     anio: [0, [Validators.required, Validators.min(1900)]],
     idTrim: [0, Validators.required],
-    precio: [0, Validators.required],
-    kilometraje: [0, Validators.required],
-    patente: ['', Validators.required],
+    precioCompra: [0, [Validators.required, Validators.min(1)]],
+    precioVenta: [0, [Validators.required, Validators.min(1)]],
+    kilometraje: [0, [Validators.required, Validators.min(0)]],
+    patente: ['', [Validators.required, Validators.pattern(/^([A-Za-z]{2}\s?\d{3}\s?[A-Za-z]{2}|[A-Za-z]{3}\s?\d{3})$/)]],
     color: ['', Validators.required],
     descripcion: ['']
+  }, {
+    validators: [ValidatorsPersonalizados.validarPrecioDeCompraVenta]
   })
 
   marcas = toSignal(this.vehiculoService.getMarcas("AUTO"), { initialValue: [] });
@@ -104,11 +112,14 @@ export class AutoForm {
   }
 
   agregarAuto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearAutoRequest = {
       idTrim: formulario.idTrim,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
@@ -124,6 +135,8 @@ export class AutoForm {
   cargarAutoParaEditar() {
     this.vehiculoService.getDetalleAuto(this.id).subscribe({
       next: (auto) => {
+        this.imagenesActuales.set(auto.imagenes ?? [])
+
         this.vehiculoService.getModelos("AUTO", auto.marca).subscribe(
           mod => this.modelos.set(mod)
         );
@@ -136,12 +149,15 @@ export class AutoForm {
           sub => this.submodelos.set(sub)
         );
 
+        this.patenteOriginal = auto.patente;
+
         this.form.patchValue({
           marca: auto.marca,
           modelo: auto.modelo,
           anio: auto.anio,
           idTrim: auto.idTrim,
-          precio: auto.precio,
+          precioCompra: auto.precioCompra,
+          precioVenta: auto.precioVenta,
           kilometraje: auto.kilometraje,
           patente: auto.patente,
           color: auto.color,
@@ -149,7 +165,7 @@ export class AutoForm {
         })
       },
       error: (e) => {
-        if (e.status === 403) {
+        if (e.status === 404) {
           this.router.navigate(['/vehiculos'])
         } else {
           console.log("Error al cargar el auto")
@@ -159,28 +175,65 @@ export class AutoForm {
   }
 
   editarAuto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearAutoRequest = {
       idTrim: formulario.idTrim,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       color: formulario.color,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
       descripcion: formulario.descripcion
     }
 
-    this.vehiculoService.modificarAuto(this.id, request).subscribe({
+    this.vehiculoService.modificarAuto(this.id, this.imageUpload().imagenes(), request).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("No se puedo modificar el auto", e)
     })
   }
 
   onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     if (this.isEditable) {
       this.editarAuto();
     } else {
       this.agregarAuto();
     }
   }
+
+  eliminarImagen(nombre: string) {
+    this.vehiculoService.eliminarImagen(this.id, nombre).subscribe({
+      next: () => {
+        this.imagenesActuales.update(imgs =>
+          imgs.filter(i => i !== nombre)
+        );
+      },
+      error: (err) => console.log(err)
+    })
+  }
+
+  validarPatente(event: Event) {
+    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "").toUpperCase();
+
+    if (this.isEditable && value === this.patenteOriginal) {
+      this.mensajeError.set("");
+      return;
+    }
+
+    this.vehiculoService.validarPatente(value).subscribe({
+      next: (existe) => {
+          this.mensajeError.set(existe ? "La patente ya esta registrada" : '')
+        },
+      error: (e) => console.log("Error al validar la patente: ", e)
+    })
+  }
 }
+
+

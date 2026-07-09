@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HistorialReparacionResponse } from '../../Models/HistorialReparacion';
+import { EstadoReparacion, HistorialReparacionResponse } from '../../Models/HistorialReparacion';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +16,9 @@ export class ReparacionService {
 
   getReparacionesPorTaller(idTaller: number): Observable<HistorialReparacionResponse[]> {
     return this.http.get<HistorialReparacionResponse[]>(`${this.url}/taller/${idTaller}`);
+  }
+
+  cambiarEstado(id:number, estadoReparacion:EstadoReparacion){
+    return this.http.patch(`${this.url}/${id}/estado`, {estadoReparacion})
   }
 }

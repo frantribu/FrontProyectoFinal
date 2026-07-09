@@ -5,7 +5,7 @@
 }
 
 header {
-    height: 100vh;
+    height: 100%;
     background-color: var(--color-bg-shell);
     position: sticky;
     top: 0;
@@ -19,3 +19,11 @@ header {
 main {
     flex: 1;/*Ocupa el resto de la pantalla*/
 }
+
+@media (max-width: 768px) {
+    .app-container {
+        overflow-y: auto;
+    }
+
+}
+

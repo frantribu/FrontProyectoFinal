@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { required } from '@angular/forms/signals';
 import { TallerService } from '../../../Core/Services/TallerService/taller-service';
 import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
 import { CrearTallerRequest } from '../../../Core/Models/Taller';
@@ -14,34 +13,47 @@ import { Router } from '@angular/router';
   styleUrl: './taller-form.css',
 })
 export class TallerForm {
-  private fb=inject(FormBuilder);
-  private tallerService=inject(TallerService);
-  private usuarioService=inject(UsuarioService);
-  private router=inject(Router);
+  private fb = inject(FormBuilder);
+  private tallerService = inject(TallerService);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
-  especialidades=toSignal(this.tallerService.obtenerEspecialidades(), {initialValue:[]});
-  encargados=toSignal(this.usuarioService.getEncargados(), {initialValue:[]});
+  especialidades = toSignal(this.tallerService.obtenerEspecialidades(), { initialValue: [] });
+  encargados = toSignal(this.usuarioService.getEncargados(), { initialValue: [] });
 
-  form=this.fb.nonNullable.group({
-    especialidad:['', Validators.required],
-    nombre:['', Validators.required],
-    idEncargadoTaller:[0, Validators.required],
-    direccion:['', Validators.required]
-  })
+  form = this.fb.nonNullable.group({
+    especialidad: ['', Validators.required],
+    nombre: ['', Validators.required],
+    idEncargadoTaller: [0, [Validators.required, Validators.min(1)]],
+    direccion: ['', Validators.required]
+  });
 
-  crearTaller(){
-    const formulario=this.form.getRawValue();
+  comprobarEncargado(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    
+    if (Number(selectElement.value) === -1) {
+      this.router.navigate(['/talleres/nuevo']);
+    }
+  }
 
-    const request:CrearTallerRequest={
-      especialidad:formulario.especialidad,
-      nombre:formulario.nombre,
-      idEncargadoTaller:formulario.idEncargadoTaller,
-      direccion:formulario.direccion
+  crearTaller() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const formulario = this.form.getRawValue();
+
+    const request: CrearTallerRequest = {
+      especialidad: formulario.especialidad,
+      nombre: formulario.nombre,
+      idEncargadoTaller: Number(formulario.idEncargadoTaller),
+      direccion: formulario.direccion
     };
 
     this.tallerService.crearTaller(request).subscribe({
-      next:()=>this.router.navigate(['/talleres']),
-      error:(e)=>console.log("Error al crear el taller: ", e)
-    })
+      next: () => this.router.navigate(['/talleres']),
+      error: (e) => console.log("Error al crear el taller: ", e)
+    });
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient, } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AutoDetalleResponse, CrearAutoRequest, Submodelo } from '../../Models/Auto';
-import { VehiculoResponse } from '../../Models/Vehiculo';
+import { VehiculoDetalleResponse, VehiculoResponse } from '../../Models/Vehiculo';
 import { CrearMotoRequest, MotoDetalleResponse } from '../../Models/Moto';
 import { CrearVentaRequest } from '../../Models/Venta';
 import { EnumResponse } from '../../Models/Enum';
@@ -16,12 +16,12 @@ export class VehiculoService {
 
   /*--------------------------------------------------------VEHICULOS-----------------------------------------------------------------------------------*/
 
-  getVehiculos(estado: string): Observable<VehiculoResponse[]> {
-    return this.http.get<VehiculoResponse[]>(`${this.url}?estado=${estado}`);
+  getVehiculos(estado: string, buscador:string): Observable<VehiculoResponse[]> {
+    return this.http.get<VehiculoResponse[]>(`${this.url}?estado=${estado}&busqueda=${buscador}`);
   }
 
-  getDetalleVehiculo(id: number): Observable<VehiculoResponse> {
-    return this.http.get<VehiculoResponse>(this.url + `/${id}`)
+  getDetalleVehiculo(id: number): Observable<VehiculoDetalleResponse> {
+    return this.http.get<VehiculoDetalleResponse>(this.url + `/${id}`)
   } 
 
   getDetalleAuto(id: number): Observable<AutoDetalleResponse> {
@@ -56,6 +56,10 @@ export class VehiculoService {
     return this.http.get<EnumResponse[]>(this.url + "/estados")
   }
 
+  validarPatente(patente:string){
+    return this.http.get<boolean>(`${this.url}/validarPatente/${patente}`);
+  }
+
   /*------------------------------------------AUTO----------------------------------------------------*/
 
   agregarAuto(auto: CrearAutoRequest, imagenes: File[]): Observable<AutoDetalleResponse> {
@@ -65,8 +69,12 @@ export class VehiculoService {
     return this.http.post<AutoDetalleResponse>(this.url + `/autos`, form);
   }
 
-  modificarAuto(id: number, auto: CrearAutoRequest): Observable<AutoDetalleResponse> {
-    return this.http.put<AutoDetalleResponse>(this.url + `/autos/${id}`, auto)
+  modificarAuto(id: number, imagenes: File[], auto: CrearAutoRequest): Observable<AutoDetalleResponse> {
+    const form = new FormData();
+    form.append('datos', new Blob([JSON.stringify(auto)], { type: 'application/json' }));
+    imagenes.forEach(img => form.append('files', img));
+
+    return this.http.put<AutoDetalleResponse>(this.url + `/autos/${id}`, form)
   }
 
   /*------------------------------------------MOTO----------------------------------------------------*/
@@ -75,6 +83,7 @@ export class VehiculoService {
     const form = new FormData();
     form.append('datos', new Blob([JSON.stringify(moto)], { type: 'application/json' }));
     imagenes.forEach(img => form.append('files', img));
+    
     return this.http.post<MotoDetalleResponse>(this.url + "/motos", form)
   }
 
@@ -90,5 +99,7 @@ export class VehiculoService {
     return this.http.delete(this.url + `/${id}`)
   }
 
-
+  eliminarImagen(id:number, nombre:string){
+    return this.http.delete(`${this.url}/${id}/imagenes?nombre=${nombre}`)
+  }
 }

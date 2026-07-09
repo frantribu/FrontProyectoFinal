@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../Services/AuthService/auth-service';
 import { Router, RouterLinkActive } from '@angular/router';
 import { RouterLink } from "@angular/router";
@@ -13,6 +13,7 @@ export class Nav {
   authService=inject(AuthService);
   router = inject(Router);
   menuUserOpen=false;
+  navAbierto=signal(false);
 
   getIniciales(): string {
     const user = this.authService.getUser();
@@ -31,5 +32,9 @@ export class Nav {
 
   toggleMenuUser():void{
     this.menuUserOpen=!this.menuUserOpen
+  }
+
+  toggleNav():void{
+    this.navAbierto.set(!this.navAbierto())
   }
 }

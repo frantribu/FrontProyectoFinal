@@ -5,7 +5,7 @@
                 <span class="material-symbols-outlined">
                     search
                 </span>
-                <input type="text" placeholder="Buscador">
+                <input type="text" placeholder="Buscador" (input)="buscarVehiculo($event)" [value]="buscador()">
             </div>
 
             <div class="container-filtros">
@@ -34,8 +34,9 @@
                     <th>VEHICULO</th>
                     <th>TIPO</th>
                     <th>PATENTE</th>
-                    <th>PRECIO</th>
-                    <th>KILOMETROS</th>
+                    <th>PRECIO DE COMPRA</th>
+                    <th>PRECIO DE VENTA</th>
+                    <th>KILOMETRAJE</th>
                     <th>ESTADO</th>
                     <th></th>
                 </tr>
@@ -44,7 +45,7 @@
             <tbody>
                 @for (v of vehiculos(); track v.id) {
                 <tr (click)="verDetalle(v)">
-                    <td>
+                    <td data-titulo="VEHICULO">
                         <div>
                             <div class="info-vehiculo">
                                 {{v.marca}} {{v.modelo}}
@@ -55,18 +56,19 @@
                         </div>
                     </td>
 
-                    <td><span class="tipo-vehiculo">{{v.tipo.toLowerCase()}}</span></td>
-                    <td>{{v.patente}}</td>
-                    <td>{{v.precio | currency:'USD':'symbol':'1.0-0' }}</td>
-                    <td>{{v.kilometraje | number}} km</td>
-                    <td class="columna-estado"><span class="estado-vehiculo"
+                    <td data-titulo="TIPO"><span class="tipo-vehiculo">{{v.tipo.toLowerCase()}}</span></td>
+                    <td data-titulo="PATENTE">{{v.patente}}</td>
+                    <td data-titulo="PRECIO DE COMPRA">{{v.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
+                    <td data-titulo="PRECIO DE VENTA">{{v.precioVenta | currency:'USD':'symbol':'1.0-0' }}</td>
+                    <td data-titulo="KILOMETRAJE">{{v.kilometraje | number}} km</td>
+                    <td data-titulo="ESTADO" class="columna-estado"><span class="estado-vehiculo"
                             [class]="'estado-' + v.estado.name.toLowerCase()">{{v.estado.label}}</span>
                     </td>
 
-                    <td class="acciones">
+                    <td  class="acciones">
                         @if (v.estado.name.toLowerCase()=="disponible") {
                         <div class="container-acciones">
-                            @if(rol=="admin"){
+                            @if(rol.toLowerCase()==="admin"){
 
                             <button class="button-accion" (click)="abrirModal(v.id); $event.stopPropagation()">
                                 <span class="material-symbols-outlined">

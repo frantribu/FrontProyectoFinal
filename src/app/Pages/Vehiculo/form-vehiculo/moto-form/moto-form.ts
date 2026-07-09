@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CrearMotoRequest } from '../../../../Core/Models/Moto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUpload } from '../../../../Shared/image-upload/image-upload';
+import { ValidatorsPersonalizados } from '../../../../Shared/Validators/ValidatorsPersonalizados';
 
 
 @Component({
@@ -22,7 +23,10 @@ export class MotoFormComponent {
   private imagenUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
-  isEditable = this.id !==null && this.id!==0
+  isEditable = this.id !== null && this.id !== 0
+
+  mensajeError = signal<string>('');
+  patenteOriginal = ""
 
   marcas = toSignal(this.vehiculoService.getMarcas("moto"), { initialValue: [] });
   modelos = signal<String[]>([]);
@@ -37,15 +41,18 @@ export class MotoFormComponent {
     motor: ['', Validators.required],
     combustion: ['', Validators.required],
     cilindrada: [0, [Validators.required, Validators.min(1)]],
-    precio: [0, [Validators.required, Validators.min(1)]],
+    precioCompra: [0, [Validators.required, Validators.min(1)]],
+    precioVenta: [0, [Validators.required, Validators.min(1)]],
     kilometraje: [0, [Validators.required, Validators.min(0)]],
-    patente: ['', [Validators.required, Validators.maxLength(10)],],
+    patente: ['', [Validators.required, Validators.pattern(/^\s*([a-zA-Z]{3}\s*\d{3}|[a-zA-Z]\s*\d{3}\s*[a-zA-Z]{3})\s*$/)]],
     color: ['', Validators.required],
     descripcion: ['']
+  }, {
+    validators: [ValidatorsPersonalizados.validarPrecioDeCompraVenta]
   });
 
-  constructor(){
-    if(this.isEditable){
+  constructor() {
+    if (this.isEditable) {
       this.cargarMotoParaEditar();
     }
   }
@@ -68,6 +75,8 @@ export class MotoFormComponent {
   // ================= ENVIO DEL FORMULARIO =================
 
   agregarMoto() {
+    if (this.form.invalid) return;
+
     const formulario = this.form.getRawValue();
 
     const request: CrearMotoRequest = {
@@ -80,7 +89,8 @@ export class MotoFormComponent {
       descripcion: formulario.descripcion,
       cilindrada: formulario.cilindrada,
       tipoMoto: formulario.tipoMoto,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
       color: formulario.color
@@ -96,10 +106,12 @@ export class MotoFormComponent {
 
   cargarMotoParaEditar() {
     this.vehiculoService.getDetalleMoto(this.id).subscribe({
-      next: (moto) => {        
+      next: (moto) => {
         this.vehiculoService.getModelos("MOTO", moto.marca).subscribe(
           mod => this.modelos.set(mod)
         );
+
+        this.patenteOriginal = moto.patente;
 
         this.form.patchValue({
           marca: moto.marca,
@@ -111,16 +123,17 @@ export class MotoFormComponent {
           descripcion: moto.descripcion,
           cilindrada: moto.cilindrada,
           tipoMoto: moto.tipoMoto.name,
-          precio: moto.precio,
+          precioCompra: moto.precioCompra,
+          precioVenta: moto.precioVenta,
           kilometraje: moto.kilometraje,
           patente: moto.patente,
           color: moto.color
         })
       },
-      error:(e)=>{
-        if(e.status===403){
+      error: (e) => {
+        if (e.status === 404) {
           this.router.navigate(['/vehiculos'])
-        }else{
+        } else {
           console.log("Error al cargar la moto");
         }
       }
@@ -128,9 +141,11 @@ export class MotoFormComponent {
   }
 
   editarMoto() {
-    const formulario=this.form.getRawValue();
+    if (this.form.invalid) return;
 
-    const request:CrearMotoRequest={
+    const formulario = this.form.getRawValue();
+
+    const request: CrearMotoRequest = {
       marca: formulario.marca,
       modelo: formulario.modelo,
       version: formulario.version,
@@ -140,23 +155,47 @@ export class MotoFormComponent {
       descripcion: formulario.descripcion,
       cilindrada: formulario.cilindrada,
       tipoMoto: formulario.tipoMoto,
-      precio: formulario.precio,
+      precioCompra: formulario.precioCompra,
+      precioVenta: formulario.precioVenta,
       kilometraje: formulario.kilometraje,
       patente: formulario.patente,
       color: formulario.color
     };
 
     this.vehiculoService.modificarMoto(this.id, request).subscribe({
-      next:()=>this.router.navigate(['/vehiculos']),
-      error:(e)=>console.log("Error al modificar la moto: ", e)
+      next: () => this.router.navigate(['/vehiculos']),
+      error: (e) => console.log("Error al modificar la moto: ", e)
     })
-  } 
+  }
 
-  onSubmit(){
-    if(this.isEditable){
+  onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    if (this.isEditable) {
       this.editarMoto()
-    }else{
+    } else {
       this.agregarMoto()
     }
+  }
+
+  validarPatente(event: Event) {
+    if (this.form.invalid) return;
+
+    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "");
+
+    if (this.isEditable && value === this.patenteOriginal) {
+      this.mensajeError.set("");
+      return;
+    }
+
+    this.vehiculoService.validarPatente(value).subscribe({
+      next: (existe) => {
+        this.mensajeError.set(existe ? "La patente ya esta registrada" : "")
+      },
+      error: (e) => console.log("Error al validad la patente: ", e)
+    })
   }
 }
