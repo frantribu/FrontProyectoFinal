@@ -10,7 +10,17 @@ export class ClienteService {
   private http=inject(HttpClient);
   private url= "http://localhost:8080/clientes";
 
-  getClientes(activo:boolean):Observable<ClienteResponse[]>{
+  getClientes(activo:string):Observable<ClienteResponse[]>{
     return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}`)
   }
+  
+  activarCliente(id: number) {
+    return this.http.patch(`${this.url}/${id}/activar`, {})
+  }
+
+  deleteCliente(id: number) {
+    return this.http.delete(`${this.url}/${id}`)
+  }
+
+  
 }

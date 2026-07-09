@@ -12,6 +12,9 @@ export const routes: Routes = [
     {path:"users", loadComponent:()=> import("./Pages/users/list-user/users").then(c => c.Users)},
     {path:"users/nuevo", loadComponent:()=> import("./Pages/users/form-user/form-user").then(c => c.FormUser)},
 
+    {path:"clientes", loadComponent:()=> import("./Pages/Clientes/list-clientes/list-clientes").then(c => c.ListClientes)},
+    {path:"clientes/nuevo", loadComponent:()=> import("./Pages/Clientes/form-clientes/form-clientes").then(c => c.FormClientes)},
+
     {path:"vehiculos", loadComponent:()=>import("./Pages/Vehiculo/list-vehiculos/vehiculos").then(c=>c.Vehiculos)},
     {path:"vehiculos/nuevo", loadComponent:()=>import("./Pages/Vehiculo/vehiculo-selector/vehiculo-selector").then(c=>c.VehiculoSelector)},
     

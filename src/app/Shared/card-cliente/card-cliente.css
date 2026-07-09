@@ -1,0 +1,40 @@
+.card-cliente {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.card-cliente:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-header h2 {
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.apellido-cliente {
+    margin-top: 8px;
+    color: var(--color-text-muted);
+}
+
+.rol-cliente {
+    background-color: var(--color-bg-chip);
+    color: var(--color-text-tertiary);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}

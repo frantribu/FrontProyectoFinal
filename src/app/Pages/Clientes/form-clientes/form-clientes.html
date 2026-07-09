@@ -1,0 +1,50 @@
+<div class="page">
+    <div class="pageForm">
+        <div class="divEncabezado">
+            <div>
+                    <style type="text/css">
+                        .st0 {
+                            fill: white;
+                            fill-rule: evenodd;
+                            clip-rule: evenodd;
+                        }
+                    </style>
+            </div>
+            <div class="divTitulo">
+                <span class="nombreEncabezado">AutoPremium</span>
+                <span class="subnombreEncabezado">Carga de Cliente</span>
+            </div>
+        </div>
+    <div>
+        <div class="divForm">
+            <form [formGroup]="form">
+                <div class="divContenedorInputs">
+                    <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" formControlName="nombre">
+        </div>
+        <div>
+            <label for="apellido">Apellido</label>
+            <input type="text" formControlName="apellido">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" formControlName="email">
+        </div>
+        <div>
+            <label for="telefono">Telefono</label>
+            <input type="text" formControlName="telefono">
+        </div>
+                </div>
+        
+        <button type="submit" [disabled]="form.invalid">
+                    <span>Cargar en el sistema</span>
+                </button>
+
+    </form>
+        </div>
+    
+    
+</div>
+    </div>
+</div>

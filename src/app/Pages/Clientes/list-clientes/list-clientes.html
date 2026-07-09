@@ -1,0 +1,27 @@
+<div class="container-clientes">
+    <div class="header-clientes">
+
+        <select (change)="onActivoChange($event)">
+            <option value="">Todos</option>
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+        </select>
+        
+        <div class="add-cliente">
+            <a routerLink="/clientes/nuevo">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                Agregar Cliente</a>
+        </div>
+
+    </div>
+
+    
+
+    <div class="container-list-clientes">
+        @for (cliente of clientes(); track cliente.id) {
+            <app-card-cliente [client]="cliente"></app-card-cliente>
+        }
+    </div>
+</div>

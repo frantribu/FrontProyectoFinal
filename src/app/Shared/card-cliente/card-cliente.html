@@ -1,0 +1,13 @@
+<section class="card-cliente">
+    <div class="card-header">
+        <h2>{{ client()?.nombre }}</h2>
+    </div>
+
+    <p class="apellido-cliente">
+        {{ client()?.apellido }}
+    </p>
+
+    <button (click)="toggleEstadoUsuario(client()!.id)">
+        {{client()?.activo ? 'Desactivar' : 'Reactivar'}}
+    </button>
+</section>
