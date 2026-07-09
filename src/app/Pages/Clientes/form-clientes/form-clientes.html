@@ -1,50 +1,103 @@
 <div class="page">
-    <div class="pageForm">
-        <div class="divEncabezado">
-            <div>
-                    <style type="text/css">
-                        .st0 {
-                            fill: white;
-                            fill-rule: evenodd;
-                            clip-rule: evenodd;
-                        }
-                    </style>
-            </div>
+    <div class="form-container">
+        <div class="form-header">
             <div class="divTitulo">
                 <span class="nombreEncabezado">AutoPremium</span>
                 <span class="subnombreEncabezado">Carga de Cliente</span>
             </div>
         </div>
-    <div>
-        <div class="divForm">
-            <form [formGroup]="form">
-                <div class="divContenedorInputs">
-                    <div>
-            <label for="nombre">Nombre</label>
-            <input type="text" formControlName="nombre">
-        </div>
-        <div>
-            <label for="apellido">Apellido</label>
-            <input type="text" formControlName="apellido">
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="text" formControlName="email">
-        </div>
-        <div>
-            <label for="telefono">Telefono</label>
-            <input type="text" formControlName="telefono">
-        </div>
-                </div>
-        
-        <button type="submit" [disabled]="form.invalid">
-                    <span>Cargar en el sistema</span>
-                </button>
 
-    </form>
-        </div>
-    
-    
-</div>
+        <form [formGroup]="form" (submit)="agregarCliente()">
+            <div class="form-grid">
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" formControlName="nombre">
+
+                    @if(form.get("nombre")?.touched){
+                    @if (form.get("nombre")?.hasError("required")) {
+                    <span class="error-message">
+                        El nombre es obligatorio.
+                    </span>
+                    }
+                    }
+                </div>
+
+                <div>
+                    <label for="apellido">Apellido</label>
+                    <input type="text" formControlName="apellido">
+
+                    @if(form.get("apellido")?.touched){
+                    @if (form.get("apellido")?.hasError("required")) {
+                    <span class="error-message">
+                        El apellido es obligatorio.
+                    </span>
+                    }
+                    }
+                </div>
+
+                <div>
+                    <label for="dni">DNI</label>
+                    <input type="text" formControlName="dni" (blur)="validarDni($event)" [class.input-error]="errorDni()">
+
+                    @if(form.get("dni")?.touched){
+                    @if (form.get("dni")?.hasError("required")) {
+                    <span class="error-message">
+                        El dni es obligatorio.
+                    </span>
+                    }@else if (form.get("dni")?.hasError("pattern")) {
+                    <span class="error-message">
+                        El dni debe ser mayor a 1.000.000 y menor a 99.999.999
+                    </span>
+                    }@else if (errorDni()) {
+                        <span class="error-message">
+                            {{errorDni()}}
+                        </span>
+                    }
+                    }
+                </div>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" formControlName="email" (blur)="validarEmail($event)" [class.input-error]="errorEmail()">
+
+                    @if(form.get("email")?.touched){
+                    @if (form.get("email")?.hasError("required")) {
+                    <span class="error-message">
+                        El email es obligatorio.
+                    </span>
+                    }@else if(form.get("email")?.hasError("email")){
+                    <span class="error-message">
+                        El email no tiene el formato valido.
+                    </span>
+                    }@else if (errorEmail()) {
+                        <span class="error-message">
+                            {{errorEmail()}}
+                        </span>
+                    }
+                    }
+                </div>
+
+                <div>
+                    <label for="telefono">Telefono</label>
+                    <input type="text" formControlName="telefono">
+
+                    @if(form.get("telefono")?.touched){
+                    @if (form.get("telefono")?.hasError("required")) {
+                    <span class="error-message">
+                        El numero de telefono es obligatorio.
+                    </span>
+                    }@else if(form.get("telefono")?.hasError("pattern")){
+                    <span class="error-message">
+                        Ingresá el código de área + número (sin espacios ni guiones)
+                    </span>
+                    }
+                    }
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="form.invalid">
+                <span>Cargar en el sistema</span>
+            </button>
+        </form>
     </div>
 </div>

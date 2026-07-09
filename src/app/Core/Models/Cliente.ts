@@ -11,5 +11,5 @@ export interface CrearClienteRequest {
     apellido: string;
     dni: number;
     email: string;
-    telefono: string;
+    telefono: number;
 }

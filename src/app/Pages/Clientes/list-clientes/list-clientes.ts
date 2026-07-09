@@ -23,7 +23,7 @@ export class ListClientes {
   }
 
   getClientes() {
-    this.clienteService.getClientes(this.activoSeleccionado()).subscribe({
+    this.clienteService.getClientes(this.activoSeleccionado(), " ").subscribe({
       next: (u) => {
         this.clientes.set(u);
       },

@@ -10,7 +10,7 @@ export class ClienteService {
   private http=inject(HttpClient);
   private url= "http://localhost:8080/clientes";
 
-  getClientes(activo:boolean, busqueda:string):Observable<ClienteResponse[]>{
+  getClientes(activo:string, busqueda:string):Observable<ClienteResponse[]>{
     return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}&busqueda=${busqueda}`)
   }
 

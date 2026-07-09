@@ -28,7 +28,7 @@ export class CrearClienteModal {
       Validators.pattern(/^\d{7,8}$/)
     ]],
     email: ['', [Validators.required, Validators.email]],
-    telefono: ['', [Validators.required, Validators.pattern(/^[+]?[0-9\s\-]{8,15}$/)]]
+    telefono: [0, [Validators.required, Validators.pattern(/^[+]?[0-9\s\-]{8,15}$/)]]
   });
 
   agregarCliente(){

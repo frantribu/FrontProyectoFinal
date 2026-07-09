@@ -17,8 +17,8 @@ export const routes: Routes = [
     {path:"users", canActivate:[adminGuard], loadComponent:()=> import("./Pages/users/list-users/users").then(c => c.Users)},
     {path:"users/nuevo", canActivate:[adminGuard], loadComponent:()=> import("./Pages/users/form-user/form-user").then(c => c.FormUser)},
 
-    {path:"clientes", loadComponent:()=> import("./Pages/Clientes/list-clientes/list-clientes").then(c => c.ListClientes)},
-    {path:"clientes/nuevo", loadComponent:()=> import("./Pages/Clientes/form-clientes/form-clientes").then(c => c.FormClientes)},
+    {path:"clientes", canActivate:[adminOrEmpleadoGuard],loadComponent:()=> import("./Pages/Clientes/list-clientes/list-clientes").then(c => c.ListClientes)},
+    {path:"clientes/nuevo",canActivate:[adminOrEmpleadoGuard], loadComponent:()=> import("./Pages/Clientes/form-clientes/form-clientes").then(c => c.FormClientes)},
 
     {path:"vehiculos", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/list-vehiculos/vehiculos").then(c=>c.Vehiculos)},
     {path:"vehiculos/nuevo", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/vehiculo-selector/vehiculo-selector").then(c=>c.VehiculoSelector)},

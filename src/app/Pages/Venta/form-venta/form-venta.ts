@@ -90,7 +90,7 @@ export class FormVenta {
   }
 
   getClientes(busqueda:string) {
-    this.clienteService.getClientes(true, busqueda).subscribe({
+    this.clienteService.getClientes("true", busqueda).subscribe({
       next: (cli) => this.clientes.set(cli),
       error: () => console.log("Error al cargar los clientes")
     })

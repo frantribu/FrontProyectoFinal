@@ -50,7 +50,7 @@ export class FormUser {
 
     this.userService.postUser(request).subscribe({
       next: () => this.router.navigate(['/users']),
-      error: (e) => console.log("No se puedo crear el usuario", e)
+      error: (e) => console.log("No se pudo crear el usuario", e)
     })
   }
 
