@@ -2,13 +2,6 @@
   <div class="header-ventas">
     <div class="container-acciones">
 
-      <div class="container-buscador">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-        <input type="text" placeholder="Buscar ventas">
-      </div>
-
       @if (authService.isAdmin()) {
       <select (change)="onEncargadoChange($event)">
         <option value="">Todos</option>

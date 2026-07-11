@@ -1,34 +1,42 @@
 .container-detalle-vehiculo {
     display: grid;
-    grid-template-areas: 
-    'titulo titulo' 
-    'imagenes info';
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: 2fr 420px;
+    grid-template-areas:
+        "principal info"
+        "descripcion descripcion"
+        "historial historial";
+    gap: 24px;
+    padding: 24px;
     background-color: var(--color-bg-elevated);
+    padding: 30px;
     height: 100%;
+}
+
+.detalle-principal{
+    grid-area: principal;
 }
 
 .titulo-vehiculo {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid var(--color-border-default);
-    grid-area: titulo;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 10px;
     border-radius: 10px;
     background-color: var(--color-bg-elevated);
+    margin-bottom: 16px;
 }
 
-h2 {
-    font-size: 30px;
+.titulo-vehiculo h2 {
+    font-size: 28px;
     font-weight: 600;
     text-align: center;
     color: var(--color-text-primary);
+}
+
+.titulo-vehiculo span{
+    font-size: 13px;
+    color: var(--color-text-secondary);
 }
 
 .container-info-vehiculo {
@@ -36,11 +44,11 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    border: 1px solid var(--color-border-default);
     padding: 24px;
     border-radius: 10px;
     background-color: var(--color-bg-elevated);
     align-items: stretch;
+    border: 1px solid var(--color-border-default);
 }
 
 .info-meta {
@@ -61,19 +69,6 @@ h2 {
     color: var(--color-primary-text);
 }
 
-.info-precio-valor {
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 1.1;
-    color: var(--color-text-primary);
-}
-
-.info-divider {
-    border: none;
-    border-top: 1px solid var(--color-border-subtle);
-    margin: 0;
-}
-
 .info-atributos {
     display: flex;
     flex-direction: column;
@@ -81,19 +76,23 @@ h2 {
 }
 
 .info-fila {
-    margin: 0;
-    font-size: 14px;
-    color: var(--color-text-secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border-default);
+    border-radius: 8px;
 }
 
-.info-label {
-    margin-right: 4px;
+.info-precio{
+    display:flex;
+    justify-content:center;
 }
 
-.info-valor {
-    font-weight: 600;
-    color: var(--color-text-primary);
-    text-transform: capitalize;
+.info-precio-valor{
+    font-size:48px;
+    font-weight:700;
+    color:var(--color-primary);
 }
 
 .info-seccion-titulo {
@@ -103,6 +102,17 @@ h2 {
     color: var(--color-text-primary);
 }
 
+.info-descripcion{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding:16px;
+    border-radius:8px;
+    background:var(--color-bg);
+    border:1px solid var(--color-border-default);
+    grid-area: descripcion;
+}
+
 .info-descripcion-texto {
     margin: 0;
     font-size: 14px;
@@ -110,16 +120,62 @@ h2 {
     color: var(--color-text-secondary);
 }
 
+.info-acciones{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-vender, .btn-editar, .btn-taller{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-vender {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.btn-vender:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.btn-taller {
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-default);
+}
+
+.btn-taller:hover {
+    border-color: var(--color-border-hover);
+}
+
+.btn-editar {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-default);
+}
+
+.btn-editar:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+}
+
 .patente-vehiculo-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
 .patente-vehiculo {
     display: flex;
     flex-direction: column;
-    align-self: flex-start;
     width: fit-content;
     margin-bottom: 16px;
     border: 2px solid #1a1a1a;
@@ -151,6 +207,20 @@ h2 {
     padding: 8px 16px 10px;
 }
 
+.historial{
+    display:flex;
+    flex-direction:column;
+    grid-area: historial;
+    gap:10px;
+}
+
+.reparacion{
+    padding:12px;
+    border-radius:8px;
+    border:1px solid var(--color-border-default);
+    background:var(--color-bg);
+}
+
 .container-imagenes {
     grid-area: imagenes;
     width: 100%;
@@ -160,7 +230,6 @@ h2 {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--color-border-default);
     border-radius: 10px;
 }
 
@@ -175,8 +244,7 @@ h2 {
 
 .carousel-viewport {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    max-width: 960px;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -193,25 +261,6 @@ h2 {
     display: block;
 }
 
-/* Botones de navegación agregados para corregir el layout */
-.carousel-btn {
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border-default);
-    color: var(--color-text-primary);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-    margin-top: 0; /* Corrige el button general */
-}
-
-.carousel-btn:hover {
-    background: var(--color-border-subtle);
-}
-
 .carousel-imagenes {
     display: flex;
     flex-direction: row;
@@ -219,9 +268,11 @@ h2 {
     justify-content: center;
     align-items: center;
     width: 100%;
-    overflow-x: auto;
+    height: content-fit;
+    overflow: hidden;
     border-radius: 8px;
     border: 1px solid var(--color-border-default);
+    background-color: #000;
     padding: 20px 0;
     background-color: var(--color-bg-elevated);
 }
@@ -232,7 +283,7 @@ h2 {
     object-fit: cover;
     display: block;
     border: 2px solid transparent;
-    border-radius: 8px; 
+    border-radius: 8px;
 }
 
 .carousel-imagenes img:hover {
@@ -246,11 +297,46 @@ h2 {
     box-sizing: border-box;
     cursor: pointer;
     background-color: var(--color-bg-elevated);
-    border-radius: 8px; 
+    border-radius: 8px;
     padding: 3px;
 }
 
 button {
     margin-top: 10px;
     cursor: pointer;
+}
+
+@media (max-width:900px) {
+    .container-detalle-vehiculo{
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "principal"
+            "info"
+            "descripcion"
+            "historial";
+    padding: 16px;
+    }
+
+    .container-info-vehiculo{
+        margin-top: 0;
+    }
+
+    h2{
+        font-size: 22px;
+    }
+
+    .info-precio-valor {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 600px) {
+    .carousel-imagenes img {
+        width: 80px;
+        height: 55px;
+    }
+
+    .patente-numero {
+        font-size: 20px;
+    }
 }

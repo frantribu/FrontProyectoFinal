@@ -14,38 +14,21 @@
     gap: 10px;
 }
 
-.container-buscador {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
 
-.container-buscador span {
-    position: absolute;
-    color: var(--color-text-placeholder);
-    pointer-events: none;
-    transform: translateX(12px);
-}
-
-.container-buscador input {
-    background-color: var(--color-bg-input-muted);
-    padding: 5px 38px 5px 37px;
+select {
+    cursor: pointer;
+    padding: 6px 30px 6px 5px;
+    background-color: var(--color-bg-surface);
     border-radius: 5px;
-    border: 0.5px solid var(--color-border-default);
-    outline: none;
-    color: var(--color-text-primary);
+    border: 0.5px solid var(--color-border-muted);
 }
 
-.container-buscador input:hover {
+select:hover {
     border-color: var(--color-border-hover);
 }
 
-.container-buscador input:focus {
+select:focus {
     border-color: var(--color-border-focus);
-}
-
-.container-buscador input::placeholder {
-    color: var(--color-text-placeholder);
 }
 
 .kpi-container {

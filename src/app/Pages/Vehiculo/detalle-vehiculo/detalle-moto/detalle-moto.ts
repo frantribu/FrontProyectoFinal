@@ -3,6 +3,9 @@ import { VehiculoService } from '../../../../Core/Services/VehiculoService/vehic
 import { ActivatedRoute, Router } from '@angular/router';
 import { MotoDetalleResponse } from '../../../../Core/Models/Moto';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../Core/Services/AuthService/auth-service';
+import { MatDialog } from '@angular/material/dialog';
+import { AsignarTallerModal } from '../../../../Core/Components/asignar-taller-modal/asignar-taller-modal';
 
 @Component({
   selector: 'app-detalle-moto',
@@ -13,10 +16,12 @@ import { CommonModule } from '@angular/common';
 export class DetalleMoto {
   private vehiculoService = inject(VehiculoService);
   private route = inject(ActivatedRoute);
-  router = inject(Router);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
 
+  authService = inject(AuthService);
   baseUrl = "http://localhost:8080/ImagenesVehiculo/";
-  
+
   moto = signal<MotoDetalleResponse | null>(null);
   loading = signal<boolean>(false);
   indiceImagen = signal<number>(0);
@@ -38,7 +43,7 @@ export class DetalleMoto {
         if (e.status === 403) {
           this.router.navigate(['/vehiculos'])
         } else {
-         console.log("Error al cargar la moto: ", e);    
+          console.log("Error al cargar la moto: ", e);
         }
         this.loading.set(false);
       }
@@ -63,5 +68,25 @@ export class DetalleMoto {
 
   irAImagen(index: number) {
     this.indiceImagen.set(index);
+  }
+
+  editarMoto(id: number) {
+    this.router.navigate([`/vehiculos/moto/${id}/editar`])
+  }
+
+  venderVehiculo(id: number) {
+    this.router.navigate([`/ventas/nuevo/${id}`])
+  }
+
+  abrirModal(vehiculoId: number) {
+    this.dialog.open(AsignarTallerModal, {
+      width: "400px",
+      data: { vehiculoId }
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === true)//tiene que coincidir con lo que le pasamos al dialogRef.close() del modal
+      {
+        this.router.navigate(['/vehiculos'])
+      }
+    })
   }
 }
