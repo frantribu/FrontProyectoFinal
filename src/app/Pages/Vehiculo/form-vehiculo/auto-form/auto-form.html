@@ -120,6 +120,7 @@
         </div>
 
         <app-image-upload [imagenesExistentes]="imagenesActuales()"
+            [id]="id"
             (eliminarImagenExistente)="eliminarImagen($event)"></app-image-upload>
 
         <button type="submit" [disabled]="form.invalid">{{isEditable ? "Actualizar auto" : "Agregar auto"}}</button>

@@ -99,7 +99,11 @@ export class VehiculoService {
     return this.http.delete(this.url + `/${id}`)
   }
 
+  /*------------------------------------------IMAGENES----------------------------------------------------*/
+
   eliminarImagen(id:number, nombre:string){
-    return this.http.delete(`${this.url}/${id}/imagenes?nombre=${nombre}`)
+    return this.http.delete(`${this.url}/${id}/imagenes?nombre=${nombre}`,{
+      responseType: 'text'
+    })
   }
 }
