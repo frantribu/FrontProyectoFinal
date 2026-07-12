@@ -10,14 +10,11 @@ export const vehiculoDisponibleGuard: CanActivateFn = (route, state) => {
 
   return vehiculoService.getDetalleVehiculo(id)
   .pipe(
-    tap(v=>console.log(v)),
     map(vehiculo=>{
       if(vehiculo.estado.name.toLowerCase()==="vendido"){
         return router.createUrlTree(['/vehiculos']);
       }
-
       return true;
     })
   )
-
 };

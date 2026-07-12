@@ -33,13 +33,6 @@ form > button {
     grid-column: 1 / -1;
 }
 
-@media (max-width: 640px) {
-    form {
-        grid-template-columns: 1fr;
-    }
-}
-
-
 input, select{
     width: 100%;
     border: 0.5px solid var(--color-border-default);
@@ -96,4 +89,16 @@ input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
     border-color: #e63946;
     background-color: var(--color-bg-surface);
+}
+
+@media (max-width: 640px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1150px) {
+    .container-moto-form{
+        padding: 20px;
+    }
 }

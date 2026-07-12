@@ -46,7 +46,7 @@
     </div>
 
     <div class="container-estado-motivo">
-        
+
         <div class="container-estado-botones">
             <div class="estado" [class]="'estado-'+ reparacion()?.estadoReparacion?.name?.toLowerCase()">
                 <span class="material-symbols-outlined">
@@ -83,7 +83,10 @@
 
             @if (mostrarMotivo()) {
             <div class="motivo">
-                {{reparacion()?.descripcion}}
+                <h4>Motivo</h4>
+                <div>
+                    {{reparacion()?.descripcion}}
+                </div>
             </div>
             }
         </div>

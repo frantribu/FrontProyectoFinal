@@ -1,6 +1,7 @@
 section {
     color: var(--color-text-primary);
     width: 100%;
+    height: 100%;
     padding: 20px;
 }
 
@@ -45,7 +46,7 @@ section>div {
 
 .resumen-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 10px;
 }
 
@@ -68,6 +69,4 @@ section>div {
     border-radius: 10px;
 }
 
-@media (max-width:768px) {
-   
-}
+@media (max-width:768px) {}

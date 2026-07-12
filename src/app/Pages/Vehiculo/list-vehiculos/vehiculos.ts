@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, viewChild, ViewChild } from '@angular/core';
 import { VehiculoService } from '../../../Core/Services/VehiculoService/vehiculo-service';
 import { VehiculoResponse } from '../../../Core/Models/Vehiculo';
 import { CommonModule } from '@angular/common';
@@ -7,10 +7,12 @@ import { Router, RouterLink } from "@angular/router";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { AsignarTallerModal } from '../../../Core/Components/asignar-taller-modal/asignar-taller-modal';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-vehiculos',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatPaginatorModule, MatTableModule],
   templateUrl: './vehiculos.html',
   styleUrl: './vehiculos.css',
 })
@@ -25,9 +27,12 @@ export class Vehiculos {
   vehiculos = signal<VehiculoResponse[]>([]);
   estadoSeleccionado = signal<string>(""); // Para filtrar
   buscador = signal<string>("")
-
   estados = toSignal(this.vehiculoService.getEstados(), { initialValue: [] });
-
+ 
+  displayedColumns: string[] =["vehiculo", "tipo", "patente", "precioCompra", "precioVenta", "kilometraje", "estado", "acciones"];
+  dataSource=new MatTableDataSource<VehiculoResponse>([]);
+  paginator=viewChild<MatPaginator>("paginator");
+  
   private timerBusqueda:any;
 
   constructor() {
@@ -40,6 +45,17 @@ export class Vehiculos {
       this.timerBusqueda=setTimeout(()=>{
         this.getVehiculos(estado, busqueda)
       }, 350)
+    })
+
+    effect(()=>{
+      this.dataSource.data=this.vehiculos();
+    })
+
+    effect(()=>{
+      const matPaginator=this.paginator();
+      if(matPaginator){
+        this.dataSource.paginator=matPaginator;
+      }
     })
   }
 
@@ -113,4 +129,5 @@ export class Vehiculos {
       }
     })
   }
+
 }

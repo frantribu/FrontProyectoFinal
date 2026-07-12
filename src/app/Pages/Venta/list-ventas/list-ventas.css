@@ -32,7 +32,8 @@ select:focus {
 }
 
 .kpi-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
     margin: 15px 0;
 }
@@ -85,7 +86,7 @@ td {
 }
 
 tbody tr {
-    border-bottom: 0.5px solid var(--color-border-subtle);
+    border-bottom:1px solid rgba(255,255,255,.07);
     transition: background-color 0.2s;
 }
 
@@ -97,12 +98,22 @@ tbody tr:last-child {
     border-bottom: none;
 }
 
+tbody tr:nth-child(even){
+    background: rgba(255,255,255,.015);
+}
+
 .precio {
     font-weight: 500;
 }
 
+.precio-venta{
+    color:#7aa2ff;
+    font-weight:600;
+}
+
 .info-vehiculo {
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--color-text-primary);
 }
 
 .positivo {
@@ -111,4 +122,50 @@ tbody tr:last-child {
 
 .negativo {
     color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+
+    .header-vehiculos {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .container-buscador,
+    .container-buscador input,
+    select,
+    .add-vehiculo {
+        width: 100%;
+    }
+
+    table {
+        min-width: 100%;
+    }
+
+    thead {
+        display: none;
+    }
+
+    table tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--color-border-default);
+    }
+
+    table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 0.5px solid var(--color-border-subtle);
+    }
+
+    table td[data-titulo]::before {
+        content: attr(data-titulo);
+        color: var(--color-text-secondary);
+        font-size: 13px;
+    }
+
 }

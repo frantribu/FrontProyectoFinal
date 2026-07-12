@@ -101,6 +101,16 @@
     width: 250px;
 }
 
+.motivo h4{
+    margin-bottom: 5px;
+}
+
+.motivo div{
+    border: 1px solid rgb(58, 58, 58);
+    padding: 10px;
+    border-radius: 8px;
+}
+
 .fecha-ingreso,
 .fecha-salida {
     display: flex;

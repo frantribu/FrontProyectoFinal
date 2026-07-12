@@ -46,7 +46,7 @@
           @if (authService.isAdmin()) {
           <th>GANANCIA</th>
           }
-          <th>FECHA</th>
+          <th>FECHA VENTA</th>
         </tr>
       </thead>
 
@@ -54,26 +54,26 @@
         @for (venta of ventas(); track venta.id) {
         <tr>
 
-          <td>
+          <td data-titulo="VEHÍCULO">
             <div class="info-vehiculo">
               {{ venta.vehiculo.marca }} {{ venta.vehiculo.modelo }}
             </div>
           </td>
-          <td>{{ venta.cliente.nombre}} {{ venta.cliente.apellido }}</td>
+          <td data-titulo="CLIENTE">{{ venta.cliente.nombre}} {{ venta.cliente.apellido }}</td>
 
           @if(authService.isAdmin()){
-          <td>{{ venta.vendedor.nombre }} {{ venta.vendedor.apellido }}</td>
-          <td>{{venta.vehiculo.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td data-titulo="VENDEDOR">{{ venta.vendedor.nombre }} {{ venta.vendedor.apellido }}</td>
+          <td data-titulo="PRECIO DE COMPRA">{{venta.vehiculo.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
           }
 
-          <td class="precio">{{ venta.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td data-titulo="PRECIO DE VENTA" class="precio precio-venta">{{ venta.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0' }}</td>
 
           @if (authService.isAdmin()) {
-          <td class="precio" [class]='venta.ganancia > 0 ? "positivo" : "negativo"'>{{ venta.ganancia |
+          <td data-titulo="GANANCIA" class="precio" [class]='venta.ganancia > 0 ? "positivo" : "negativo"'>{{ venta.ganancia |
             currency:'USD':'symbol':'1.0-0' }}</td>
           }
 
-          <td>{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
+          <td data-titulo="FECHA VENTA" class="fecha">{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
         </tr>
         }
       </tbody>

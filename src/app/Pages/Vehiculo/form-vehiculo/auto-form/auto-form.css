@@ -33,12 +33,6 @@ form>button {
     grid-column: 1 / -1;
 }
 
-@media (max-width: 640px) {
-    form {
-        grid-template-columns: 1fr;
-    }
-}
-
 input,
 select {
     width: 100%;
@@ -99,14 +93,14 @@ button[type="submit"]:disabled {
     opacity: 0.8;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-2px);
+@media (max-width: 640px) {
+    form {
+        grid-template-columns: 1fr;
     }
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+@media (max-width: 1150px) {
+    .container-auto-form{
+        padding: 20px;
     }
 }
