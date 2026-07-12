@@ -5,11 +5,13 @@
 .header-ventas {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 40px   ;
+  
 }
 
 .container-acciones {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
 }
@@ -111,4 +113,172 @@ tbody tr:last-child {
 
 .negativo {
     color: #e74c3c;
+}
+
+/* Contenedor principal del formulario */
+.fechas {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    /* Alinea el botón abajo con los inputs */
+    gap: 1.25rem;
+    background-color: #14141a;
+    /* Fondo oscuro similar a tus tarjetas */
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #1f1f2e;
+    width: fit-content;
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor padre que agrupa "Desde" y "Hasta" */
+.fechas>.calendario_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Contenedores individuales de cada input y label */
+.fechas>.calendario_container>.calendario_container,
+.calendario {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Estilos para los labels ("Desde" y "Hasta") */
+.calendario_desde,
+.calendario_hasta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    /* Gris sutil */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Estilos para los inputs de fecha */
+.fechas input[type="date"] {
+    background-color: #1c1c24;
+    /* Un poco más claro que el fondo del form */
+    color: #e5e7eb;
+    border: 1px solid #2d2d3b;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    min-width: 150px;
+
+    /* ESTO ES MAGIA: Pinta el ícono del calendario nativo de blanco */
+    color-scheme: dark;
+}
+
+/* Efecto al hacer clic en el input */
+.fechas input[type="date"]:focus {
+    border-color: #4f46e5;
+    /* Borde azul/índigo */
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Botón de buscar */
+.btn_calendario {
+    background-color: #4f46e5;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    height: fit-content;
+}
+
+.btn_calendario:hover:not(:disabled) {
+    background-color: #4338ca;
+}
+
+.btn_calendario:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE: Adaptación para pantallas de celular */
+@media (max-width: 600px) {
+    .fechas {
+        flex-direction: column;
+        align-items: stretch;
+        /* Estira todo a lo ancho */
+        width: 100%;
+    }
+
+    .fechas>.calendario_container {
+        flex-direction: column;
+    }
+
+    .btn_calendario {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding: 0.8rem;
+        /* Botón un poco más alto para tocar con el dedo */
+    }
+}
+/* ----- 1. EL TEXTO "EMPLEADO" ----- */
+h3 {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ----- 2. EL SELECT ----- */
+select {
+  display: inline-block;
+  vertical-align: bottom;
+  background-color: #1c1c24;
+  color: #e5e7eb;
+  border: 1px solid #2d2d3b;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  min-width: 150px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color-scheme: dark;
+}
+
+select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+select option {
+  background-color: #1c1c24;
+  color: #e5e7eb;
+  padding: 0.5rem;
+}
+
+/* ----- 3. EL FORMULARIO DE FECHAS ----- */
+.fechas {
+  /* CAMBIO CLAVE: De 'flex' a 'inline-flex' para que permita que el H3 y Select 
+     existan a su izquierda en la misma fila */
+  display: inline-flex; 
+  vertical-align: bottom;
+  /* Mantiene los estilos que ya tenías */
+  flex-wrap: wrap;
+  align-items: flex-end; 
+  gap: 1.25rem;
+  background-color: #14141a; 
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid #1f1f2e;
+  width: fit-content;
+  /* Este margen de 2rem empuja las tarjetas de Total Ventas/Ingresos hacia abajo */
+  margin-bottom: 2rem; 
 }

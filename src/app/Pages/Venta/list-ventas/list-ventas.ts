@@ -5,44 +5,81 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
 import { VentaResponse } from '../../../Core/Models/Venta';
+import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { form } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-list-ventas',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule, ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './list-ventas.html',
   styleUrl: './list-ventas.css',
 })
-export class ListVentas{
-  private ventaService=inject(VentaService);
-  private usuarioService=inject(UsuarioService);
+export class ListVentas {
+  private ventaService = inject(VentaService);
+  private usuarioService = inject(UsuarioService);
 
-  filtroEncargado=signal<string>('');
+  filtroEncargado = signal<string>('');
 
-  authService=inject(AuthService);
-  empleados=toSignal(this.usuarioService.getEmpleados(), {initialValue:[]});
+  fb = inject(FormBuilder)
 
-  ventas=signal<VentaResponse[]>([]);
+  authService = inject(AuthService);
+  empleados = toSignal(this.usuarioService.getEmpleados(), { initialValue: [] });
 
-  cantidadVentas=computed(()=>this.ventas().length);
-  totalGanancia=computed(()=>this.ventas().reduce((sum, v)=>sum + v.ganancia, 0));
-  totalIngresos=computed(()=>this.ventas().reduce((sum, v)=>sum + v.precioFinalDeVenta, 0));
-  promedioVenta=computed(()=>this.ventas().length ? this.totalIngresos() / this.cantidadVentas() : 0)
+  ventas = signal<VentaResponse[]>([]);
 
-  constructor(){
+  cantidadVentas = computed(() => this.ventas().length);
+  totalGanancia = computed(() => this.ventas().reduce((sum, v) => sum + v.ganancia, 0));
+  totalIngresos = computed(() => this.ventas().reduce((sum, v) => sum + v.precioFinalDeVenta, 0));
+  promedioVenta = computed(() => this.ventas().length ? this.totalIngresos() / this.cantidadVentas() : 0)
+
+  errorFechas = signal<string>('');
+
+  filtroFechas = this.fb.nonNullable.group({
+    fechaDesde: ["", Validators.required],
+    fechaHasta: ["", Validators.required]
+  })
+
+  constructor() {
     this.getVentas();
   }
 
-  getVentas(){
+  getVentas() {
     this.ventaService.getVentas(this.filtroEncargado()).subscribe({
-      next:(v)=>this.ventas.set(v),
-      error:()=>console.log("Error al cargar las ventas")
+      next: (v) => this.ventas.set(v),
+      error: () => console.log("Error al cargar las ventas")
     })
   }
 
-  onEncargadoChange(event:Event){
-    const value=(event.target as HTMLSelectElement).value;
+  onEncargadoChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
     this.filtroEncargado.set(value);
     this.getVentas();
+  }
+
+  buscarVentas() {
+    this.errorFechas.set('')
+
+    if (this.filtroFechas.invalid) return;
+
+    const fechaDesde = this.filtroFechas.value.fechaDesde;
+
+    const fechaHasta = this.filtroFechas.value.fechaHasta;
+
+    if (!fechaDesde || !fechaHasta) return;
+
+    if (this.filtroFechas.value.fechaDesde && this.filtroFechas.value.fechaHasta && new Date(this.filtroFechas.value.fechaDesde) > new Date(this.filtroFechas.value.fechaHasta)) {
+      this.errorFechas.set('La fecha de inicio no puede ser mayor a la fecha final.');
+      return;
+    }
+
+    this.ventaService.getVentas(fechaDesde, fechaHasta).subscribe({
+      next: (data => {
+        this.ventas.set(data)
+      }),
+      error: err => console.log(err)
+    })
+
+
   }
 }
