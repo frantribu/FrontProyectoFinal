@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { VentaResponse } from '../../Models/Venta';
@@ -12,11 +12,31 @@ export class VentaService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
-  getVentas(empleadoId:string): Observable<VentaResponse[]> {
+getVentas(empleadoId?: string, fechaDesde?: string, fechaHasta?: string): Observable<VentaResponse[]> {
+    let params = new HttpParams();
+
+    // 1. Si hay fechas, las agregamos a los parámetros.
+    // Esto es genial porque le servirá tanto al Admin como al Empleado regular.
+    if (fechaDesde && fechaHasta) {
+      params = params.set('desde', fechaDesde).set('hasta', fechaHasta);
+    }
+
+    // 2. Evaluamos según el Rol
     if (this.authService.isAdmin()) {
-      return this.http.get<VentaResponse[]>(`${this.url}?empleadoId=${empleadoId}`);
+      
+      // Si el select mandó un ID válido (es decir, no es el option value="" de "Todos")
+      if (empleadoId) {
+        params = params.set('empleadoId', empleadoId);
+      }
+      
+      return this.http.get<VentaResponse[]>(this.url, { params });
+
     } else if (this.authService.isEmpleado()) {
-      return this.http.get<VentaResponse[]>(`${this.url}/mis-ventas`);
+      
+      // El empleado llama a su propio endpoint, pero le pasamos los parámetros
+      // por si él también quiere filtrar sus propias ventas por fecha.
+      // (Asegúrate de que tu backend en /mis-ventas reciba @RequestParam de fechas también)
+      return this.http.get<VentaResponse[]>(`${this.url}/mis-ventas`, { params });
     }
 
     return EMPTY;
@@ -25,6 +45,8 @@ export class VentaService {
   ventasTotales(): Observable<number> {
     return this.http.get<number>(`${this.url}/cantidad`);
   }
+
+
 
 
 }

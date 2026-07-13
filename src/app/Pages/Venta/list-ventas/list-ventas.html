@@ -1,8 +1,8 @@
 <div class="container-ventas">
   <div class="header-ventas">
     <div class="container-acciones">
-
       @if (authService.isAdmin()) {
+      <h3>EMPLEADO</h3>
       <select (change)="onEncargadoChange($event)">
         <option value="">Todos</option>
         @for (e of empleados(); track e.id) {
@@ -10,6 +10,33 @@
         }
       </select>
       }
+    </div>
+    
+    <div class="fechas_container">
+      <form [formGroup]="filtroFechas" class="fechas" (submit)="buscarVentas()">
+
+        <div class="calendario_container">
+          <div class="calendario_container">
+            <label for="fecha-desde" class="calendario_desde">Desde</label>
+            <input type="date" id="fecha-desde" formControlName="fechaDesde">
+          </div>
+
+          <div class="calendario">
+            <label for="fecha-hasta" class="calendario_hasta">Hasta</label>
+            <input type="date" id="fecha-hasta" formControlName="fechaHasta">
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="filtroFechas.invalid" class="btn_calendario">
+          Buscar
+        </button>
+      </form>
+      <!-- Mensaje de error de validación -->
+      <div>
+        @if (errorFechas()) {
+        <p class="text-red-500 text-sm mt-2">{{ errorFechas() }}</p>
+        }
+      </div>
     </div>
   </div>
 
