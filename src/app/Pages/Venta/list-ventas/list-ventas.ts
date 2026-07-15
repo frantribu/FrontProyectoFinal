@@ -1,16 +1,18 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VentaService } from '../../../Core/Services/VentaService/venta-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
 import { VentaResponse } from '../../../Core/Models/Venta';
-import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-list-ventas',
   standalone: true,
-  imports: [CommonModule, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatPaginatorModule, MatTableModule],
   templateUrl: './list-ventas.html',
   styleUrl: './list-ventas.css',
 })
@@ -32,6 +34,10 @@ export class ListVentas {
   totalIngresos = computed(() => this.ventas().reduce((sum, v) => sum + v.precioFinalDeVenta, 0));
   promedioVenta = computed(() => this.ventas().length ? this.totalIngresos() / this.cantidadVentas() : 0)
 
+  displayedColumns:string[]=["vehiculo", "cliente", "vendedor", "precioCompra", "precioVenta", "ganancia", "fechaVenta"];
+  dataSource=new MatTableDataSource<VentaResponse>([]);
+  paginator=viewChild<MatPaginator>("paginator");
+
   errorFechas = signal<string>('');
 
   filtroFechas = this.fb.nonNullable.group({
@@ -41,6 +47,18 @@ export class ListVentas {
 
   constructor() {
     this.getVentas();
+
+    effect(()=>{
+      this.dataSource.data=this.ventas();
+    })
+
+    effect(()=>{
+      const  matPaginator=this.paginator();
+
+      if(matPaginator){
+        this.dataSource.paginator=matPaginator;
+      }
+    })
   }
 
   getVentas() {

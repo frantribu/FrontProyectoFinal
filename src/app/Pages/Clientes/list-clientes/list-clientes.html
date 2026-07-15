@@ -17,11 +17,9 @@
 
     </div>
 
-    
-
     <div class="container-list-clientes">
         @for (cliente of clientes(); track cliente.id) {
-            <app-card-cliente [client]="cliente"></app-card-cliente>
+            <app-card-cliente [client]="cliente" (estadoModificado)="getClientes()"></app-card-cliente>
         }
     </div>
 </div>

@@ -11,7 +11,7 @@
       </select>
       }
     </div>
-    
+
     <div class="fechas_container">
       <form [formGroup]="filtroFechas" class="fechas" (submit)="buscarVentas()">
 
@@ -60,51 +60,56 @@
   </div>
 
   <div class="container-list-ventas">
-    <table>
-      <thead>
-        <tr>
-          <th>VEHÍCULO</th>
-          <th>CLIENTE</th>
-          @if(authService.isAdmin()){
-          <th>VENDEDOR</th>
-          <th>PRECIO COMPRA</th>
-          }
-          <th>PRECIO VENTA</th>
-          @if (authService.isAdmin()) {
-          <th>GANANCIA</th>
-          }
-          <th>FECHA VENTA</th>
-        </tr>
-      </thead>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="vehiculo">
+        <th mat-header-cell *matHeaderCellDef> VEHICULO </th>
+        <td mat-cell *matCellDef="let v" data-titulo="VEHÍCULO"> {{v.vehiculo.marca}} {{v.vehiculo.modelo}}</td>
+      </ng-container>
 
-      <tbody>
-        @for (venta of ventas(); track venta.id) {
-        <tr>
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef> CLIENTE </th>
+        <td mat-cell *matCellDef="let v" data-titulo="CLIENTE"> {{ v.cliente.nombre}} {{ v.cliente.apellido }} </td>
+      </ng-container>
 
-          <td data-titulo="VEHÍCULO">
-            <div class="info-vehiculo">
-              {{ venta.vehiculo.marca }} {{ venta.vehiculo.modelo }}
-            </div>
-          </td>
-          <td data-titulo="CLIENTE">{{ venta.cliente.nombre}} {{ venta.cliente.apellido }}</td>
+      @if(authService.isAdmin()){
+      <ng-container matColumnDef="vendedor">
+        <th mat-header-cell *matHeaderCellDef> VENDEDOR </th>
+        <td mat-cell *matCellDef="let v" data-titulo="VENDEDOR"> {{ v.vendedor.nombre }} {{ v.vendedor.apellido }} </td>
+      </ng-container>
 
-          @if(authService.isAdmin()){
-          <td data-titulo="VENDEDOR">{{ venta.vendedor.nombre }} {{ venta.vendedor.apellido }}</td>
-          <td data-titulo="PRECIO DE COMPRA">{{venta.vehiculo.precioCompra | currency:'USD':'symbol':'1.0-0' }}</td>
-          }
+      <ng-container matColumnDef="precioCompra">
+        <th mat-header-cell *matHeaderCellDef> PRECIO DE COMPRA </th>
+        <td mat-cell *matCellDef="let v" data-titulo="PRECIO DE COMPRA"> {{v.vehiculo.precioCompra | currency:'USD':'symbol':'1.0-0' }} </td>
+      </ng-container>
+      }
 
-          <td data-titulo="PRECIO DE VENTA" class="precio precio-venta">{{ venta.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0' }}</td>
+      <ng-container matColumnDef="precioVenta">
+        <th mat-header-cell *matHeaderCellDef> PRECIO DE VENTA </th>
+        <td mat-cell *matCellDef="let v" data-titulo="PRECIO DE VENTA" class="precio precio-venta"> {{ v.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0' }}</td>
+      </ng-container>
 
-          @if (authService.isAdmin()) {
-          <td data-titulo="GANANCIA" class="precio" [class]='venta.ganancia > 0 ? "positivo" : "negativo"'>{{ venta.ganancia |
-            currency:'USD':'symbol':'1.0-0' }}</td>
-          }
+      @if (authService.isAdmin()) {
+      <ng-container matColumnDef="ganancia">
+        <th mat-header-cell *matHeaderCellDef> GANANCIA </th>
+        <td mat-cell *matCellDef="let v" data-titulo="GANANCIA" class="precio" [class]='v.ganancia > 0 ? "positivo" : "negativo"'> {{
+          v.ganancia | currency:'USD':'symbol':'1.0-0' }}</td>
+      </ng-container>
+      }
 
-          <td data-titulo="FECHA VENTA" class="fecha">{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
-        </tr>
-        }
-      </tbody>
+      <ng-container matColumnDef="fechaVenta">
+        <th mat-header-cell *matHeaderCellDef> FECHA DE VENTA </th>
+        <td mat-cell *matCellDef="let v" class="fecha" data-titulo="FECHA DE VENTA"> {{ v.fechaVenta | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tr-header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="tr-row"></tr>
     </table>
+
+    <div>
+      <mat-paginator #paginator [length]="ventas().length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+
+    </div>
   </div>
 </div>

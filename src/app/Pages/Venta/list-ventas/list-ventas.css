@@ -5,7 +5,7 @@
 .header-ventas {
     display: flex;
     align-items: center;
-    gap: 40px ;
+    gap: 40px;
 
 }
 
@@ -33,17 +33,17 @@ select:focus {
 }
 
 .fechas {
-  display: inline-flex; 
-  vertical-align: bottom;
-  flex-wrap: wrap;
-  align-items: flex-end; 
-  gap: 1.25rem;
-  background-color: #14141a; 
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  border: 1px solid #1f1f2e;
-  width: fit-content;
-  margin-bottom: 2rem; 
+    display: inline-flex;
+    vertical-align: bottom;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.25rem;
+    background-color: #14141a;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #1f1f2e;
+    width: fit-content;
+    margin-bottom: 2rem;
 }
 
 .fechas>.calendario_container {
@@ -153,42 +153,35 @@ table {
     color: var(--color-text-primary);
 }
 
-thead {
-    font-size: 11px;
+th {
     color: var(--color-text-table-header);
+    font-size: 11px;
     border-bottom: 0.5px solid var(--color-border-default);
 }
 
-th,
 td {
     padding: 13px 16px;
-    text-align: left;
-}
-
-tbody tr {
-    border-bottom:1px solid rgba(255,255,255,.07);
-    transition: background-color 0.2s;
-}
-
-tbody tr:hover {
-    background-color: var(--color-overlay-row-hover);
-}
-
-tbody tr:last-child {
+    color: var(--color-text-primary);
     border-bottom: none;
 }
 
-tbody tr:nth-child(even){
-    background: rgba(255,255,255,.015);
+.tr-row {
+    border-bottom: 0.5px solid var(--color-border-subtle);
+    transition: background-color 0.2s;
+    text-transform: capitalize;
+}
+
+.tr-row:hover {
+    background-color: var(--color-overlay-row-hover)
 }
 
 .precio {
     font-weight: 500;
 }
 
-.precio-venta{
-    color:#7aa2ff;
-    font-weight:600;
+.precio-venta {
+    color: #7aa2ff;
+    font-weight: 600;
 }
 
 .info-vehiculo {
@@ -205,40 +198,45 @@ tbody tr:nth-child(even){
 }
 
 h3 {
-  display: inline-block;
-  vertical-align: bottom;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 select {
-  display: inline-block;
-  vertical-align: bottom;
-  background-color: #1c1c24;
-  color: #e5e7eb;
-  border: 1px solid #2d2d3b;
-  border-radius: 0.5rem;
-  padding: 0.6rem 1rem;
-  font-size: 0.875rem;
-  outline: none;
-  min-width: 150px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  color-scheme: dark;
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: #1c1c24;
+    color: #e5e7eb;
+    border: 1px solid #2d2d3b;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    outline: none;
+    min-width: 150px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color-scheme: dark;
 }
 
 select:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
 
 select option {
-  background-color: #1c1c24;
-  color: #e5e7eb;
-  padding: 0.5rem;
+    background-color: #1c1c24;
+    color: #e5e7eb;
+    padding: 0.5rem;
+}
+
+mat-paginator {
+    background-color: var(--color-bg-elevated);
+    color: var(--color-text-primary);
 }
 
 @media (max-width: 768px) {
@@ -247,7 +245,6 @@ select option {
         width: 100%;
         flex-direction: column;
         justify-content: center;
-        align-items: stretch;
         gap: 10px;
     }
 
@@ -278,10 +275,6 @@ select option {
         min-width: 100%;
     }
 
-    thead {
-        display: none;
-    }
-
     table tr {
         display: flex;
         flex-direction: column;
@@ -303,3 +296,59 @@ select option {
 
 }
 
+@media (max-width: 768px) {
+
+    .header-vehiculos {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .container-buscador,
+    .container-buscador input,
+    select,
+    .add-vehiculo {
+        width: 100%;
+    }
+
+    table {
+        min-width: 100%;
+    }
+
+    .tr-row{
+        height: 100%;
+    }
+
+    th{
+        display: none;
+    }
+
+    .container-list-vehiculos tr.mat-mdc-header-row {
+        display: none;
+    }
+
+    .tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--color-border-default);
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: var(--color-bg-elevated);
+    }
+
+    .container-list-vehiculos td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 0.5px solid var(--color-border-subtle);
+        padding: 20px 16px;
+    }
+
+    td[data-titulo]::before {
+        content: attr(data-titulo);
+        color: var(--color-text-secondary);
+        font-size: 13px;
+    }
+}
