@@ -5,7 +5,7 @@
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" formControlName="nombre">
             @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
-                <span class="error-message">El nombre es obligatorio.</span>
+            <span class="error-message">El nombre es obligatorio.</span>
             }
         </div>
 
@@ -13,7 +13,7 @@
             <label for="direccion">Direccion</label>
             <input type="text" id="direccion" formControlName="direccion">
             @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
-                <span class="error-message">La dirección es obligatoria.</span>
+            <span class="error-message">La dirección es obligatoria.</span>
             }
         </div>
 
@@ -22,26 +22,43 @@
             <select id="especialidad" formControlName="especialidad">
                 <option value="">Selecciona una especialidad</option>
                 @for (e of especialidades(); track e.name) {
-                    <option [value]="e.name">{{e.label}}</option>
+                <option [value]="e.name">{{e.label}}</option>
                 }
             </select>
             @if (form.get('especialidad')?.invalid && form.get('especialidad')?.touched) {
-                <span class="error-message">Debes seleccionar una especialidad.</span>
+            <span class="error-message">Debes seleccionar una especialidad.</span>
             }
         </div>
 
-        <div class="container-select">
+        <div class="container-input e">
             <label for="encargado">Encargado del taller</label>
-            <select id="encargado" formControlName="idEncargadoTaller" (change)="comprobarEncargado($event)">
-                <option [ngValue]="0">Selecciona un encargado</option>
-                @for (e of encargados(); track e.id) {
-                    <option [value]="e.id">{{e.nombre}} {{e.apellido}}</option>
+
+           <div>
+                <input type="text" (input)="buscarEncargado($event)" [value]="buscador()"
+                    [class.input-encargado]="form.get('idEncargadoTaller')?.invalid &&
+                    form.get('idEncargadoTaller')?.touched">
+
+                @if (mostrarLista()) {
+                <ul class="list-encargados">
+                    <li class="agregar-encargado" (click)="abrirModal()">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
+                        Agregar encargado
+                    </li>
+
+                    @for (e of encargados(); track e.id) {
+                    <li (click)="seleccionarEncargado(e)">{{e.nombre}} {{e.apellido}}</li>
+                    }@empty {
+                    <li>No se encontraron encargados</li>
+                    }
+                </ul>
                 }
-                <option [value]="-1" class="opcion-nueva">+ Crear nuevo encargado...</option>
-            </select>
-            @if (form.get('idEncargadoTaller')?.invalid && form.get('idEncargadoTaller')?.touched) {
+
+                @if (form.get('idEncargadoTaller')?.invalid && form.get('idEncargadoTaller')?.touched) {
                 <span class="error-message">Debes asignar un encargado.</span>
-            }
+                }
+            </div>
         </div>
 
         <button type="submit">

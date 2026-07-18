@@ -20,8 +20,8 @@ export class UsuarioService {
     return this.http.get<UsuarioResponse>(`${this.url}/${id}`)
   }
 
-   getEncargados() {
-    return this.http.get<UsuarioResponse[]>(this.url + "/encargados")
+   getEncargados(buscador:string) {
+    return this.http.get<UsuarioResponse[]>(`${this.url}/encargados?buscador=${buscador}`);
   }
 
    getEmpleados() {

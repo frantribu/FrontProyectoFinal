@@ -8,6 +8,7 @@ import { AsignarTallerRequest } from '../../Models/Taller';
 @Component({
   selector: 'app-asignar-taller-modal',
   imports: [ReactiveFormsModule],
+  standalone:true,
   templateUrl: './asignar-taller-modal.html',
   styleUrl: './asignar-taller-modal.css',
 })

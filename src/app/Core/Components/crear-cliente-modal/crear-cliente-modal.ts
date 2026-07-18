@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-crear-cliente-modal',
   imports: [ReactiveFormsModule],
+  standalone:true,
   templateUrl: './crear-cliente-modal.html',
   styleUrl: './crear-cliente-modal.css',
 })
