@@ -6,8 +6,8 @@ import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 import { UsuarioService } from '../../../Core/Services/UsuarioService/usuario-service';
 import { VentaResponse } from '../../../Core/Models/Venta';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-list-ventas',
@@ -34,9 +34,9 @@ export class ListVentas {
   totalIngresos = computed(() => this.ventas().reduce((sum, v) => sum + v.precioFinalDeVenta, 0));
   promedioVenta = computed(() => this.ventas().length ? this.totalIngresos() / this.cantidadVentas() : 0)
 
-  displayedColumns:string[]=["vehiculo", "cliente", "vendedor", "precioCompra", "precioVenta", "ganancia", "fechaVenta"];
-  dataSource=new MatTableDataSource<VentaResponse>([]);
-  paginator=viewChild<MatPaginator>("paginator");
+  displayedColumns: string[] = ["vehiculo", "cliente", "vendedor", "precioCompra", "precioVenta", "ganancia", "fechaVenta"];
+  dataSource = new MatTableDataSource<VentaResponse>([]);
+  paginator = viewChild<MatPaginator>("paginator");
 
   errorFechas = signal<string>('');
 
@@ -48,24 +48,33 @@ export class ListVentas {
   constructor() {
     this.getVentas();
 
-    effect(()=>{
-      this.dataSource.data=this.ventas();
+    effect(() => {
+      this.dataSource.data = this.ventas();
     })
 
-    effect(()=>{
-      const  matPaginator=this.paginator();
+    effect(() => {
+      const matPaginator = this.paginator();
 
-      if(matPaginator){
-        this.dataSource.paginator=matPaginator;
+      if (matPaginator) {
+        this.dataSource.paginator = matPaginator;
       }
     })
   }
 
   getVentas() {
-    this.ventaService.getVentas(this.filtroEncargado()).subscribe({
-      next: (v) => this.ventas.set(v),
-      error: () => console.log("Error al cargar las ventas")
-    })
+    const { fechaDesde, fechaHasta } = this.filtroFechas.getRawValue();
+    if (!fechaDesde || !fechaHasta) {
+      this.ventaService.getVentas(this.filtroEncargado()).subscribe({
+        next: (v) => this.ventas.set(v),
+        error: () => console.log("Error al cargar las ventas")
+      })
+    }else{
+      this.ventaService.getVentas(this.filtroEncargado(), fechaDesde, fechaHasta).subscribe({
+        next: (v) => this.ventas.set(v),
+        error: () => console.log("Error al cargar las ventas filtradas")
+      });
+    }
+
   }
 
   onEncargadoChange(event: Event) {
@@ -90,7 +99,7 @@ export class ListVentas {
       return;
     }
 
-    this.ventaService.getVentas(fechaDesde, fechaHasta).subscribe({
+    this.ventaService.getVentas(this.filtroEncargado(), fechaDesde, fechaHasta).subscribe({
       next: (data => {
         this.ventas.set(data)
       }),
