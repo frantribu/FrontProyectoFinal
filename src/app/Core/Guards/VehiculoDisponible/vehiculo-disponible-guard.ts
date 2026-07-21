@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { VehiculoService } from '../../Services/VehiculoService/vehiculo-service';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 
 export const vehiculoDisponibleGuard: CanActivateFn = (route, state) => {
   const vehiculoService=inject(VehiculoService);
@@ -11,7 +11,7 @@ export const vehiculoDisponibleGuard: CanActivateFn = (route, state) => {
   return vehiculoService.getDetalleVehiculo(id)
   .pipe(
     map(vehiculo=>{
-      if(vehiculo.estado.name.toLowerCase()==="vendido"){
+      if(vehiculo.estado.name.toLowerCase()!=="disponible"){
         return router.createUrlTree(['/vehiculos']);
       }
       return true;

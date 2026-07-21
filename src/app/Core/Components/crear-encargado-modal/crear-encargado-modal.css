@@ -81,6 +81,11 @@ select:focus {
     background-color: var(--color-bg-surface-active);
 }
 
+input[readonly] {
+    cursor: default;
+    background-color: var(--color-bg-surface-active);
+}
+
 button {
     width: 100%;
     padding: 12px;

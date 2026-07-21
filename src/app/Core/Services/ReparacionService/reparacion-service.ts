@@ -21,4 +21,8 @@ export class ReparacionService {
   cambiarEstado(id:number, estadoReparacion:EstadoReparacion){
     return this.http.patch(`${this.url}/${id}/estado`, {estadoReparacion})
   }
+
+  getReparacionesActivas(){
+    return this.http.get<number>(`${this.url}/reparacionesActivas`);
+  }
 }

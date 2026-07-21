@@ -25,11 +25,11 @@ export const routes: Routes = [
     
     {path:"vehiculos/nuevo/auto", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/auto-form/auto-form").then(c=>c.AutoForm)},
     {path:"vehiculos/auto/:id", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/detalle-vehiculo/detalle-auto/detalle-auto").then(c=>c.DetalleAuto)},
-    {path:"vehiculos/auto/:id/editar", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/auto-form/auto-form").then(c=>c.AutoForm)},
+    {path:"vehiculos/auto/:id/editar", canActivate:[adminOrEmpleadoGuard, vehiculoDisponibleGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/auto-form/auto-form").then(c=>c.AutoForm)},
 
     {path:"vehiculos/nuevo/moto", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/moto-form/moto-form").then(c=>c.MotoFormComponent)},
     {path:"vehiculos/moto/:id", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/detalle-vehiculo/detalle-moto/detalle-moto").then(c=>c.DetalleMoto)},
-    {path:"vehiculos/moto/:id/editar", canActivate:[adminOrEmpleadoGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/moto-form/moto-form").then(c=>c.MotoFormComponent)},
+    {path:"vehiculos/moto/:id/editar", canActivate:[adminOrEmpleadoGuard, vehiculoDisponibleGuard], loadComponent:()=>import("./Pages/Vehiculo/form-vehiculo/moto-form/moto-form").then(c=>c.MotoFormComponent)},
 
     {path:"talleres", canActivate:[adminGuard],loadComponent:()=>import("./Pages/Taller/list-talleres/list-talleres").then(c=>c.ListTalleres)},
     {path:"talleres/nuevo", canActivate:[adminGuard], loadComponent:()=>import("./Pages/Taller/taller-form/taller-form").then(c=>c.TallerForm)},

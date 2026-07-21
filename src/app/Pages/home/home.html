@@ -1,5 +1,17 @@
 <section>
-    <div>
+    <div class="container-header">
+        <div class="saludo-header">
+            <p class="nombre-header">Buenos dias {{authService.getUser()?.nombre}}</p>
+
+            <div>
+                <span class="material-symbols-outlined">
+                    calendar_month
+                </span>
+                <p class="fecha-header">{{fechaActual | date: 'fullDate'}}</p>
+
+            </div>
+
+        </div>
         <div class="resumen-header">
             <div class="container-title-section">
                 <span class="material-symbols-outlined">
@@ -7,14 +19,25 @@
                 </span>
                 <p class="title-section">Resumen del mes</p>
             </div>
-            <a routerLink="">Ver reportes</a>
         </div>
 
         <div class="resumen-cards">
-            <app-card-resumen icono="assignment" titulo="Facturacion" [valor]="42"></app-card-resumen>
-            <app-card-resumen icono="toys" titulo="Ventas" [valor]="totalDeVentas()"></app-card-resumen>
-            <app-card-resumen icono="build" titulo="Reparaciones" [valor]="15"></app-card-resumen>
-            <app-card-resumen icono="group" titulo="Clientes" [valor]="20"></app-card-resumen>
+            @if (authService.isAdmin()) {
+            <app-card-resumen icono="assignment" titulo="Facturacion"
+                [valor]="facturacionDelMes() | currency:'USD':'symbol':'1.0-0'"></app-card-resumen>
+            <app-card-resumen icono="toys" titulo="Ventas del mes" [valor]="ventasDelMes()"></app-card-resumen>
+            <app-card-resumen icono="build" titulo="Reparaciones activas"
+                [valor]="reparacionesActivas()"></app-card-resumen>
+            <app-card-resumen icono="group" titulo="Clientes" [valor]="clientesTotales()"></app-card-resumen>
+            }@else if (authService.isEmpleado()) {
+            <app-card-resumen icono="toys" titulo="Mis ventas de este mes"
+                [valor]="ventasDelMesPorEmpleado()"></app-card-resumen>
+            <app-card-resumen icono="assignment" titulo="Mi facturacion"
+                [valor]="facturacionDelMesPorEmpleado() | currency:'USD':'symbol':'1.0-0'"></app-card-resumen>
+            <app-card-resumen icono="toys" titulo="Vehiclos disponibles"
+                [valor]="(vehiculosDisponibles())"></app-card-resumen>
+            }
+
         </div>
     </div>
 
@@ -27,14 +50,53 @@
         </div>
 
         <div class="accesos-grid">
-            <app-card-acceso-rapido class="card-acceso" logo="add" titulo="Nueva venta" [iconColor]="'var(--color-primary-text)'"
-                [backgroundIcon]="'var(--color-primary-subtle-bg)'"
-                descripcion="Registrar venta de vehiculo"></app-card-acceso-rapido>
-            <app-card-acceso-rapido routerLink="/talleres" class="card-acceso" logo="build" titulo="Talleres" [iconColor]="'var(--color-accent-red)'"
-                [backgroundIcon]="'var(--color-accent-red-bg)'" descripcion="Ver talleres"></app-card-acceso-rapido>
-            <app-card-acceso-rapido routerLink="/clientes" class="card-acceso" logo="calendar_add_on" titulo="Clientes" [iconColor]="'var(--color-accent-green)'"
-                [backgroundIcon]="'var(--color-accent-green-bg)'" descripcion="Ver clientes"></app-card-acceso-rapido>
+            @if (authService.isAdmin()) {
+            <app-card-acceso-rapido routerLink="/vehiculos" class="card-acceso" logo="add" titulo="Vehiculos"
+                [iconColor]="'var(--color-primary-text)'" [backgroundIcon]="'var(--color-primary-subtle-bg)'"
+                descripcion="Ver los vehiculos"></app-card-acceso-rapido>
+            <app-card-acceso-rapido routerLink="/talleres" class="card-acceso" logo="build" titulo="Talleres"
+                [iconColor]="'var(--color-accent-red)'" [backgroundIcon]="'var(--color-accent-red-bg)'"
+                descripcion="Ver talleres"></app-card-acceso-rapido>
+            <app-card-acceso-rapido routerLink="/users/nuevo" class="card-acceso" logo="person_add"
+                titulo="Nuevo usuario" [iconColor]="'var(--color-accent-green)'"
+                [backgroundIcon]="'var(--color-accent-green-bg)'"
+                descripcion="Crear un nuevo usuario"></app-card-acceso-rapido>
+            }
+            @else if(authService.isEmpleado()){
+            <app-card-acceso-rapido routerLink="/mis-ventas" class="card-acceso" logo="car_tag" titulo="Mis ventas"
+                [iconColor]="'var(--color-accent-green)'" [backgroundIcon]="'var(--color-accent-green-bg)'"
+                descripcion="Ver todas mis ventas"></app-card-acceso-rapido>
+            }
+
         </div>
     </div>
 
+    <div>
+        @if (authService.isEmpleado()) {
+        <div class="header-menu-section">
+            <div class="container-title-section">
+                <span class="material-symbols-outlined">
+                    list
+                </span>
+                <p class="title-section">Mis ultimas ventas</p>
+            </div>
+
+            <div class="nav-ventas">
+                <a routerLink="/mis-ventas">Ver todas -></a>
+            </div>
+        </div>
+
+        <div class="list-ventas">
+                @for (v of ultimasTresVentas(); track v.id) {
+                <div>
+                    <div>
+                        <p>{{v.vehiculo.marca}} {{v.vehiculo.modelo}} {{v.vehiculo.anio}}</p>
+                        <span>{{v.cliente.nombre}} {{v.cliente.apellido}} - {{v.fechaVenta }}</span>
+                    </div>
+                    <p>{{v.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0'}}</p>
+                </div>
+                }
+            </div>
+        }
+    </div>
 </section>

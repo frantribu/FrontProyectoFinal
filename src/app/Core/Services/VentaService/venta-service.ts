@@ -15,16 +15,11 @@ export class VentaService {
 getVentas(empleadoId?: string, fechaDesde?: string, fechaHasta?: string): Observable<VentaResponse[]> {
     let params = new HttpParams();
 
-    // 1. Si hay fechas, las agregamos a los parámetros.
-    // Esto es genial porque le servirá tanto al Admin como al Empleado regular.
     if (fechaDesde && fechaHasta) {
       params = params.set('desde', fechaDesde).set('hasta', fechaHasta);
     }
 
-    // 2. Evaluamos según el Rol
     if (this.authService.isAdmin()) {
-      
-      // Si el select mandó un ID válido (es decir, no es el option value="" de "Todos")
       if (empleadoId) {
         params = params.set('empleadoId', empleadoId);
       }
@@ -32,21 +27,29 @@ getVentas(empleadoId?: string, fechaDesde?: string, fechaHasta?: string): Observ
       return this.http.get<VentaResponse[]>(this.url, { params });
 
     } else if (this.authService.isEmpleado()) {
-      
-      // El empleado llama a su propio endpoint, pero le pasamos los parámetros
-      // por si él también quiere filtrar sus propias ventas por fecha.
-      // (Asegúrate de que tu backend en /mis-ventas reciba @RequestParam de fechas también)
       return this.http.get<VentaResponse[]>(`${this.url}/mis-ventas`, { params });
     }
 
     return EMPTY;
   }
 
-  ventasTotales(): Observable<number> {
-    return this.http.get<number>(`${this.url}/cantidad`);
+ getFacturacionDelMes(): Observable<number> {
+    return this.http.get<number>(`${this.url}/facturacion-mes`);
   }
 
+  getVentasDelMes(): Observable<number> {
+    return this.http.get<number>(`${this.url}/ventas-mes`);
+  }
 
+  getVentasDelMesEmpleado(): Observable<number> {
+    return this.http.get<number>(`${this.url}/empleado/ventas-mes`);
+  }
 
+  getFacturacionDelMesEmpleado(): Observable<number> {
+    return this.http.get<number>(`${this.url}/empleado/facturacion-mes`);
+  }
 
+  getUltimasTresVentasEmpleado():Observable<VentaResponse[]>{
+    return this.http.get<VentaResponse[]>(`${this.url}/empleado/ultimas-ventas`);
+  }
 }

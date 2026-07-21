@@ -9,6 +9,31 @@ section>div {
     margin-bottom: 20px;
 }
 
+.saludo-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--color-bg-elevated);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-default);
+    margin-bottom: 20px;
+}
+
+.saludo-header div {
+    display: flex;
+    color: rgb(153, 153, 153);
+}
+
+.nombre-header {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.fecha-header {
+    text-transform: capitalize;
+}
+
 .resumen-header {
     display: flex;
     flex-direction: row;
@@ -69,4 +94,51 @@ section>div {
     border-radius: 10px;
 }
 
-@media (max-width:768px) {}
+.header-menu-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-ventas {
+    color: rgb(122, 191, 255);
+}
+
+.container-title-section {
+    color: rgb(182, 182, 182);
+}
+
+.list-ventas {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-elevated);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-default);
+    gap: 10px;
+    margin-bottom: 20px;
+
+}
+
+.list-ventas>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border-default);
+}
+
+.list-ventas>div:last-child {
+    border: none;
+    padding-bottom: 0;
+}
+
+.list-ventas>div div p {
+    font-size: 15px;
+}
+
+.list-ventas>div div span {
+    color: gray;
+}

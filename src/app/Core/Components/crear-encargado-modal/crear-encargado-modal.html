@@ -56,6 +56,12 @@
                     }
                 </div>
 
+                 <div>
+                    <label for="rol">Rol</label>
+                    <input type="text" readonly value="Encargado de taller">
+                </div>
+
+
                 <div>
                     <label for="email">Email</label>
                     <input type="text" formControlName="email" (blur)="validarEmail($event)" [class.input-error]="errorEmail()">

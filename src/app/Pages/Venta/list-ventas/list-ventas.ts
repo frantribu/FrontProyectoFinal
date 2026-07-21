@@ -34,7 +34,7 @@ export class ListVentas {
   totalIngresos = computed(() => this.ventas().reduce((sum, v) => sum + v.precioFinalDeVenta, 0));
   promedioVenta = computed(() => this.ventas().length ? this.totalIngresos() / this.cantidadVentas() : 0)
 
-  displayedColumns:string[]=["vehiculo", "cliente", "vendedor", "precioCompra", "precioVenta", "ganancia", "fechaVenta"];
+  displayedColumns:string[]=[];
   dataSource=new MatTableDataSource<VentaResponse>([]);
   paginator=viewChild<MatPaginator>("paginator");
 
@@ -46,6 +46,12 @@ export class ListVentas {
   })
 
   constructor() {
+    if(this.authService.isAdmin()){
+      this.displayedColumns=["vehiculo", "cliente", "vendedor", "precioCompra", "precioVenta", "ganancia", "fechaVenta"]
+    }else{
+      this.displayedColumns=["vehiculo", "cliente", "precioVenta", "fechaVenta"]
+    }
+
     this.getVentas();
 
     effect(()=>{
@@ -53,7 +59,7 @@ export class ListVentas {
     })
 
     effect(()=>{
-      const  matPaginator=this.paginator();
+      const matPaginator=this.paginator();
 
       if(matPaginator){
         this.dataSource.paginator=matPaginator;

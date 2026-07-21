@@ -1,6 +1,7 @@
 import { Component, inject, input, output } from '@angular/core';
 import { ClienteService } from '../../Core/Services/ClienteService/cliente-service';
 import { ClienteResponse } from '../../Core/Models/Cliente';
+import { AuthService } from '../../Core/Services/AuthService/auth-service';
 
 @Component({
   selector: 'app-card-cliente',
@@ -10,7 +11,8 @@ import { ClienteResponse } from '../../Core/Models/Cliente';
 })
 export class CardCliente {
   private clienteService=inject(ClienteService);
-
+  authService=inject(AuthService);
+  
   client = input<ClienteResponse>();
   estadoModificado=output<void>();
 

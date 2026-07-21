@@ -60,6 +60,10 @@ export class VehiculoService {
     return this.http.get<boolean>(`${this.url}/validarPatente/${patente}`);
   }
 
+  countVehiculosDisponibles():Observable<number>{
+    return this.http.get<number>(`${this.url}/cantidadDisponible`);
+  }
+
   /*------------------------------------------AUTO----------------------------------------------------*/
 
   agregarAuto(auto: CrearAutoRequest, imagenes: File[]): Observable<AutoDetalleResponse> {

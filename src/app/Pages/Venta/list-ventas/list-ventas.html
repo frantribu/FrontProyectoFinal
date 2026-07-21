@@ -31,7 +31,6 @@
           Buscar
         </button>
       </form>
-      <!-- Mensaje de error de validación -->
       <div>
         @if (errorFechas()) {
         <p class="text-red-500 text-sm mt-2">{{ errorFechas() }}</p>
@@ -74,7 +73,7 @@
       @if(authService.isAdmin()){
       <ng-container matColumnDef="vendedor">
         <th mat-header-cell *matHeaderCellDef> VENDEDOR </th>
-        <td mat-cell *matCellDef="let v" data-titulo="VENDEDOR"> {{ v.vendedor.nombre }} {{ v.vendedor.apellido }} </td>
+        <td mat-cell *matCellDef="let v" data-titulo="VENDEDOR"> {{ v.vendedor.nombre }} {{ v.vendedor.apellido }}</td>
       </ng-container>
 
       <ng-container matColumnDef="precioCompra">

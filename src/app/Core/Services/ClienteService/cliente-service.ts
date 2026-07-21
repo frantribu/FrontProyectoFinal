@@ -26,5 +26,7 @@ export class ClienteService {
     return this.http.delete(`${this.url}/${id}`)
   }
 
-  
+  contarClientes(){
+    return this.http.get<number>(`${this.url}/total`)
+  }
 }
