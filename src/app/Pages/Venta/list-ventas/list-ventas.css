@@ -352,3 +352,118 @@ mat-paginator {
         font-size: 13px;
     }
 }
+
+/* Layout del Header */
+.header-ventas {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  background-color: #12131C; /* Coincide con el tono del dashboard */
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Formulario de Fechas */
+.fechas_container {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* Estilo unificado para los grupos de inputs */
+.input_group, .container-empleado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input_group label, .container-empleado label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8E8EA8;
+}
+
+/* Inputs de Fecha y Select */
+.input_group input[type="date"],
+.container-empleado select {
+  background-color: #1B1C28;
+  color: #E2E8F0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  min-width: 150px;
+}
+
+/* Color para el ícono nativo del calendario en Webkit */
+.input_group input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
+.input_group input[type="date"]:focus,
+.container-empleado select:focus {
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Botón Buscar */
+.btn_buscar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #4F46E5;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  height: 38px; /* Alineado al alto del input */
+}
+
+.btn_buscar:hover:not(:disabled) {
+  background-color: #4338CA;
+}
+
+.btn_buscar:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn_buscar:disabled {
+  background-color: #2D2D3D;
+  color: #6C6C80;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Select de Empleado */
+.container-empleado select {
+  min-width: 180px;
+  cursor: pointer;
+}
+
+/* Manejo del Mensaje de Error */
+.error_container {
+  position: absolute;
+  bottom: -1.3rem;
+  left: 0;
+}
+
+.error_text {
+  color: #EF4444;
+  font-size: 0.75rem;
+  margin: 0;
+}
