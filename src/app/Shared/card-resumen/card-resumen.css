@@ -3,6 +3,8 @@
     padding: 15px;
     background-color: var(--color-bg-elevated);
     border-radius: 10px;
+    /* Agregamos esto para asegurar que nada se desborde del div */
+    overflow: hidden; 
 }
 
 .card-container div {
@@ -16,13 +18,38 @@ span {
     font-size: 20px;
     margin-right: 5px;
     color: var(--color-text-muted);
+    flex-shrink: 0; /* Evita que el ícono se aplaste si el título es largo */
 }
 
 p {
     color: var(--color-text-muted);
+    /* Manejo del título por si es muy largo */
+    line-height: 1.2;
+    margin: 0;
 }
 
 h3 {
     font-size: 30px;
     font-weight: 500;
+    margin: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+    .card-container {
+        padding: 12px; /* Damos un poco más de espacio interno reduciendo el padding */
+    }
+
+    h3 {
+        font-size: 22px; /* Achicamos el número para que entren cifras más largas (como facturación) */
+    }
+
+    p {
+        font-size: 14px; /* Ajustamos sutilmente el título */
+    }
+
+    span {
+        font-size: 18px; /* Ajustamos el ícono para que coincida con el título */
+    }
 }

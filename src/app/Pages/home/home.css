@@ -142,3 +142,62 @@ section>div {
 .list-ventas>div div span {
     color: gray;
 }
+
+@media (max-width: 600px) {
+    section {
+        padding: 15px 10px;
+    }
+
+    .saludo-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .resumen-cards {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 10px;
+    }
+
+    .accesos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .list-ventas > div {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .list-ventas > div div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .list-ventas > div > p {
+        font-weight: 600;
+        color: var(--color-success-text, #2ecc71);
+        align-self: flex-end;
+        margin-top: -10px;
+    }
+
+    .header-menu-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+/* Pequeño ajuste para tablets */
+@media (min-width: 601px) and (max-width: 900px) {
+    .saludo-header {
+        align-items: center;
+    }
+    
+    .resumen-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

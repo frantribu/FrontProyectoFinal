@@ -158,3 +158,102 @@ tbody tr:hover {
 .button-accion:hover {
     background-color: rgba(71, 71, 71, 0.11);
 }
+
+@media (max-width: 768px) {
+    .div-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .div-header select {
+        width: 100%;
+    }
+
+    .add-taller a {
+        justify-content: center;
+    }
+
+    .container-list-talleres {
+        border: none;
+        background: transparent;
+        border-radius: 0;
+        overflow: visible;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 20px;
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        background-color: var(--color-bg-elevated);
+        padding: 10px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--color-border-subtle);
+        text-align: right; 
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        font-weight: 700;
+        font-size: 11px;
+        color: var(--color-text-table-header);
+        text-transform: uppercase;
+        padding-right: 15px;
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    td:nth-child(1)::before { content: "TALLER"; }
+    td:nth-child(2)::before { content: "DIRECCIÓN"; }
+    td:nth-child(3)::before { content: "ESPECIALIDAD"; }
+    td:nth-child(4)::before { content: "ENCARGADO"; }
+    td:nth-child(5)::before { content: "REPARACIONES ACTIVAS"; }
+    td:nth-child(6)::before { content: "ESTADO"; }
+    
+    td:nth-child(7)::before { 
+        content: ""; 
+        display: none; 
+    }
+
+    .reparacionesActivas, .estado-activo {
+        width: auto; 
+    }
+
+    .acciones {
+        width: 100%;
+        padding-top: 15px;
+    }
+
+    .container-acciones {
+        width: 100%;
+        justify-content: space-between; /* Separa los botones en la base de la tarjeta */
+    }
+}
+
+/* Scroll horizontal seguro para tablets o pantallas medianas */
+@media (min-width: 769px) {
+    .container-list-talleres {
+        overflow-x: auto;
+    }
+    table {
+        min-width: 900px;
+    }
+}
