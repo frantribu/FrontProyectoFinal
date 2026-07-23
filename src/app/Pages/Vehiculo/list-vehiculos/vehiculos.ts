@@ -82,10 +82,8 @@ export class Vehiculos {
     if (resultado) {
       this.vehiculoService.eliminarVehiculo(id).subscribe({
         next: () => this.getVehiculos(this.estadoSeleccionado(), this.buscador()),
-        error: (e) => {
-          console.log("Error al eliminar el vehiculo: ", e);
-
-          alert("Error al eliminar el vehiculo")
+        error: () => {
+          alert("El vehiculo no se puede vender ya que tiene un historial")
         }
       })
     }

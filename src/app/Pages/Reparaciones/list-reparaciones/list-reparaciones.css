@@ -1,0 +1,187 @@
+.container-list {
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: var(--color-text-primary);
+}
+
+.table-responsive {
+    border: 0.5px solid var(--color-border-default);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-bg-elevated);
+    color: var(--color-text-primary);
+}
+
+thead {
+    color: var(--color-text-table-header);
+    font-size: 11px;
+    border-bottom: 0.5px solid var(--color-border-default);
+}
+
+thead tr {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 13px 16px;
+}
+
+tbody {
+    text-transform: capitalize;
+}
+
+tbody tr {
+    border-bottom: 0.5px solid var(--color-border-subtle);
+    transition: background-color 0.2s;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: var(--color-overlay-row-hover);
+}
+
+.estado {
+    height: 4vh;
+    padding: 10px;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+.estado-ingreso {
+    background: rgba(59, 130, 246, .10);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, .20);
+}
+
+.estado-diagnostico {
+    background: rgba(245, 158, 11, .10);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, .20);
+}
+
+.estado-reparacion {
+    background: rgba(239, 68, 68, .10);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, .20);
+}
+
+.estado-prueba {
+    background: rgba(34, 197, 94, .08);
+    color: #86efac;
+    border-color: rgba(34, 197, 94, .18);
+}
+
+.estado-finalizado {
+    background: rgba(99, 102, 241, .12);
+    color: #818cf8;
+    border-color: rgba(99, 102, 241, .22);
+}
+
+.estado-entregado {
+    background: rgba(20, 184, 166, .08);
+    color: #5eead4;
+    border-color: rgba(20, 184, 166, .20);
+}
+
+@media (max-width: 768px) {
+
+    .container-list {
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        overflow: visible;
+    }
+
+    table,
+    thead,
+    tbody,
+    tr,
+    td,
+    th {
+        display: block;
+        width: 100%;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 20px;
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        background-color: var(--color-bg-elevated);
+        padding: 10px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        font-weight: 700;
+        font-size: 11px;
+        color: var(--color-text-table-header);
+        text-transform: uppercase;
+        text-align: left;
+        padding-right: 15px;
+        flex-shrink: 0;
+    }
+
+    td:nth-child(1)::before {
+        content: "FECHA ENTRADA";
+    }
+
+    td:nth-child(2)::before {
+        content: "VEHÍCULO";
+    }
+
+    td:nth-child(3)::before {
+        content: "DESCRIPCIÓN";
+    }
+
+    td:nth-child(4)::before {
+        content: "ESTADO";
+    }
+
+    td:nth-child(5)::before {
+        content: "FECHA SALIDA";
+    }
+
+    .badge {
+        min-width: auto;
+    }
+}
+
+@media (min-width: 769px) {
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 850px;
+    }
+}

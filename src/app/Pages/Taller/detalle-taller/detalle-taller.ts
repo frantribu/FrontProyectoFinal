@@ -57,6 +57,4 @@ export class DetalleTaller {
   cambiarVista(vista:'activas'|'finalizadas'){
     this.vistaActual.set(vista);
   }
-
-
 }

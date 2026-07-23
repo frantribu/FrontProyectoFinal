@@ -1,32 +1,28 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { ReparacionService } from '../../../Core/Services/ReparacionService/reparacion-service';
 import { HistorialReparacionResponse } from '../../../Core/Models/HistorialReparacion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-reparaciones',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './list-reparaciones.html',
   styleUrl: './list-reparaciones.css',
 })
-export class ListReparaciones implements OnInit {
+export class ListReparaciones{
   private reparacionService = inject(ReparacionService);
   
   reparaciones = signal<HistorialReparacionResponse[]>([]);
 
-  ngOnInit(): void {
-    const idTallerLogueado = localStorage.getItem("idTaller");
-
-    if (idTallerLogueado) {
-      this.reparacionService.getReparacionesPorTaller(Number(idTallerLogueado)).subscribe({
-        next: (data) => {
-          this.reparaciones.set(data);
-        },
-        error: (err) => console.error("Error al cargar las reparaciones del taller:", err)
-      });
-    } else {
-      console.warn("No se encontró ningún ID de taller en el almacenamiento local.");
-    }
+  constructor(){
+    this.getReparaciones();
   }
+
+  getReparaciones(){
+    this.reparacionService.getReparaciones().subscribe({
+      next:(r)=>this.reparaciones.set(r),
+      error:()=>console.log("Error al obtener las reparaciones")
+    })
+  }  
 }

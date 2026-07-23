@@ -38,6 +38,8 @@ export const routes: Routes = [
     {path:"ventas", canActivate:[adminGuard], loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
     {path:"ventas/nuevo/:id", canActivate:[vehiculoDisponibleGuard, adminGuard],loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
 
+    {path:"reparaciones", canActivate:[adminGuard], loadComponent:()=>import("./Pages/Reparaciones/list-reparaciones/list-reparaciones").then(c=>c.ListReparaciones)},  
+
     //PARA EL ENCARGADO DEL TALLER
     {path:"mis-talleres", canActivate:[encargadoTallerGuard], loadComponent:()=>import("./Pages/Taller/list-talleres/list-talleres").then(c=>c.ListTalleres)},
     {path:"mis-talleres/:id", canActivate:[encargadoTallerGuard], loadComponent:()=>import("./Pages/Taller/detalle-taller/detalle-taller").then(c=>c.DetalleTaller)},

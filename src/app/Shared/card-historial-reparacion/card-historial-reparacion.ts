@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { EstadoReparacion, HistorialReparacionResponse } from '../../Core/Models/HistorialReparacion';
 import { CommonModule } from '@angular/common';
 import { ReparacionService } from '../../Core/Services/ReparacionService/reparacion-service';
@@ -42,11 +42,19 @@ export class CardHistorialReparacion {
     this.cambiarEstado(anterior);
   }
 
-  cambiarEstado(estado: EstadoReparacion) {  
-    this.reparacionService.cambiarEstado(this.reparacion()!.id, estado).subscribe({
-      next: () => this.estadoCambiado.emit(),
-      error: () => console.log("Error al cambiar el estado ")
-    })
+  cambiarEstado(estado: EstadoReparacion) {
+    let resultado = false;
+
+    if (estado.toLowerCase() == "entregado") {
+      resultado = window.confirm("¿Confirmas que entregas el vehiculo?");
+    }
+
+    if (resultado || estado.toLowerCase() !== "entregado") {
+      this.reparacionService.cambiarEstado(this.reparacion()!.id, estado).subscribe({
+        next: () => this.estadoCambiado.emit(),
+        error: () => console.log("Error al cambiar el estado ")
+      })
+    }
   }
 
   toggleMotivo() {

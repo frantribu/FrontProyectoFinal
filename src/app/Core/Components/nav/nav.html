@@ -16,6 +16,7 @@
     <hr>
 
     <div class="nav-content">
+        @if (authService.isAdmin() || authService.isEmpleado()) {
 
         <div class="nav-section">
             <p>PRINCIPAL</p>
@@ -29,7 +30,6 @@
                         <span class="nav-label">Inicio</span>
                     </a>
                 </li>
-                @if (authService.isAdmin() || authService.isEmpleado()) {
                 <li>
                     <a routerLink="/vehiculos" routerLinkActive="active">
                         <span class="material-symbols-outlined">
@@ -47,9 +47,10 @@
                         <span class="nav-label">{{authService.isAdmin() ? 'Ventas' : 'Mis ventas'}}</span>
                     </a>
                 </li>
-                }
+
             </ul>
         </div>
+        }
 
         @if (authService.isAdmin() || authService.isEncargado()) {
         <div class="nav-section">
@@ -67,7 +68,7 @@
 
                 @if(authService.isAdmin()){
                 <li>
-                    <a href="">
+                    <a routerLink="/reparaciones">
                         <span class="material-symbols-outlined">
                             build
                         </span>

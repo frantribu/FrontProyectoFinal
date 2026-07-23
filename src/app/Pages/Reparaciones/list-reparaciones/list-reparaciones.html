@@ -15,17 +15,17 @@
       <tbody>
         @for (rep of reparaciones(); track rep.id) {
           <tr>
-            <td>{{ rep.fechaDeEntrada }}</td>
+            <td>{{ rep.fechaDeEntrada | date:'dd/MM/yyyy' }}</td>
             <td>
               {{ rep.vehiculo.marca }} {{ rep.vehiculo.modelo }} 
             </td>
             <td>{{ rep.descripcion }}</td>
             <td>
-              <span class="badge" [className]="'badge ' + rep.estadoReparacion.label.toLowerCase()">
-                {{ rep.estadoReparacion }}
+              <span class="estado" [class]="'estado-'+ rep?.estadoReparacion?.name?.toLowerCase()">
+                {{ rep.estadoReparacion.label }}
               </span>
             </td>
-            <td>{{ rep.fechaDeSalida ? rep.fechaDeSalida : 'En curso...' }}</td>
+            <td>{{ rep.fechaDeSalida ? (rep.fechaDeSalida | date:'dd/MM/yyyy' ) : 'En curso...' }}</td>
           </tr>
         } @empty {
           <tr>
