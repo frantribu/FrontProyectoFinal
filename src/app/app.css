@@ -20,7 +20,7 @@ header {
 main {
     background-image: linear-gradient(rgba(14, 14, 14, 0.7),
             rgba(15, 15, 15, 0.7)),
-        url("Assets/background.png");
+        url("/img/background.png");
     background-size: cover;
     flex: 1;
     /*Ocupa el resto de la pantalla*/

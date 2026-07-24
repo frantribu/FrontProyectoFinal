@@ -227,11 +227,11 @@ mat-paginator {
         min-width: 100%;
     }
 
-    .tr-row{
+    .tr-row {
         height: 100%;
     }
 
-    th{
+    th {
         display: none;
     }
 
@@ -262,4 +262,15 @@ mat-paginator {
         font-size: 13px;
     }
 
+    .mat-column-acciones {
+        width: 100%;
+    }
+
+    .container-acciones-v {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+    }
 }

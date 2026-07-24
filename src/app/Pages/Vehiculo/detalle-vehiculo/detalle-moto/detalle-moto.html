@@ -30,7 +30,12 @@
                     [src]="baseUrl + imagen">
                 }
             </div>
-            } @else {
+            }@else if (!moto()?.imagenes?.length) {
+            <div>
+                <img src="img/imagenDefaultMoto.png" class="imagen-vehiculo">
+            </div>
+            }
+            @else {
             <div class="carousel-viewport">
                 <img class="imagen-vehiculo" [src]="baseUrl + moto()!.imagenes![0]">
             </div>

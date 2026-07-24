@@ -96,7 +96,7 @@ export class ListVentas {
       return;
     }
 
-    this.ventaService.getVentas(fechaDesde, fechaHasta).subscribe({
+    this.ventaService.getVentas(this.filtroEncargado(),fechaDesde, fechaHasta).subscribe({
       next: (data => {
         this.ventas.set(data)
       }),
