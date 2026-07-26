@@ -3,11 +3,11 @@
         <div class="form-header">
             <div class="divTitulo">
                 <span class="nombreEncabezado">AutoPremium</span>
-                <span class="subnombreEncabezado">{{isEditable ? "Modificacion de Cliente" : "Carga de Cliente"}}</span>
+                <span class="subnombreEncabezado">Modificacion de Usuario</span>
             </div>
         </div>
 
-        <form [formGroup]="form" (submit)="onSubmit()">
+        <form [formGroup]="form" (submit)="modificarUsuario()">
             <div class="form-grid">
                 <div>
                     <label for="nombre">Nombre</label>
@@ -76,27 +76,10 @@
                     }
                     }
                 </div>
-
-                <div>
-                    <label for="telefono">Telefono</label>
-                    <input type="text" formControlName="telefono">
-
-                    @if(form.get("telefono")?.touched){
-                    @if (form.get("telefono")?.hasError("required")) {
-                    <span class="error-message">
-                        El telefono es obligatorio.
-                    </span>
-                    }@else if(form.get("telefono")?.hasError("pattern")){
-                    <span class="error-message">
-                        El telefono no tiene el formato valido.
-                    </span>
-                    }
-                    }
-                </div>
             </div>
 
             <button type="submit" [disabled]="form.invalid">
-                <span>Cargar en el sistema</span>
+                <span>Modificar usuario</span>
             </button>
         </form>
     </div>

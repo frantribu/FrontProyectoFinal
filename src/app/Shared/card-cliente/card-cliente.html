@@ -1,15 +1,29 @@
-<section class="card-cliente">
+<section class="card-usuario">
     <div class="card-header">
-        <h2>{{ client()?.nombre }}</h2>
+        <div>
+            <h2>{{ client()?.nombre }} {{ client()?.apellido }}</h2>
+            <span>Telefono: {{client()?.telefono}}</span>
+        </div>
+
+        <span class="estado-usuario" [class]="client()?.activo ? 'activo' : 'inactivo'">{{client()?.activo ? 'Activo' :
+            'Inactivo'}}</span>
     </div>
 
-    <p class="apellido-cliente">
-        {{ client()?.apellido }}
-    </p>
+    <hr>
 
-    @if (authService.isAdmin()) {
-    <button (click)="toggleEstadoUsuario(client()!.id)">
-        {{client()?.activo ? 'Desactivar' : 'Reactivar'}}
-    </button>
-    }
+    <div class="card-footer">
+        <div>
+            @if (authService.isAdmin()) {
+            <button [class]="client()?.activo ? 'desactivar' : 'activar'" (click)="toggleEstadoUsuario(client()!.id)">
+                {{ client()?.activo ? 'Desactivar' : 'Reactivar' }}
+            </button>
+            }
+            <button (click)="modificarCliente()">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+            </button>
+        </div>
+    </div>
+
 </section>

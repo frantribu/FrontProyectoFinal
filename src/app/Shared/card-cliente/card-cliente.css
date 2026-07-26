@@ -1,40 +1,118 @@
-.card-cliente {
+.card-usuario {
     background-color: var(--color-bg-elevated);
     border: 1px solid var(--color-border-default);
     border-radius: 12px;
     padding: 18px;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    height: auto;
 }
 
-.card-cliente:hover {
-    border-color: var(--color-border-strong);
-    transform: translateY(-2px);
+.card-usuario:hover {
+    border-color: var(--color-border-hover);
+}
+
+hr{
+    color: rgb(46, 45, 45);
 }
 
 .card-header {
     display: flex;
-    align-items: start;
     justify-content: space-between;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 16px;
 }
 
-.card-header h2 {
-    font-size: 1rem;
-    color: var(--color-text-primary);
+.card-header div h2 {
     margin: 0;
+    font-size: 18px;
+    color: var(--color-text-primary);
+    text-transform: capitalize;
 }
 
-.apellido-cliente {
-    margin-top: 8px;
-    color: var(--color-text-muted);
+.card-header div span{
+    color: gray;
 }
 
-.rol-cliente {
-    background-color: var(--color-bg-chip);
-    color: var(--color-text-tertiary);
-    padding: 4px 8px;
-    border-radius: 12px;
+.estado-usuario {
+    padding: 4px 10px;
+    border-radius: 999px;
     font-size: 12px;
-    white-space: nowrap;
+    font-weight: 500;
+}
+
+.estado-usuario.activo {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-border);
+}
+
+.estado-usuario.inactivo {
+    background: rgb(26, 26, 26);
+    color: gray;
+    border:  0.5px solid rgb(48, 48, 48);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-footer div{
+    display: flex;
+    flex-direction: row;
+}
+
+.card-footer > span {
+    padding: 3px 8px;
+    background-color: rgb(26, 26, 26);
+    border-radius: 20px;
+    color: gray;
+    font-size: 10px;
+    border: 0.5px solid rgb(48, 48, 48);
+}
+
+.card-footer button {
+    padding: 1px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .2s;
+    font-weight: 500;
+}
+
+.card-footer button span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 14, 14);
+    padding: 5px;
+    border: 0.5px solid rgb(92, 92, 92);
+    border-radius: 10px;
+    transition: background-color 0.2s;
+    gap: 5px;
+}
+
+.card-footer button span:hover{
+    background-color: rgba(71, 71, 71, 0.11);
+}
+
+.desactivar {
+    background: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
+}
+
+.activar {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-border);
+}
+
+.card-footer button:hover {
+    opacity: 0.9;
 }

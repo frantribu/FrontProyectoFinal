@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UsuarioRequest, UsuarioResponse } from '../../Models/Usuario';
+import { UpdateUsuarioRequest, UsuarioRequest, UsuarioResponse } from '../../Models/Usuario';
 import { Observable } from 'rxjs';
 import { EnumResponse } from '../../Models/Enum';
 
@@ -26,6 +26,10 @@ export class UsuarioService {
 
    getEmpleados() {
     return this.http.get<UsuarioResponse[]>(this.url + "/empleados")
+  }
+
+  modificarUsuario(request:UpdateUsuarioRequest, id:number){
+    return this.http.put<UsuarioResponse>(`${this.url}/${id}`, request);
   }
 
   postUser(user: UsuarioRequest) {

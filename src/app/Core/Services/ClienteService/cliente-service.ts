@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ClienteResponse, CrearClienteRequest } from '../../Models/Cliente';
+import { ClienteResponse, ClienteRequest, ClienteDetalleResponse } from '../../Models/Cliente';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,16 @@ export class ClienteService {
     return this.http.get<ClienteResponse[]>(`${this.url}?activo=${activo}&busqueda=${busqueda}`)
   }
 
-  crearCliente(request:CrearClienteRequest):Observable<ClienteResponse>{
+  getClienteById(id:number):Observable<ClienteDetalleResponse>{
+      return this.http.get<ClienteDetalleResponse>(`${this.url}/${id}`);
+  }
+
+  crearCliente(request:ClienteRequest):Observable<ClienteResponse>{
     return this.http.post<ClienteResponse>(this.url, request)
+  }
+
+  modificarCliente(request:ClienteRequest, id:number):Observable<ClienteResponse>{
+    return this.http.put<ClienteResponse>(`${this.url}/${id}`, request)
   }
   
   activarCliente(id: number) {

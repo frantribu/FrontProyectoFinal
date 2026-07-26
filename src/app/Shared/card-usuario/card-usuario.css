@@ -7,11 +7,15 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 18px;
-    height: 130px;
+    height: auto;
 }
 
 .card-usuario:hover {
     border-color: var(--color-border-hover);
+}
+
+hr{
+    color: rgb(46, 45, 45);
 }
 
 .card-header {
@@ -55,24 +59,46 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
 }
 
-.card-footer span {
-    padding: 6px 12px;
+.card-footer div{
+    display: flex;
+    flex-direction: row;
+}
+
+.card-footer > span {
+    padding: 3px 8px;
     background-color: rgb(26, 26, 26);
     border-radius: 20px;
     color: gray;
-    font-size: 12px;
+    font-size: 10px;
     border: 0.5px solid rgb(48, 48, 48);
 }
 
 .card-footer button {
-    padding: 8px 14px;
+    padding: 1px 10px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: .2s;
     font-weight: 500;
+}
+
+.card-footer button span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 14, 14);
+    padding: 5px;
+    border: 0.5px solid rgb(92, 92, 92);
+    border-radius: 10px;
+    transition: background-color 0.2s;
+    gap: 5px;
+}
+
+.card-footer button span:hover{
+    background-color: rgba(71, 71, 71, 0.11);
 }
 
 .desactivar {

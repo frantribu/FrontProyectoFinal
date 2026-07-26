@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CrearClienteRequest } from '../../Models/Cliente';
+import { ClienteRequest } from '../../Models/Cliente';
 import { ClienteService } from '../../Services/ClienteService/cliente-service';
 import { ValidacionService } from '../../Services/ValidacionService/validacionService';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -29,13 +29,13 @@ export class CrearClienteModal {
       Validators.pattern(/^\d{7,8}$/)
     ]],
     email: ['', [Validators.required, Validators.email]],
-    telefono: [0, [Validators.required, Validators.pattern(/^[+]?[0-9\s\-]{8,15}$/)]]
+    telefono: ['', [Validators.required, Validators.pattern(/^[+]?[0-9\s\-]{8,15}$/)]]
   });
 
   agregarCliente(){
     const formulario=this.form.value;
 
-    const request:CrearClienteRequest={
+    const request:ClienteRequest={
       nombre:formulario.nombre!,
       apellido:formulario.apellido!,
       dni:formulario.dni!,
@@ -63,7 +63,7 @@ export class CrearClienteModal {
   }
 
     validarDni(event:Event){
-    const value=(event.target as HTMLInputElement).value.trim();
+    const value=Number((event.target as HTMLInputElement).value.trim());
 
     if(!value) return;
 

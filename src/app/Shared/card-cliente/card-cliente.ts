@@ -2,6 +2,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { ClienteService } from '../../Core/Services/ClienteService/cliente-service';
 import { ClienteResponse } from '../../Core/Models/Cliente';
 import { AuthService } from '../../Core/Services/AuthService/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-cliente',
@@ -11,6 +12,8 @@ import { AuthService } from '../../Core/Services/AuthService/auth-service';
 })
 export class CardCliente {
   private clienteService=inject(ClienteService);
+  private router=inject(Router);
+
   authService=inject(AuthService);
   
   client = input<ClienteResponse>();
@@ -23,10 +26,13 @@ export class CardCliente {
 
     request.subscribe({
       next:()=>{
-        console.log("Estado del cliente actualizado");
         this.estadoModificado.emit();
       },
       error:()=>console.log("Error al cambiar el estado del cliente")
     })
+  }
+
+  modificarCliente(){
+    this.router.navigate([`/clientes/${this.client()?.id}/editar`])
   }
 }

@@ -12,7 +12,7 @@ export class ValidacionService {
     return this.http.get<boolean>(`${this.url}/email/${email}`)
   }
 
-  validarDni(dni: string) {
+  validarDni(dni: number) {
     return this.http.get<boolean>(`${this.url}/dni/${dni}`)
   }
 }

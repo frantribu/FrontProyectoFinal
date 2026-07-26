@@ -33,7 +33,7 @@
             <app-card-resumen icono="toys" titulo="Mis ventas de este mes"
                 [valor]="ventasDelMesPorEmpleado()"></app-card-resumen>
             <app-card-resumen icono="assignment" titulo="Mi facturacion"
-                [valor]="facturacionDelMesPorEmpleado() | currency:'USD':'symbol':'1.0-0'"></app-card-resumen>
+                [valor]="facturacionDelMesPorEmpleado() ? (facturacionDelMesPorEmpleado() | currency:'USD':'symbol':'1.0-0') : (0 | currency:'USD':'symbol':'1.0-0')"></app-card-resumen>
             <app-card-resumen icono="toys" titulo="Vehiclos disponibles"
                 [valor]="(vehiculosDisponibles())"></app-card-resumen>
             }
@@ -95,6 +95,8 @@
                     </div>
                     <p>{{v.precioFinalDeVenta | currency:'USD':'symbol':'1.0-0'}}</p>
                 </div>
+                }@empty {
+                    <span>No hay ventas registradas</span>
                 }
             </div>
         }

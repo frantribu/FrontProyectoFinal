@@ -9,15 +9,26 @@
             'Inactivo'}}</span>
     </div>
 
+    <hr>
+
     <div class="card-footer">
         <span>
             {{ user()?.rol }}
         </span>
-        @if(user()?.rol?.toLowerCase()!="admin"){
-        <button [class]="user()?.activo ? 'desactivar' : 'activar'" (click)="toggleEstadoUsuario(user()!.id)">
-            {{ user()?.activo ? 'Desactivar' : 'Reactivar' }}
-        </button>
-        }
+        <div>
+            @if(user()?.rol?.toLowerCase()!="admin"){
+            <button [class]="user()?.activo ? 'desactivar' : 'activar'" (click)="toggleEstadoUsuario(user()!.id)">
+                {{ user()?.activo ? 'Desactivar' : 'Reactivar' }}
+            </button>
+            <button (click)="modificarUsuario()">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+            </button>
+            }
+        </div>
+
+
     </div>
 
 </section>

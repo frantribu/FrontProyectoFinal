@@ -1,9 +1,8 @@
-import { EnumResponse } from "./Enum";
-
 export interface UsuarioResponse{
     id:number;
     nombre:string;
     apellido:string;
+    dni:number;
     rol:string;
     email:string;
     activo:boolean;
@@ -16,4 +15,11 @@ export interface UsuarioRequest{
     rol: String;
     email: String;
     password: String;
+}
+
+export interface UpdateUsuarioRequest{
+    dni:number;
+    nombre:string;
+    apellido:string;
+    email:string;
 }

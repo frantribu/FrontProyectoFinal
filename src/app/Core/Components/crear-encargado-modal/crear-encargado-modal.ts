@@ -64,7 +64,7 @@ export class CrearEncargadoModal {
   }
 
   validarDni(event:Event){
-    const value=(event.target as HTMLInputElement).value.trim();
+    const value=Number((event.target as HTMLInputElement).value.trim());
 
     if(!value)return;
 
