@@ -38,12 +38,14 @@ export class ModificarUser {
 
   constructor() {
     this.cargarUsuario();
+    
   }
 
   cargarUsuario() {
+    console.log("HOLA");
     this.usuarioService.getUserById(this.id).subscribe({
       next: (c) => {
-
+        
         this.emailOriginal.set(c.email);
         this.dniOriginal.set(c.dni);
 
@@ -57,6 +59,8 @@ export class ModificarUser {
       error: (e) => {
         if (e.status == 404) {
           this.router.navigate(['/users'])
+        }else{
+          console.log(e);
         }
       }
     })

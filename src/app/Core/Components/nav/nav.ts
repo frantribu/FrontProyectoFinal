@@ -14,6 +14,7 @@ export class Nav {
   router = inject(Router);
   menuUserOpen=false;
   navAbierto=signal(false);
+  routerLink = RouterLink;
 
   getIniciales(): string {
     const user = this.authService.getUser();
@@ -36,5 +37,9 @@ export class Nav {
 
   toggleNav():void{
     this.navAbierto.set(!this.navAbierto())
+  }
+
+  verMiPerfil(){
+    this.router.navigate(['/mi-perfil'])
   }
 }

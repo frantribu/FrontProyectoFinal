@@ -16,7 +16,7 @@ export const routes: Routes = [
 
     {path:"users", canActivate:[adminGuard], loadComponent:()=> import("./Pages/users/list-users/users").then(c => c.Users)},
     {path:"users/nuevo", canActivate:[adminGuard], loadComponent:()=> import("./Pages/users/form-user/form-user").then(c => c.FormUser)},
-    {path:"users/:id/editar", canActivate:[adminGuard], loadComponent:()=> import("./Pages/users/modificar-user/modificar-user").then(c => c.ModificarUser)},
+    {path:"users/:id/editar", canActivate:[adminOrEmpleadoGuard], loadComponent:()=> import("./Pages/users/modificar-user/modificar-user").then(c => c.ModificarUser)},
 
     {path:"clientes", canActivate:[adminOrEmpleadoGuard],loadComponent:()=> import("./Pages/Clientes/list-clientes/list-clientes").then(c => c.ListClientes)},
     {path:"clientes/nuevo",canActivate:[adminOrEmpleadoGuard], loadComponent:()=> import("./Pages/Clientes/form-clientes/form-clientes").then(c => c.FormClientes)},
@@ -49,4 +49,8 @@ export const routes: Routes = [
     //PARA EL EMPLEADO
     {path:"mis-ventas", canActivate:[empleadoGuard], loadComponent:()=>import("./Pages/Venta/list-ventas/list-ventas").then(c=>c.ListVentas)},
     {path:"mis-ventas/nuevo/:id", canActivate:[vehiculoDisponibleGuard, empleadoGuard], loadComponent:()=>import("./Pages/Venta/form-venta/form-venta").then(c=>c.FormVenta)},  
+
+    //PERFIL
+    {path:"mi-perfil", canActivate:[authGuard], loadComponent:()=>import("./Pages/mi-perfil/mi-perfil").then(c=>c.MiPerfil)},
+    {path:"mi-perfil/editar/:id", canActivate:[authGuard], loadComponent:()=>import("./Pages/users/modificar-user/modificar-user").then(c=>c.ModificarUser)},
 ];

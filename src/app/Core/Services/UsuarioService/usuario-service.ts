@@ -28,7 +28,7 @@ export class UsuarioService {
     return this.http.get<UsuarioResponse[]>(this.url + "/empleados")
   }
 
-  modificarUsuario(request:UpdateUsuarioRequest, id:number){
+  modificarUsuario(request:UpdateUsuarioRequest, id:number): Observable<UsuarioResponse>{
     return this.http.put<UsuarioResponse>(`${this.url}/${id}`, request);
   }
 
