@@ -1,5 +1,8 @@
+
 .container-detalle-taller {
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .container-nombre-taller {
@@ -7,12 +10,13 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
-    gap: 10px
+    gap: 10px;
 }
 
 .container-nombre-taller a {
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .container-nombre-taller span {
@@ -24,6 +28,7 @@
 .container-nombre-taller h2 {
     font-size: 25px;
     font-weight: 600;
+    word-break: break-word; /* Para nombres largos de taller */
 }
 
 .info-taller {
@@ -36,6 +41,8 @@
     border-radius: 10px;
     border: 1px solid var(--color-border-default);
     margin-bottom: 30px;
+    box-sizing: border-box;
+    gap: 20px;
 }
 
 .container-ubicacion {
@@ -55,6 +62,12 @@
     padding: 10px;
     border-radius: 10px;
     font-variation-settings: 'FILL' 1;
+    flex-shrink: 0;
+}
+
+.container-detalle {
+    display: flex;
+    flex-direction: column;
 }
 
 .container-detalle span {
@@ -64,6 +77,8 @@
 .container-detalle span,
 .container-detalle p {
     font-size: 15px;
+    margin: 0;
+    word-break: break-word;
 }
 
 .tabs {
@@ -72,12 +87,19 @@
     gap: 40px;
     font-size: 18px;
     border-bottom: 1.5px solid var(--color-border-strong);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tabs button {
     font-weight: 500;
     padding-bottom: 10px;
     transition: .2s color, .2s border-bottom;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    color: inherit;
 }
 
 .activa {
@@ -85,9 +107,68 @@
     border-bottom: 2px solid var(--color-primary-text);
 }
 
-.container-reparaciones{
+.container-reparaciones {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 868px) {
+    .info-taller {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .tabs {
+        gap: 25px;
+    }
+}
+
+/* Móviles (< 576px) */
+@media (max-width: 576px) {
+    .container-detalle-taller {
+        padding: 12px;
+    }
+
+    .container-nombre-taller h2 {
+        font-size: 20px;
+    }
+
+    .container-nombre-taller span {
+        font-size: 24px;
+    }
+
+    .info-taller {
+        padding: 14px;
+        margin-bottom: 20px;
+    }
+
+    .container-ubicacion {
+        gap: 12px;
+    }
+
+    .icono-ubi {
+        font-size: 24px;
+        padding: 8px;
+    }
+
+    .tabs {
+        gap: 0;
+        justify-content: space-around; /* Reparte los botones equitativamente */
+    }
+
+    .tabs button {
+        flex: 1;
+        text-align: center;
+        font-size: 15px;
+        padding-bottom: 8px;
+    }
+
+    .container-reparaciones {
+        margin-top: 20px;
+    }
 }

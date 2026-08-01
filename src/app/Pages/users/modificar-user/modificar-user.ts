@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidacionService } from '../../../Core/Services/ValidacionService/validacionService';
 import { UpdateUsuarioRequest } from '../../../Core/Models/Usuario';
+import { AuthService } from '../../../Core/Services/AuthService/auth-service';
 
 @Component({
   selector: 'app-modificar-user',
@@ -17,6 +18,8 @@ export class ModificarUser {
   private fb = inject(FormBuilder);
   private validacionService = inject(ValidacionService);
   private router = inject(Router);
+  private authService = inject(AuthService)
+
 
   emailOriginal = signal<string>("");
   dniOriginal = signal<number>(0);
@@ -42,7 +45,6 @@ export class ModificarUser {
   }
 
   cargarUsuario() {
-    console.log("HOLA");
     this.usuarioService.getUserById(this.id).subscribe({
       next: (c) => {
         
@@ -79,7 +81,11 @@ export class ModificarUser {
     }
 
     this.usuarioService.modificarUsuario(request, this.id).subscribe({
-      next: () => this.router.navigate(['/users'])
+      next: (usuarioResponse) => {
+        if(this.id == this.authService.getUser()?.id){
+          this.authService.actualizarUsuario(usuarioResponse);
+        }
+        this.router.navigate(['/users'])}
     })
   }
 

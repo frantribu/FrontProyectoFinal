@@ -1,3 +1,7 @@
+/* ===================================================
+   ESTILOS BASE (ESCRITORIO)
+   =================================================== */
+
 .container-card {
     display: flex;
     flex-direction: row;
@@ -6,6 +10,13 @@
     padding: 20px;
     border-radius: 10px;
     border: 1px solid var(--color-border-default);
+    box-sizing: border-box;
+    width: 100%;
+    gap: 20px;
+}
+
+.info {
+    flex: 1;
 }
 
 .container-info-vehiculo {
@@ -31,15 +42,63 @@
     padding: 10px;
     border-radius: 50px;
     background-color: var(--color-bg-elevated);
+    flex-shrink: 0;
 }
 
 .info-vehiculo p {
     font-size: 19px;
+    margin: 0;
+    word-break: break-word;
 }
 
 .info-vehiculo span {
     font-size: 14px;
     color: var(--color-text-tertiary);
+    word-break: break-word;
+}
+
+.container-fechas {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.fecha-ingreso,
+.fecha-salida {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--color-bg-elevated);
+    min-width: 250px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.363);
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.fecha-ingreso span,
+.fecha-salida span {
+    color: #b9b9b9a8;
+}
+
+.fecha {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.fecha span {
+    color: #b9b9b9a8;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.fecha p {
+    margin: 0;
+    font-weight: 500;
 }
 
 .container-estado-motivo {
@@ -47,31 +106,75 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 20px;
+}
+
+.container-estado-botones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
 }
 
 .estado {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 5vh;
-    padding: 20px;
-    gap: 5px;
+    min-height: 40px;
+    padding: 6px 16px;
+    gap: 8px;
     border-radius: 10px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
 }
 
 .estado span {
     font-variation-settings: 'FILL' 1;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .estado p {
-    font-size: 17px;
+    font-size: 15px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.botones-estado {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.botones-estado button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 140px;
+    background-color: rgb(31, 31, 31);
+    color: var(--color-text-primary, #ffffff);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.botones-estado button:hover:not(:disabled) {
+    background-color: rgb(45, 45, 45);
+}
+
+.botones-estado button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .container-motivo {
     position: relative;
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .boton-motivo {
@@ -93,103 +196,37 @@
 .motivo {
     position: absolute;
     bottom: calc(100% + 8px);
-    background-color: var(--color-bg-elevated);
     right: 0;
+    background-color: var(--color-bg-elevated);
     border: 0.5px solid rgba(255, 255, 255, .12);
     border-radius: 10px;
     padding: 12px 14px;
-    width: 250px;
+    width: 260px;
+    box-sizing: border-box;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.motivo h4{
-    margin-bottom: 5px;
+.motivo h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
 }
 
-.motivo div{
+.motivo div {
     border: 1px solid rgb(58, 58, 58);
     padding: 10px;
     border-radius: 8px;
+    font-size: 13px;
+    word-break: break-word;
 }
 
-.fecha-ingreso,
-.fecha-salida {
-    display: flex;
-    gap: 10px;
-    background-color: var(--color-bg-elevated);
-    min-width: 250px;
-    padding: 15px 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.363);
-}
-
-.fecha-ingreso span,
-.fecha-salida span {
-    color: #b9b9b9a8;
-}
-
-.container-fechas {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-.fecha {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.fecha span {
-    color: #b9b9b9a8;
-}
-
-.container-estado-botones{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 20px;
-}
-
-.botones-estado{
-    display: flex;
-    gap: 10px;
-}
-
-.botones-estado button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 160px;
-    background-color: rgb(31, 31, 31);
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.card-ingreso {
-    border-left: 4px solid #93c5fd;
-}
-
-.card-diagnostico {
-    border-left: 4px solid #fcd34d;
-}
-
-.card-reparacion {
-    border-left: 4px solid #fca5a5;
-}
-
-.card-prueba {
-    border-left: 4px solid #86efac;
-}
-
-.card-finalizado {
-    border-left: 4px solid #818cf8;
-}
-
-.card-entregado {
-    border-left: 4px solid #5eead4;
-}
+/* BORDES Y ESTADOS COLOR */
+.card-ingreso { border-left: 4px solid #93c5fd; }
+.card-diagnostico { border-left: 4px solid #fcd34d; }
+.card-reparacion { border-left: 4px solid #fca5a5; }
+.card-prueba { border-left: 4px solid #86efac; }
+.card-finalizado { border-left: 4px solid #818cf8; }
+.card-entregado { border-left: 4px solid #5eead4; }
 
 .estado-ingreso {
     background: rgba(59, 130, 246, .10);
@@ -225,4 +262,92 @@
     background: rgba(20, 184, 166, .08);
     color: #5eead4;
     border-color: rgba(20, 184, 166, .20);
+}
+
+
+/* ===================================================
+   RESPONSIVE (TABLETS Y MÓVILES)
+   =================================================== */
+
+/* Tablets (< 992px) */
+@media (max-width: 992px) {
+    .container-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .container-estado-motivo {
+        align-items: stretch;
+        border-top: 1px solid var(--color-border-default);
+        padding-top: 15px;
+    }
+
+    .container-estado-botones {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .estado {
+        align-self: flex-start;
+    }
+
+    .botones-estado {
+        justify-content: stretch;
+    }
+
+    .botones-estado button {
+        flex: 1;
+    }
+
+    .container-motivo {
+        align-self: flex-end;
+    }
+}
+
+/* Móviles (< 576px) */
+@media (max-width: 576px) {
+    .container-card {
+        padding: 14px;
+    }
+
+    .div-datos-vehiculo {
+        gap: 12px;
+    }
+
+    .icono-vehiculo span {
+        font-size: 30px;
+        padding: 8px;
+    }
+
+    .info-vehiculo p {
+        font-size: 16px;
+    }
+
+    .container-fechas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .fecha-ingreso,
+    .fecha-salida {
+        min-width: 100%;
+    }
+
+    .botones-estado {
+        flex-direction: column;
+    }
+
+    .botones-estado button {
+        width: 100%;
+    }
+
+    .estado {
+        width: 100%;
+    }
+
+    .motivo {
+        right: 0;
+        left: auto;
+        max-width: calc(100vw - 60px);
+    }
 }

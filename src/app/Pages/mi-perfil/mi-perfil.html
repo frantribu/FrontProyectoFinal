@@ -5,7 +5,7 @@
                 <p class="avatar-iniciales">{{getIniciales()}}</p>
             </div>
             <div class="perfil-info">
-                <h1>{{authService.getNombreCompleto()}}</h1>
+                <h1>{{userSignal()?.nombre}} {{userSignal()?.apellido}}</h1>
                 <p class="perfil-rol">{{authService.getRol()}}</p>
             </div>
         </div>
@@ -24,27 +24,27 @@
         <div class="perfil-detalle">
             <div class="detalle-item">
                 <span class="detalle-label">Nombre</span>
-                <span class="detalle-value nombre">{{authService.getUser()?.nombre ?? ' '}}</span>
+                <span class="detalle-value nombre">{{userSignal()?.nombre ?? ' '}}</span>
             </div>
 
             <div class="detalle-item">
                 <span class="detalle-label">Apellido</span>
-                <span class="detalle-value nombre">{{authService.getUser()?.apellido ?? ''}}</span>
+                <span class="detalle-value nombre">{{userSignal()?.apellido ?? ''}}</span>
             </div>
 
             <div class="detalle-item">
                 <span class="detalle-label">Email</span>
-                <span class="detalle-value">{{authService.getUser()?.email}}</span>
+                <span class="detalle-value">{{userSignal()?.email}}</span>
             </div>
 
             <div class="detalle-item">
                 <span class="detalle-label">DNI</span>
-                <span class="detalle-value">{{authService.getUser()?.dni}}</span>
+                <span class="detalle-value">{{userSignal()?.dni}}</span>
             </div>
 
             <div class="detalle-item">
                 <span class="detalle-label">Rol</span>
-                <span class="detalle-value">{{authService.getRol()}}</span>
+                <span class="detalle-value">{{userSignal()?.rol}}</span>
             </div>
         </div>
     </div>

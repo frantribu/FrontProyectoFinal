@@ -18,7 +18,7 @@ export class AuthService {
 
   login(loginRequest: LoginRequest):Observable<LoginResponse>{
     return this.http.post<LoginResponse>(this.url, loginRequest).pipe(
-      tap(response=>{ // el tap hace efecto secundarios sin modificar la respuesta
+      tap(response=>{
         if(response){
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem(this.userKey, JSON.stringify(response.usuario));
@@ -75,5 +75,9 @@ export class AuthService {
   isEmpleado():boolean{
     return this.getRol().toLowerCase()==="empleado"
   }
+
+  actualizarUsuario(usuario: UsuarioResponse) {
+    localStorage.setItem(this.userKey, JSON.stringify(usuario));
+}
 
 }

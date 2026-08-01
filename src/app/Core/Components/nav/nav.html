@@ -125,7 +125,7 @@
         <p class="logo-user">{{getIniciales()}}</p>
 
         <div>
-            <h3 class="name-user">{{capitalizarNombre(authService.getNombreCompleto())}}</h3>
+            <h3 class="name-user">{{userSignal()?.nombre}} {{userSignal()?.apellido}}</h3>
             <p class="rol-user">{{authService.getRol()}}</p>
         </div>
     </div>
