@@ -20,10 +20,11 @@ export class MotoFormComponent {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private imagenUpload = viewChild.required(ImageUpload);
+  private imageUpload = viewChild.required(ImageUpload);
 
   id = Number(this.route.snapshot.paramMap.get("id"));
   isEditable = this.id !== null && this.id !== 0
+  imagenesActuales = signal<string[]>([])
 
   mensajeError = signal<string>('');
   patenteOriginal = ""
@@ -96,7 +97,7 @@ export class MotoFormComponent {
       color: formulario.color
     }
 
-    this.vehiculoService.agregarMoto(request, this.imagenUpload().imagenes()).subscribe({
+    this.vehiculoService.agregarMoto(request, this.imageUpload().imagenes()).subscribe({
       next: () => {
         this.router.navigate(['/vehiculos'])
       },
@@ -107,6 +108,8 @@ export class MotoFormComponent {
   cargarMotoParaEditar() {
     this.vehiculoService.getDetalleMoto(this.id).subscribe({
       next: (moto) => {
+        this.imagenesActuales.set(moto.imagenes ?? [])
+
         this.vehiculoService.getModelos("MOTO", moto.marca).subscribe(
           mod => this.modelos.set(mod)
         );
@@ -162,7 +165,7 @@ export class MotoFormComponent {
       color: formulario.color
     };
 
-    this.vehiculoService.modificarMoto(this.id, request).subscribe({
+    this.vehiculoService.modificarMoto(this.id, this.imageUpload().imagenes(), request).subscribe({
       next: () => this.router.navigate(['/vehiculos']),
       error: (e) => console.log("Error al modificar la moto: ", e)
     })
@@ -181,10 +184,19 @@ export class MotoFormComponent {
     }
   }
 
-  validarPatente(event: Event) {
-    if (this.form.invalid) return;
+   eliminarImagen(nombre: string) {
+    this.vehiculoService.eliminarImagen(this.id, nombre).subscribe({
+      next: () => {
+        this.imagenesActuales.update(imgs =>
+          imgs.filter(i => i !== nombre)
+        );
+      },
+      error: (err) => console.log(err)
+    })
+  }
 
-    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "");
+  validarPatente(event: Event) {
+    const value = (event.target as HTMLInputElement).value.replaceAll(/\s/g, "").toUpperCase();
 
     if (this.isEditable && value === this.patenteOriginal) {
       this.mensajeError.set("");
@@ -195,7 +207,7 @@ export class MotoFormComponent {
       next: (existe) => {
         this.mensajeError.set(existe ? "La patente ya esta registrada" : "")
       },
-      error: (e) => console.log("Error al validad la patente: ", e)
+      error: (e) => console.log("Error al validar la patente: ", e)
     })
   }
 }

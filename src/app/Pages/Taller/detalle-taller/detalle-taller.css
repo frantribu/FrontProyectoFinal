@@ -102,7 +102,7 @@
     color: inherit;
 }
 
-.activa {
+.tabs button.activa {
     color: var(--color-primary-text);
     border-bottom: 2px solid var(--color-primary-text);
 }

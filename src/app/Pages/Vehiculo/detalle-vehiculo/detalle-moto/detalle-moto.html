@@ -146,7 +146,8 @@
 
         @for (r of moto()?.historialDeReparacion; track r.id) {
         <div class="reparacion">
-            {{r.descripcion}}
+            <p>Motivo: {{r.descripcion}}</p>
+            <p>Fecha de salida: {{r.fechaDeSalida}}</p>
         </div>
         }
     </div>

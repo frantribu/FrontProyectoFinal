@@ -21,7 +21,7 @@ getVentas(empleadoId?: string, fechaDesde?: string, fechaHasta?: string): Observ
 
     if (this.authService.isAdmin()) {
       if (empleadoId) {
-        params = params.set('empleadoId', empleadoId);
+        params = params.set('vendedorId', empleadoId);
       }
       
       return this.http.get<VentaResponse[]>(this.url, { params });

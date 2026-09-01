@@ -156,7 +156,9 @@
             <input type="text" id="descripcion-input" placeholder="" formControlName="descripcion">
         </div>
 
-        <app-image-upload></app-image-upload>
+        <app-image-upload [imagenesExistentes]="imagenesActuales()"
+            [id]="id"
+            (eliminarImagenExistente)="eliminarImagen($event)"></app-image-upload>
 
         <button [disabled]="form.invalid" type="submit">{{isEditable ? 'Actualizar moto' : 'Agregar moto'}}</button>
     </form>

@@ -24,7 +24,7 @@
         <div class="resumen-cards">
             @if (authService.isAdmin()) {
             <app-card-resumen icono="assignment" titulo="Facturacion"
-                [valor]="facturacionDelMes() | currency:'USD':'symbol':'1.0-0'"></app-card-resumen>
+                [valor]="facturacionDelMes() ? (facturacionDelMes() | currency:'USD':'symbol':'1.0-0') : (0 | currency:'USD':'symbol':'1.0-0')"></app-card-resumen>
             <app-card-resumen icono="toys" titulo="Ventas del mes" [valor]="ventasDelMes()"></app-card-resumen>
             <app-card-resumen icono="build" titulo="Reparaciones activas"
                 [valor]="reparacionesActivas()"></app-card-resumen>

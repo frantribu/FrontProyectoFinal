@@ -91,8 +91,12 @@ export class VehiculoService {
     return this.http.post<MotoDetalleResponse>(this.url + "/motos", form)
   }
 
-  modificarMoto(id:number, request:CrearMotoRequest):Observable<MotoDetalleResponse>{
-    return this.http.put<MotoDetalleResponse>(`${this.url}/motos/${id}`, request);
+  modificarMoto(id:number, imagenes: File[], request:CrearMotoRequest):Observable<MotoDetalleResponse>{
+    const form = new FormData();
+    form.append('datos', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+    imagenes.forEach(img => form.append('files', img));
+
+    return this.http.put<MotoDetalleResponse>(`${this.url}/motos/${id}`, form);
   }
 
   obtenerTiposMoto() {
